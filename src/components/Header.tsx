@@ -1,13 +1,15 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Search, ShoppingCart, User, MapPin, Menu } from 'lucide-react';
+import { Search, ShoppingCart, User, MapPin, Menu, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { useState } from 'react';
+import { useTheme } from '@/context/ThemeContext';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Header = () => {
   const { itemCount, setIsOpen } = useCart();
+  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -86,6 +88,22 @@ const Header = () => {
                   >
                     {itemCount}
                   </motion.span>
+                )}
+              </AnimatePresence>
+            </Button>
+          </motion.div>
+
+          <motion.div whileTap={{ scale: 0.9 }}>
+            <Button variant="ghost" size="sm" className="rounded-xl" onClick={toggleTheme}>
+              <AnimatePresence mode="wait" initial={false}>
+                {theme === 'light' ? (
+                  <motion.div key="sun" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                    <Sun className="h-4 w-4" />
+                  </motion.div>
+                ) : (
+                  <motion.div key="moon" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                    <Moon className="h-4 w-4" />
+                  </motion.div>
                 )}
               </AnimatePresence>
             </Button>
