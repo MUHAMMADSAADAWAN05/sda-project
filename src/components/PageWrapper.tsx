@@ -10,3 +10,5 @@ export const PageWrapper = ({ children }: { children: ReactNode }) => (
     {children}
   </motion.div>
 );
+
+export default PageWrapper;
