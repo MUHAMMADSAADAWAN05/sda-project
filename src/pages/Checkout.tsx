@@ -8,7 +8,7 @@ import { useCart } from '@/context/CartContext';
 import { savedAddresses } from '@/data/mockData';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { PageWrapper } from '@/lib/animations';
+import { PageWrapper } from '@/components/PageWrapper';
 
 const Checkout = () => {
   const { items, subtotal, clearCart } = useCart();

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { mockOrders } from '@/data/mockData';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { PageWrapper } from '@/lib/animations';
+import { PageWrapper } from '@/components/PageWrapper';
 
 const steps = [
   { key: 'confirmed', label: 'Order Confirmed', icon: Check, description: 'Your order has been received' },

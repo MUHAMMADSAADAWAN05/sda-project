@@ -12,7 +12,7 @@ import { useCart } from '@/context/CartContext';
 import { MenuItem } from '@/types';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { PageWrapper } from '@/lib/animations';
+import { PageWrapper } from '@/components/PageWrapper';
 
 const RestaurantDetail = () => {
   const { id } = useParams();

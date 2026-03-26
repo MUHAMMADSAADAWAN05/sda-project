@@ -6,7 +6,7 @@ import RestaurantCard from '@/components/RestaurantCard';
 import { categories, restaurants } from '@/data/mockData';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { PageWrapper } from '@/lib/animations';
+import { PageWrapper } from '@/components/PageWrapper';
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');

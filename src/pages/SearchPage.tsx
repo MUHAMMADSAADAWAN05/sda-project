@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import RestaurantCard from '@/components/RestaurantCard';
 import { restaurants, categories } from '@/data/mockData';
 import { motion } from 'framer-motion';
-import { PageWrapper } from '@/lib/animations';
+import { PageWrapper } from '@/components/PageWrapper';
 
 const SearchPage = () => {
   const [searchParams] = useSearchParams();
