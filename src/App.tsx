@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
+import SplashScreen from "./pages/SplashScreen";
 import Index from "./pages/Index";
 import SearchPage from "./pages/SearchPage";
 import RestaurantDetail from "./pages/RestaurantDetail";
@@ -32,28 +33,33 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <div className="flex min-h-screen flex-col">
-            <Header />
-            <main className="flex-1">
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/search" element={<SearchPage />} />
-                <Route path="/restaurant/:id" element={<RestaurantDetail />} />
-                <Route path="/checkout" element={<Checkout />} />
-                <Route path="/tracking/:orderId" element={<OrderTracking />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/account" element={<Account />} />
-                <Route path="/orders" element={<Orders />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/driver" element={<Driver />} />
-                <Route path="/admin" element={<Admin />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-            <Footer />
-            <CartDrawer />
-          </div>
+          <Routes>
+            <Route path="/welcome" element={<SplashScreen />} />
+            <Route path="*" element={
+              <div className="flex min-h-screen flex-col">
+                <Header />
+                <main className="flex-1">
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/search" element={<SearchPage />} />
+                    <Route path="/restaurant/:id" element={<RestaurantDetail />} />
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/tracking/:orderId" element={<OrderTracking />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
+                    <Route path="/account" element={<Account />} />
+                    <Route path="/orders" element={<Orders />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/driver" element={<Driver />} />
+                    <Route path="/admin" element={<Admin />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </main>
+                <Footer />
+                <CartDrawer />
+              </div>
+            } />
+          </Routes>
         </BrowserRouter>
       </CartProvider>
     </TooltipProvider>
