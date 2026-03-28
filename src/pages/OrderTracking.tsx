@@ -32,17 +32,18 @@ const OrderTracking = () => {
         <motion.h1 initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="text-2xl font-heading font-extrabold mb-2">
           Order #{orderId || 'ORD-001'}
         </motion.h1>
-        <p className="text-muted-foreground mb-8">Estimated delivery: <span className="font-semibold text-primary">{order.estimatedDelivery}</span></p>
+        <p className="text-muted-foreground mb-8">Estimated delivery: <span className="font-bold text-gradient">{order.estimatedDelivery}</span></p>
 
         {/* Progress */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl border bg-card p-6 mb-8 shadow-card">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-card neon-border p-6 mb-8 shadow-card-hover">
           <div className="relative">
-            <div className="absolute left-5 top-5 bottom-5 w-0.5 bg-border" />
+            <div className="absolute left-5 top-5 bottom-5 w-0.5 bg-border/30" />
             <motion.div
               className="absolute left-5 top-5 w-0.5 gradient-warm rounded-full"
               initial={{ height: 0 }}
               animate={{ height: `${(currentStep / (steps.length - 1)) * 100}%` }}
               transition={{ duration: 1, ease: 'easeInOut' }}
+              style={{ boxShadow: '0 0 12px hsl(var(--primary) / 0.5)' }}
             />
             <div className="space-y-8">
               {steps.map((step, i) => {
@@ -60,14 +61,14 @@ const OrderTracking = () => {
                     <motion.div
                       animate={isCurrent ? { scale: [1, 1.15, 1] } : {}}
                       transition={isCurrent ? { repeat: Infinity, duration: 2 } : {}}
-                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 transition-all ${
-                        isComplete ? 'border-transparent gradient-warm text-primary-foreground shadow-glow' : 'border-border bg-card text-muted-foreground'
+                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border-2 transition-all ${
+                        isComplete ? 'border-transparent gradient-warm text-primary-foreground neon-glow-primary' : 'border-border/30 glass-card text-muted-foreground'
                       }`}
                     >
                       <StepIcon className="h-5 w-5" />
                     </motion.div>
                     <div>
-                      <p className={`font-semibold ${isComplete ? 'text-foreground' : 'text-muted-foreground'}`}>{step.label}</p>
+                      <p className={`font-heading font-semibold ${isComplete ? 'text-foreground' : 'text-muted-foreground'}`}>{step.label}</p>
                       <p className="text-sm text-muted-foreground">{step.description}</p>
                     </div>
                   </motion.div>
@@ -82,9 +83,10 @@ const OrderTracking = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="rounded-2xl border bg-muted/50 h-48 flex items-center justify-center mb-8 overflow-hidden relative"
+          className="rounded-2xl glass-card neon-border h-48 flex items-center justify-center mb-8 overflow-hidden relative shadow-card"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
+          <div className="absolute inset-0 bg-[linear-gradient(hsl(var(--primary)/0.03)_1px,transparent_1px),linear-gradient(90deg,hsl(var(--primary)/0.03)_1px,transparent_1px)] bg-[size:30px_30px]" />
           <div className="text-center relative z-10">
             <MapPin className="h-8 w-8 mx-auto mb-2 text-primary animate-float" />
             <p className="font-heading font-bold">Live Map Tracking</p>
@@ -97,34 +99,34 @@ const OrderTracking = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-2xl border-2 border-primary/20 bg-card p-6 mb-8 shadow-card"
+            className="rounded-2xl glass-card border-2 border-primary/20 p-6 mb-8 shadow-card-hover neon-glow-primary"
           >
             <h2 className="font-heading font-bold mb-4">Your Driver</h2>
             <div className="flex items-center gap-4">
-              <img src={order.driver.photo} alt={order.driver.name} className="h-14 w-14 rounded-full object-cover ring-2 ring-primary/20" />
+              <img src={order.driver.photo} alt={order.driver.name} className="h-14 w-14 rounded-2xl object-cover ring-2 ring-primary/30" />
               <div className="flex-1">
-                <p className="font-semibold">{order.driver.name}</p>
+                <p className="font-heading font-bold">{order.driver.name}</p>
                 <p className="text-sm text-muted-foreground">{order.driver.vehicle}</p>
               </div>
-              <Button variant="outline" size="icon" className="rounded-full"><Phone className="h-4 w-4" /></Button>
+              <Button variant="outline" size="icon" className="rounded-xl glass-card neon-border"><Phone className="h-4 w-4" /></Button>
             </div>
           </motion.div>
         )}
 
         {/* Order details */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="rounded-2xl border bg-card p-6 shadow-card">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="rounded-2xl glass-card neon-border p-6 shadow-card-hover">
           <h2 className="font-heading font-bold mb-3">Order Details</h2>
           <p className="text-sm font-semibold text-primary mb-3">{order.restaurantName}</p>
-          <div className="space-y-2 text-sm border-t pt-3">
+          <div className="space-y-2 text-sm border-t border-border/30 pt-3">
             <div className="flex justify-between"><span className="text-muted-foreground">Subtotal</span><span className="font-medium">${order.subtotal.toFixed(2)}</span></div>
             <div className="flex justify-between"><span className="text-muted-foreground">Delivery</span><span className="font-medium">${order.deliveryFee.toFixed(2)}</span></div>
             <div className="flex justify-between"><span className="text-muted-foreground">Tax</span><span className="font-medium">${order.tax.toFixed(2)}</span></div>
-            <div className="flex justify-between font-heading font-bold text-lg border-t pt-2"><span>Total</span><span className="text-gradient">${order.total.toFixed(2)}</span></div>
+            <div className="flex justify-between font-heading font-extrabold text-lg border-t border-border/30 pt-2"><span>Total</span><span className="text-gradient">${order.total.toFixed(2)}</span></div>
           </div>
         </motion.div>
 
         <div className="mt-8 text-center">
-          <Button variant="outline" className="rounded-xl" onClick={() => navigate('/')}>Back to Home</Button>
+          <Button variant="outline" className="rounded-xl glass-card neon-border" onClick={() => navigate('/')}>Back to Home</Button>
         </div>
       </div>
     </PageWrapper>
