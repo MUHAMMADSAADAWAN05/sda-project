@@ -12,7 +12,7 @@ const RestaurantCard = ({ restaurant, index = 0 }: { restaurant: Restaurant; ind
     whileTap={{ scale: 0.98 }}
   >
     <Link to={`/restaurant/${restaurant.id}`} className="group block">
-      <div className="overflow-hidden rounded-2xl border bg-card shadow-card transition-shadow hover:shadow-card-hover">
+      <div className="overflow-hidden rounded-2xl border bg-card/80 glass-card shadow-card transition-all hover:shadow-card-hover hover:neon-border">
         <div className="relative aspect-[16/10] overflow-hidden">
           <img
             src={restaurant.image}
