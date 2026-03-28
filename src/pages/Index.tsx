@@ -71,12 +71,12 @@ const Index = () => {
                   <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     placeholder="What are you craving?"
-                    className="h-14 rounded-2xl border-2 bg-card pl-12 text-base shadow-card transition-shadow focus:shadow-card-hover focus:border-primary/40"
+                    className="h-14 rounded-2xl border-2 bg-card/70 glass-card pl-12 text-base shadow-card transition-all focus:shadow-card-hover focus:border-primary/40 focus:neon-border"
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
                   />
                 </div>
-                <Button type="submit" size="lg" className="h-14 rounded-2xl px-8 gradient-warm shadow-glow hover:shadow-lg transition-all">
+                <Button type="submit" size="lg" className="h-14 rounded-2xl px-8 gradient-warm neon-glow-primary hover:shadow-xl transition-all">
                   Search
                 </Button>
               </motion.form>

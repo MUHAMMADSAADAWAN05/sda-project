@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const Footer = () => (
-  <footer className="border-t bg-card mt-auto">
+  <footer className="border-t glass-strong mt-auto">
     <div className="container py-12">
       <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
         <div>

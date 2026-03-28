@@ -22,7 +22,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-card/80 glass">
+    <header className="sticky top-0 z-50 border-b glass-strong neon-border">
       <div className="container flex h-16 items-center justify-between gap-4">
         <div className="flex items-center gap-6">
           <Link to="/" className="flex items-center gap-2 group">
@@ -115,7 +115,7 @@ const Header = () => {
             </Link>
           </Button>
 
-          <Button size="sm" className="rounded-xl gradient-warm shadow-glow hover:shadow-lg transition-all font-semibold" asChild>
+          <Button size="sm" className="rounded-xl gradient-warm neon-glow-primary hover:shadow-xl transition-all font-semibold" asChild>
             <Link to="/login">Sign In</Link>
           </Button>
         </div>
