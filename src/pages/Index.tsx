@@ -1,5 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { Search, MapPin, ArrowRight, Sparkles, TrendingUp, Flame } from 'lucide-react';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
+import { Search, MapPin, ArrowRight, Sparkles, TrendingUp, Flame, Zap, Shield, Clock as ClockIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import RestaurantCard from '@/components/RestaurantCard';
@@ -14,6 +14,13 @@ const Index = () => {
   const featured = restaurants.filter(r => r.featured);
   const topRated = [...restaurants].sort((a, b) => b.rating - a.rating);
 
+  // Redirect first-time visitors to splash screen
+  const hasVisited = localStorage.getItem('fooddash-visited');
+  if (!hasVisited) {
+    localStorage.setItem('fooddash-visited', 'true');
+    return <Navigate to="/welcome" replace />;
+  }
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
@@ -24,18 +31,22 @@ const Index = () => {
       <div className="min-h-screen">
         {/* Hero */}
         <section className="relative overflow-hidden gradient-hero">
-          {/* Decorative blobs */}
-          <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
-          <div className="absolute -right-32 top-16 h-80 w-80 rounded-full bg-accent/8 blur-3xl" />
-          <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-primary/3 blur-2xl" />
+          {/* Animated neon lines */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-primary/8 blur-[120px] animate-float" />
+            <div className="absolute -right-32 top-16 h-80 w-80 rounded-full bg-accent/10 blur-[100px]" style={{ animationDelay: '1s' }} />
+            <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-success/6 blur-[80px]" style={{ animationDelay: '2s' }} />
+            {/* Neon grid lines */}
+            <div className="absolute inset-0 bg-[linear-gradient(hsl(var(--primary)/0.03)_1px,transparent_1px),linear-gradient(90deg,hsl(var(--primary)/0.03)_1px,transparent_1px)] bg-[size:80px_80px]" />
+          </div>
 
-          <div className="container relative py-20 md:py-28">
+          <div className="container relative py-20 md:py-32">
             <div className="mx-auto max-w-2xl text-center">
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, type: 'spring', stiffness: 200 }}
-                className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-medium text-primary"
+                className="mb-6 inline-flex items-center gap-2 rounded-full glass-card neon-border px-5 py-2.5 text-sm font-semibold text-primary"
               >
                 <Sparkles className="h-4 w-4" />
                 Free delivery on your first order!
@@ -65,13 +76,13 @@ const Index = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.3 }}
-                className="mt-10 flex gap-2"
+                className="mt-10 flex gap-3"
               >
                 <div className="relative flex-1">
                   <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     placeholder="What are you craving?"
-                    className="h-14 rounded-2xl border-2 bg-card/70 glass-card pl-12 text-base shadow-card transition-all focus:shadow-card-hover focus:border-primary/40 focus:neon-border"
+                    className="h-14 rounded-2xl border-2 glass-card pl-12 text-base shadow-card transition-all focus:shadow-card-hover focus:neon-border"
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
                   />
@@ -95,6 +106,35 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Stats Banner */}
+        <section className="container -mt-6 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="grid grid-cols-3 gap-4 rounded-2xl glass-card neon-border p-6 shadow-card-hover"
+          >
+            {[
+              { icon: Zap, label: 'Lightning Fast', value: '15-30 min avg', color: 'text-accent' },
+              { icon: Shield, label: 'Secure Payments', value: '100% Protected', color: 'text-success' },
+              { icon: ClockIcon, label: 'Live Tracking', value: 'Real-time GPS', color: 'text-primary' },
+            ].map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="text-center"
+              >
+                <stat.icon className={`h-6 w-6 mx-auto mb-2 ${stat.color}`} />
+                <p className="font-heading font-bold text-sm">{stat.value}</p>
+                <p className="text-xs text-muted-foreground">{stat.label}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </section>
+
         {/* Categories */}
         <section className="container py-12">
           <motion.h2
@@ -113,14 +153,14 @@ const Index = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.04 }}
-                whileHover={{ y: -4, scale: 1.05 }}
+                whileHover={{ y: -6, scale: 1.08 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <Link
                   to={`/search?category=${cat.name}`}
                   className="flex flex-col items-center gap-2.5 min-w-[88px] group"
                 >
-                  <div className="flex h-18 w-18 items-center justify-center rounded-2xl bg-secondary text-3xl transition-all group-hover:bg-primary/10 group-hover:shadow-glow/30 border border-transparent group-hover:border-primary/20"
+                  <div className="flex items-center justify-center rounded-2xl glass-card text-3xl transition-all group-hover:neon-glow-primary group-hover:neon-border border border-border/50"
                     style={{ height: '72px', width: '72px' }}
                   >
                     {cat.icon}
@@ -141,7 +181,9 @@ const Index = () => {
               viewport={{ once: true }}
               className="flex items-center gap-2"
             >
-              <Flame className="h-6 w-6 text-primary" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg gradient-warm neon-glow-primary">
+                <Flame className="h-4 w-4 text-primary-foreground" />
+              </div>
               <h2 className="text-2xl font-heading font-bold">Featured Restaurants</h2>
             </motion.div>
             <Button variant="ghost" size="sm" className="gap-1 text-primary font-semibold group" asChild>
@@ -162,7 +204,9 @@ const Index = () => {
               viewport={{ once: true }}
               className="flex items-center gap-2"
             >
-              <TrendingUp className="h-6 w-6 text-success" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-success/20 neon-glow-success">
+                <TrendingUp className="h-4 w-4 text-success" />
+              </div>
               <h2 className="text-2xl font-heading font-bold">Top Rated Near You</h2>
             </motion.div>
             <Button variant="ghost" size="sm" className="gap-1 text-primary font-semibold group" asChild>
@@ -181,8 +225,8 @@ const Index = () => {
           viewport={{ once: true }}
           className="relative overflow-hidden"
         >
-          <div className="gradient-warm">
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTAiIGN5PSIxMCIgcj0iMS41IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMSkiLz48L3N2Zz4=')] opacity-30" />
+          <div className="gradient-warm relative">
+            <div className="absolute inset-0 bg-[linear-gradient(hsl(0_0%_100%/0.05)_1px,transparent_1px),linear-gradient(90deg,hsl(0_0%_100%/0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
             <div className="container relative py-16 text-center">
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
@@ -199,7 +243,7 @@ const Index = () => {
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
               >
-                <Button variant="secondary" size="lg" className="mt-8 rounded-2xl px-8 font-bold shadow-lg hover:shadow-xl transition-all" asChild>
+                <Button variant="secondary" size="lg" className="mt-8 rounded-2xl px-8 font-bold shadow-lg hover:shadow-xl transition-all glass" asChild>
                   <Link to="/dashboard">Get Started</Link>
                 </Button>
               </motion.div>

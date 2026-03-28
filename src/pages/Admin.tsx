@@ -3,6 +3,8 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Users, Store, ShoppingBag, DollarSign, Search, Check, X, Tag, Plus } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { PageWrapper } from '@/components/PageWrapper';
 
 const platformStats = [
   { label: 'Total Orders', value: '12,847', icon: ShoppingBag, change: '+23%' },
@@ -32,131 +34,144 @@ const promoCodes = [
 ];
 
 const Admin = () => (
-  <div className="container py-8">
-    <h1 className="text-3xl font-heading font-bold mb-8">Admin Panel</h1>
+  <PageWrapper>
+    <div className="container py-8">
+      <motion.h1 initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="text-3xl font-heading font-extrabold mb-8">Admin Panel</motion.h1>
 
-    {/* Stats */}
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-      {platformStats.map(stat => {
-        const Icon = stat.icon;
-        return (
-          <div key={stat.label} className="rounded-xl border bg-card p-5">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-muted-foreground">{stat.label}</span>
-              <Icon className="h-4 w-4 text-muted-foreground" />
+      {/* Stats */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+        {platformStats.map((stat, i) => {
+          const Icon = stat.icon;
+          return (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              whileHover={{ y: -4 }}
+              className="rounded-2xl glass-card neon-border p-5 shadow-card hover:shadow-card-hover transition-all"
+            >
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm text-muted-foreground">{stat.label}</span>
+                <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Icon className="h-4 w-4 text-primary" />
+                </div>
+              </div>
+              <p className="text-2xl font-heading font-extrabold">{stat.value}</p>
+              <p className="text-xs text-success mt-1 font-semibold">{stat.change} this month</p>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      <Tabs defaultValue="restaurants" className="space-y-6">
+        <TabsList className="glass-card rounded-2xl p-1">
+          <TabsTrigger value="restaurants" className="rounded-xl">Restaurants</TabsTrigger>
+          <TabsTrigger value="users" className="rounded-xl">Users</TabsTrigger>
+          <TabsTrigger value="promos" className="rounded-xl">Promo Codes</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="restaurants">
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-card neon-border shadow-card-hover overflow-hidden">
+            <div className="flex items-center justify-between p-4 border-b border-border/30">
+              <div className="relative max-w-sm flex-1">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input placeholder="Search restaurants..." className="pl-10 rounded-xl glass-card border-border/50 focus:neon-border" />
+              </div>
             </div>
-            <p className="text-2xl font-heading font-bold">{stat.value}</p>
-            <p className="text-xs text-success mt-1">{stat.change} this month</p>
-          </div>
-        );
-      })}
-    </div>
-
-    <Tabs defaultValue="restaurants" className="space-y-6">
-      <TabsList>
-        <TabsTrigger value="restaurants">Restaurants</TabsTrigger>
-        <TabsTrigger value="users">Users</TabsTrigger>
-        <TabsTrigger value="promos">Promo Codes</TabsTrigger>
-      </TabsList>
-
-      <TabsContent value="restaurants">
-        <div className="rounded-xl border bg-card">
-          <div className="flex items-center justify-between p-4 border-b">
-            <div className="relative max-w-sm flex-1">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input placeholder="Search restaurants..." className="pl-10" />
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead><tr className="border-b border-border/30 text-left text-muted-foreground">
+                  <th className="p-4 font-heading font-semibold">Restaurant</th>
+                  <th className="p-4 font-heading font-semibold">Status</th>
+                  <th className="p-4 font-heading font-semibold">Orders</th>
+                  <th className="p-4 font-heading font-semibold">Revenue</th>
+                  <th className="p-4 font-heading font-semibold">Rating</th>
+                  <th className="p-4 font-heading font-semibold">Actions</th>
+                </tr></thead>
+                <tbody>
+                  {mockRestaurants.map(r => (
+                    <tr key={r.id} className="border-b border-border/20 last:border-0 hover:bg-muted/20 transition-colors">
+                      <td className="p-4 font-heading font-semibold">{r.name}</td>
+                      <td className="p-4"><Badge variant={r.status === 'active' ? 'default' : 'secondary'} className={`rounded-full ${r.status === 'active' ? 'gradient-warm border-0' : ''}`}>{r.status}</Badge></td>
+                      <td className="p-4">{r.orders.toLocaleString()}</td>
+                      <td className="p-4 font-heading font-semibold">{r.revenue}</td>
+                      <td className="p-4">{r.rating > 0 ? <span className="text-accent font-bold">{r.rating}</span> : '—'}</td>
+                      <td className="p-4">
+                        {r.status === 'pending' ? (
+                          <div className="flex gap-1">
+                            <Button size="sm" className="h-7 gap-1 gradient-warm rounded-lg"><Check className="h-3 w-3" /> Approve</Button>
+                            <Button size="sm" variant="ghost" className="h-7 text-destructive rounded-lg"><X className="h-3 w-3" /></Button>
+                          </div>
+                        ) : (
+                          <Button size="sm" variant="ghost" className="h-7 rounded-lg">Manage</Button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          </div>
-          <div className="overflow-x-auto">
+          </motion.div>
+        </TabsContent>
+
+        <TabsContent value="users">
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-card neon-border overflow-x-auto shadow-card-hover">
             <table className="w-full text-sm">
-              <thead><tr className="border-b text-left text-muted-foreground">
-                <th className="p-4 font-medium">Restaurant</th>
-                <th className="p-4 font-medium">Status</th>
-                <th className="p-4 font-medium">Orders</th>
-                <th className="p-4 font-medium">Revenue</th>
-                <th className="p-4 font-medium">Rating</th>
-                <th className="p-4 font-medium">Actions</th>
+              <thead><tr className="border-b border-border/30 text-left text-muted-foreground">
+                <th className="p-4 font-heading font-semibold">Name</th>
+                <th className="p-4 font-heading font-semibold">Email</th>
+                <th className="p-4 font-heading font-semibold">Role</th>
+                <th className="p-4 font-heading font-semibold">Orders</th>
+                <th className="p-4 font-heading font-semibold">Joined</th>
+                <th className="p-4 font-heading font-semibold">Actions</th>
               </tr></thead>
               <tbody>
-                {mockRestaurants.map(r => (
-                  <tr key={r.id} className="border-b last:border-0">
-                    <td className="p-4 font-medium">{r.name}</td>
-                    <td className="p-4"><Badge variant={r.status === 'active' ? 'default' : 'secondary'}>{r.status}</Badge></td>
-                    <td className="p-4">{r.orders.toLocaleString()}</td>
-                    <td className="p-4">{r.revenue}</td>
-                    <td className="p-4">{r.rating > 0 ? r.rating : '—'}</td>
-                    <td className="p-4">
-                      {r.status === 'pending' ? (
-                        <div className="flex gap-1">
-                          <Button size="sm" variant="outline" className="h-7 gap-1"><Check className="h-3 w-3" /> Approve</Button>
-                          <Button size="sm" variant="ghost" className="h-7 text-destructive"><X className="h-3 w-3" /></Button>
-                        </div>
-                      ) : (
-                        <Button size="sm" variant="ghost" className="h-7">Manage</Button>
-                      )}
-                    </td>
+                {mockUsers.map(u => (
+                  <tr key={u.id} className="border-b border-border/20 last:border-0 hover:bg-muted/20 transition-colors">
+                    <td className="p-4 font-heading font-semibold">{u.name}</td>
+                    <td className="p-4 text-muted-foreground">{u.email}</td>
+                    <td className="p-4"><Badge variant="secondary" className="rounded-full">{u.role}</Badge></td>
+                    <td className="p-4">{u.orders}</td>
+                    <td className="p-4 text-muted-foreground">{u.joined}</td>
+                    <td className="p-4"><Button size="sm" variant="ghost" className="h-7 rounded-lg">View</Button></td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </div>
-        </div>
-      </TabsContent>
+          </motion.div>
+        </TabsContent>
 
-      <TabsContent value="users">
-        <div className="rounded-xl border bg-card overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead><tr className="border-b text-left text-muted-foreground">
-              <th className="p-4 font-medium">Name</th>
-              <th className="p-4 font-medium">Email</th>
-              <th className="p-4 font-medium">Role</th>
-              <th className="p-4 font-medium">Orders</th>
-              <th className="p-4 font-medium">Joined</th>
-              <th className="p-4 font-medium">Actions</th>
-            </tr></thead>
-            <tbody>
-              {mockUsers.map(u => (
-                <tr key={u.id} className="border-b last:border-0">
-                  <td className="p-4 font-medium">{u.name}</td>
-                  <td className="p-4 text-muted-foreground">{u.email}</td>
-                  <td className="p-4"><Badge variant="secondary">{u.role}</Badge></td>
-                  <td className="p-4">{u.orders}</td>
-                  <td className="p-4 text-muted-foreground">{u.joined}</td>
-                  <td className="p-4"><Button size="sm" variant="ghost" className="h-7">View</Button></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </TabsContent>
-
-      <TabsContent value="promos">
-        <div className="rounded-xl border bg-card">
-          <div className="flex items-center justify-between p-4 border-b">
-            <h3 className="font-heading font-semibold">Promo Codes</h3>
-            <Button size="sm" className="gap-1"><Plus className="h-3.5 w-3.5" /> Create Code</Button>
-          </div>
-          <div className="divide-y">
-            {promoCodes.map(promo => (
-              <div key={promo.code} className="flex items-center justify-between p-4">
-                <div className="flex items-center gap-3">
-                  <Tag className="h-4 w-4 text-primary" />
-                  <div>
-                    <p className="font-mono font-medium">{promo.code}</p>
-                    <p className="text-sm text-muted-foreground">{promo.discount} • Expires {promo.expires}</p>
+        <TabsContent value="promos">
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-card neon-border shadow-card-hover overflow-hidden">
+            <div className="flex items-center justify-between p-4 border-b border-border/30">
+              <h3 className="font-heading font-bold">Promo Codes</h3>
+              <Button size="sm" className="gap-1 gradient-warm rounded-xl neon-glow-primary"><Plus className="h-3.5 w-3.5" /> Create Code</Button>
+            </div>
+            <div className="divide-y divide-border/30">
+              {promoCodes.map(promo => (
+                <motion.div key={promo.code} whileHover={{ backgroundColor: 'hsl(var(--muted) / 0.3)' }} className="flex items-center justify-between p-4 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Tag className="h-4 w-4 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-mono font-bold">{promo.code}</p>
+                      <p className="text-sm text-muted-foreground">{promo.discount} • Expires {promo.expires}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-sm text-muted-foreground">{promo.usage}</span>
-                  <Badge variant={promo.status === 'active' ? 'default' : 'secondary'}>{promo.status}</Badge>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </TabsContent>
-    </Tabs>
-  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm text-muted-foreground">{promo.usage}</span>
+                    <Badge variant={promo.status === 'active' ? 'default' : 'secondary'} className={`rounded-full ${promo.status === 'active' ? 'gradient-warm border-0' : ''}`}>{promo.status}</Badge>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </TabsContent>
+      </Tabs>
+    </div>
+  </PageWrapper>
 );
 
 export default Admin;

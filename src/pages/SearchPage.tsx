@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Search, Grid3X3, List } from 'lucide-react';
+import { Search, Grid3X3, List, SlidersHorizontal } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -45,26 +45,26 @@ const SearchPage = () => {
         >
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input placeholder="Search restaurants or cuisines..." className="pl-10 rounded-xl" value={query} onChange={e => setQuery(e.target.value)} />
+            <Input placeholder="Search restaurants or cuisines..." className="pl-10 rounded-xl glass-card border-border/50 focus:neon-border transition-all" value={query} onChange={e => setQuery(e.target.value)} />
           </div>
           <div className="flex gap-2">
             <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-[140px] rounded-xl"><SelectValue placeholder="Category" /></SelectTrigger>
-              <SelectContent>
+              <SelectTrigger className="w-[140px] rounded-xl glass-card border-border/50"><SelectValue placeholder="Category" /></SelectTrigger>
+              <SelectContent className="glass-strong rounded-xl border-border/50">
                 <SelectItem value="all">All</SelectItem>
                 {categories.map(c => <SelectItem key={c.id} value={c.name}>{c.icon} {c.name}</SelectItem>)}
               </SelectContent>
             </Select>
             <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-[150px] rounded-xl"><SelectValue placeholder="Sort by" /></SelectTrigger>
-              <SelectContent>
+              <SelectTrigger className="w-[150px] rounded-xl glass-card border-border/50"><SelectValue placeholder="Sort by" /></SelectTrigger>
+              <SelectContent className="glass-strong rounded-xl border-border/50">
                 <SelectItem value="relevance">Relevance</SelectItem>
                 <SelectItem value="rating">Top Rated</SelectItem>
                 <SelectItem value="delivery">Fastest Delivery</SelectItem>
                 <SelectItem value="price">Lowest Fee</SelectItem>
               </SelectContent>
             </Select>
-            <div className="hidden sm:flex border rounded-xl overflow-hidden">
+            <div className="hidden sm:flex glass-card rounded-xl overflow-hidden neon-border">
               <Button variant={view === 'grid' ? 'secondary' : 'ghost'} size="icon" className="h-9 w-9 rounded-none" onClick={() => setView('grid')}><Grid3X3 className="h-4 w-4" /></Button>
               <Button variant={view === 'list' ? 'secondary' : 'ghost'} size="icon" className="h-9 w-9 rounded-none" onClick={() => setView('list')}><List className="h-4 w-4" /></Button>
             </div>
@@ -73,6 +73,9 @@ const SearchPage = () => {
 
         {filtered.length === 0 ? (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="py-20 text-center">
+            <div className="flex h-24 w-24 mx-auto items-center justify-center rounded-3xl glass-card neon-border mb-4">
+              <Search className="h-12 w-12 text-muted-foreground" />
+            </div>
             <p className="text-xl font-heading font-bold">No restaurants found</p>
             <p className="text-muted-foreground mt-2">Try adjusting your search or filters</p>
           </motion.div>
@@ -81,7 +84,9 @@ const SearchPage = () => {
             {filtered.map((r, i) => <RestaurantCard key={r.id} restaurant={r} index={i} />)}
           </div>
         )}
-        <p className="mt-6 text-sm text-muted-foreground">{filtered.length} restaurant{filtered.length !== 1 ? 's' : ''} found</p>
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="mt-6 text-sm text-muted-foreground glass-card inline-block rounded-full px-4 py-2 neon-border">
+          {filtered.length} restaurant{filtered.length !== 1 ? 's' : ''} found
+        </motion.p>
       </div>
     </PageWrapper>
   );

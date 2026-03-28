@@ -27,8 +27,8 @@ const RestaurantDetail = () => {
 
   if (!restaurant) return (
     <div className="container py-20 text-center">
-      <p className="text-xl font-heading font-semibold">Restaurant not found</p>
-      <Button className="mt-4" onClick={() => navigate('/')}>Go Home</Button>
+      <p className="text-xl font-heading font-bold">Restaurant not found</p>
+      <Button className="mt-4 gradient-warm rounded-xl neon-glow-primary" onClick={() => navigate('/')}>Go Home</Button>
     </div>
   );
 
@@ -86,7 +86,7 @@ const RestaurantDetail = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent" />
           <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}>
-            <Button variant="secondary" size="icon" className="absolute left-4 top-4 rounded-xl glass" onClick={() => navigate(-1)}>
+            <Button variant="secondary" size="icon" className="absolute left-4 top-4 rounded-xl glass neon-border" onClick={() => navigate(-1)}>
               <ArrowLeft className="h-4 w-4" />
             </Button>
           </motion.div>
@@ -97,22 +97,22 @@ const RestaurantDetail = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="rounded-2xl bg-card p-6 shadow-card-hover border"
+            className="rounded-2xl glass-card neon-border p-6 shadow-card-hover"
           >
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h1 className="text-2xl font-heading font-extrabold md:text-3xl">{restaurant.name}</h1>
                 <p className="text-muted-foreground mt-1">{restaurant.description}</p>
                 <div className="flex flex-wrap gap-3 mt-3 text-sm text-muted-foreground">
-                  <span className="flex items-center gap-1.5 rounded-full bg-accent/15 px-3 py-1"><Star className="h-4 w-4 fill-accent text-accent" /><span className="font-bold text-accent-foreground">{restaurant.rating}</span> ({restaurant.reviewCount.toLocaleString()}+)</span>
-                  <span className="flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1"><Clock className="h-4 w-4 text-primary" />{restaurant.deliveryTime}</span>
-                  <span className="flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1"><MapPin className="h-4 w-4" />{restaurant.address}</span>
+                  <span className="flex items-center gap-1.5 rounded-full glass-card neon-border px-3 py-1"><Star className="h-4 w-4 fill-accent text-accent" /><span className="font-bold text-accent-foreground">{restaurant.rating}</span> ({restaurant.reviewCount.toLocaleString()}+)</span>
+                  <span className="flex items-center gap-1.5 rounded-full glass-card border border-border/30 px-3 py-1"><Clock className="h-4 w-4 text-primary" />{restaurant.deliveryTime}</span>
+                  <span className="flex items-center gap-1.5 rounded-full glass-card border border-border/30 px-3 py-1"><MapPin className="h-4 w-4" />{restaurant.address}</span>
                 </div>
               </div>
               <div className="flex gap-2">
-                <Badge variant="secondary" className="rounded-full px-3">{restaurant.cuisine}</Badge>
-                <Badge variant="outline" className="rounded-full px-3">{restaurant.priceRange}</Badge>
-                <Badge variant="outline" className="rounded-full px-3">${restaurant.deliveryFee.toFixed(2)} delivery</Badge>
+                <Badge variant="secondary" className="rounded-full px-3 glass-card">{restaurant.cuisine}</Badge>
+                <Badge variant="outline" className="rounded-full px-3 glass-card neon-border">{restaurant.priceRange}</Badge>
+                <Badge variant="outline" className="rounded-full px-3 glass-card neon-border">${restaurant.deliveryFee.toFixed(2)} delivery</Badge>
               </div>
             </div>
           </motion.div>
@@ -128,7 +128,7 @@ const RestaurantDetail = () => {
                 transition={{ delay: catIdx * 0.1 }}
               >
                 <h2 className="text-xl font-heading font-bold mb-4 flex items-center gap-2">
-                  <div className="h-1 w-6 rounded-full gradient-warm" />
+                  <div className="h-1 w-6 rounded-full gradient-warm" style={{ boxShadow: '0 0 8px hsl(var(--primary) / 0.4)' }} />
                   {category.name}
                 </h2>
                 <div className="grid gap-4 sm:grid-cols-2">
@@ -141,20 +141,20 @@ const RestaurantDetail = () => {
                       transition={{ delay: itemIdx * 0.05 }}
                       whileHover={{ y: -3, transition: { duration: 0.2 } }}
                       whileTap={{ scale: 0.98 }}
-                      className="flex gap-4 rounded-2xl border bg-card p-4 text-left transition-shadow hover:shadow-card-hover w-full group"
+                      className="flex gap-4 rounded-2xl glass-card neon-border p-4 text-left transition-all hover:shadow-card-hover w-full group"
                       onClick={() => openItemDialog(item)}
                     >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <span className="font-semibold line-clamp-1">{item.name}</span>
-                          {item.popular && <Badge className="shrink-0 text-[10px] h-5 gradient-warm border-0">🔥 Popular</Badge>}
+                          <span className="font-heading font-semibold line-clamp-1">{item.name}</span>
+                          {item.popular && <Badge className="shrink-0 text-[10px] h-5 gradient-warm border-0 neon-glow-primary">🔥 Popular</Badge>}
                         </div>
                         <p className="text-sm text-muted-foreground mt-1.5 line-clamp-2">{item.description}</p>
-                        <p className="mt-2.5 font-heading font-bold text-primary text-lg">${item.price.toFixed(2)}</p>
+                        <p className="mt-2.5 font-heading font-extrabold text-gradient text-lg">${item.price.toFixed(2)}</p>
                       </div>
                       <div className="relative">
                         <img src={item.image} alt={item.name} className="h-24 w-24 rounded-xl object-cover shrink-0 transition-transform duration-300 group-hover:scale-105" />
-                        <div className="absolute -bottom-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full gradient-warm shadow-glow text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="absolute -bottom-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full gradient-warm neon-glow-primary text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity">
                           <Plus className="h-4 w-4" />
                         </div>
                       </div>
@@ -168,7 +168,7 @@ const RestaurantDetail = () => {
 
         {/* Item Dialog */}
         <Dialog open={!!selectedItem} onOpenChange={open => !open && setSelectedItem(null)}>
-          <DialogContent className="sm:max-w-lg max-h-[85vh] overflow-y-auto rounded-2xl">
+          <DialogContent className="sm:max-w-lg max-h-[85vh] overflow-y-auto rounded-2xl glass-strong neon-border">
             {selectedItem && (
               <>
                 <div className="relative -mt-2 -mx-6 overflow-hidden rounded-t-2xl">
@@ -178,7 +178,7 @@ const RestaurantDetail = () => {
                 <DialogHeader className="mt-2">
                   <DialogTitle className="font-heading text-xl font-extrabold">{selectedItem.name}</DialogTitle>
                   <p className="text-sm text-muted-foreground">{selectedItem.description}</p>
-                  <p className="text-xl font-heading font-bold text-gradient">${selectedItem.price.toFixed(2)}</p>
+                  <p className="text-xl font-heading font-extrabold text-gradient">${selectedItem.price.toFixed(2)}</p>
                 </DialogHeader>
 
                 {selectedItem.modifiers?.map(group => (
@@ -190,7 +190,7 @@ const RestaurantDetail = () => {
                     {group.maxSelect === 1 ? (
                       <RadioGroup value={selectedModifiers[group.id]?.[0] || ''} onValueChange={v => toggleModifier(group.id, v, 1)}>
                         {group.options.map(opt => (
-                          <div key={opt.id} className="flex items-center justify-between rounded-xl border p-3 hover:bg-muted/50 transition-colors">
+                          <div key={opt.id} className="flex items-center justify-between rounded-xl glass-card border border-border/30 p-3 hover:neon-border transition-all">
                             <div className="flex items-center gap-2">
                               <RadioGroupItem value={opt.id} id={`${group.id}-${opt.id}`} />
                               <Label htmlFor={`${group.id}-${opt.id}`} className="cursor-pointer">{opt.name}</Label>
@@ -202,7 +202,7 @@ const RestaurantDetail = () => {
                     ) : (
                       <div className="space-y-2">
                         {group.options.map(opt => (
-                          <div key={opt.id} className="flex items-center justify-between rounded-xl border p-3 hover:bg-muted/50 transition-colors">
+                          <div key={opt.id} className="flex items-center justify-between rounded-xl glass-card border border-border/30 p-3 hover:neon-border transition-all">
                             <div className="flex items-center gap-2">
                               <Checkbox id={`${group.id}-${opt.id}`} checked={selectedModifiers[group.id]?.includes(opt.id)} onCheckedChange={() => toggleModifier(group.id, opt.id, group.maxSelect)} />
                               <Label htmlFor={`${group.id}-${opt.id}`} className="cursor-pointer">{opt.name}</Label>
@@ -217,16 +217,16 @@ const RestaurantDetail = () => {
 
                 <div className="space-y-2">
                   <Label className="font-heading font-semibold">Special Instructions</Label>
-                  <Textarea placeholder="Any allergies or preferences?" value={specialInstructions} onChange={e => setSpecialInstructions(e.target.value)} className="resize-none rounded-xl" rows={2} />
+                  <Textarea placeholder="Any allergies or preferences?" value={specialInstructions} onChange={e => setSpecialInstructions(e.target.value)} className="resize-none rounded-xl glass-card border-border/50 focus:neon-border" rows={2} />
                 </div>
 
                 <DialogFooter className="flex-row items-center gap-3">
-                  <div className="flex items-center gap-3 rounded-full border px-2 bg-muted/30">
+                  <div className="flex items-center gap-3 rounded-full glass-card neon-border px-2">
                     <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full" onClick={() => setQuantity(q => Math.max(1, q - 1))}><Minus className="h-4 w-4" /></Button>
                     <span className="font-bold w-4 text-center">{quantity}</span>
                     <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full" onClick={() => setQuantity(q => q + 1)}><Plus className="h-4 w-4" /></Button>
                   </div>
-                  <Button className="flex-1 gradient-warm rounded-xl shadow-glow" size="lg" onClick={handleAddToCart}>
+                  <Button className="flex-1 gradient-warm rounded-xl neon-glow-primary" size="lg" onClick={handleAddToCart}>
                     Add to Cart — ${getItemTotal().toFixed(2)}
                   </Button>
                 </DialogFooter>
