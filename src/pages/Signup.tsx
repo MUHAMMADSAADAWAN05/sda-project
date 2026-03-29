@@ -1,14 +1,24 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { PageWrapper } from '@/components/PageWrapper';
-import { User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { User, Mail, Lock, Eye, EyeOff, SkipForward } from 'lucide-react';
+
+const roleDestinations: Record<string, string> = {
+  customer: '/',
+  restaurant: '/dashboard',
+  driver: '/driver',
+};
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const role = searchParams.get('role') || 'customer';
+  const destination = roleDestinations[role] || '/';
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,7 +26,7 @@ const Signup = () => {
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate('/');
+    navigate(destination);
   };
 
   return (
@@ -44,7 +54,7 @@ const Signup = () => {
               <span className="text-2xl font-bold text-primary-foreground">F</span>
             </motion.div>
             <h1 className="text-2xl font-heading font-extrabold">Create your account</h1>
-            <p className="text-muted-foreground mt-1">Start ordering from the best restaurants</p>
+            <p className="text-muted-foreground mt-1">Join as <span className="text-primary font-semibold capitalize">{role}</span></p>
           </div>
 
           <form onSubmit={handleSignup} className="space-y-4">
@@ -75,6 +85,16 @@ const Signup = () => {
             <Button type="submit" className="w-full gradient-warm rounded-xl neon-glow-primary hover:shadow-xl transition-all" size="lg">Create Account</Button>
           </form>
 
+          {/* Skip button */}
+          <Button
+            variant="ghost"
+            className="w-full gap-2 text-muted-foreground hover:text-primary rounded-xl"
+            onClick={() => navigate(destination)}
+          >
+            <SkipForward className="h-4 w-4" />
+            Skip for now
+          </Button>
+
           <div className="relative">
             <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-border/50" /></div>
             <div className="relative flex justify-center text-xs uppercase"><span className="glass-card px-3 py-1 rounded-full text-muted-foreground">Or continue with</span></div>
@@ -86,7 +106,7 @@ const Signup = () => {
           </div>
 
           <p className="text-center text-sm text-muted-foreground">
-            Already have an account? <Link to="/login" className="text-primary font-semibold hover:underline">Sign in</Link>
+            Already have an account? <Link to={`/login?role=${role}`} className="text-primary font-semibold hover:underline">Sign in</Link>
           </p>
         </motion.div>
       </div>

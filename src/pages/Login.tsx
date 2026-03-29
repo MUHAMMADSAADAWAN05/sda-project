@@ -1,21 +1,31 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { PageWrapper } from '@/components/PageWrapper';
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, SkipForward } from 'lucide-react';
+
+const roleDestinations: Record<string, string> = {
+  customer: '/',
+  restaurant: '/dashboard',
+  driver: '/driver',
+};
 
 const Login = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const role = searchParams.get('role') || 'customer';
+  const destination = roleDestinations[role] || '/';
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate('/');
+    navigate(destination);
   };
 
   return (
@@ -44,7 +54,7 @@ const Login = () => {
               <span className="text-2xl font-bold text-primary-foreground">F</span>
             </motion.div>
             <h1 className="text-2xl font-heading font-extrabold">Welcome back</h1>
-            <p className="text-muted-foreground mt-1">Sign in to your FoodDash account</p>
+            <p className="text-muted-foreground mt-1">Sign in as <span className="text-primary font-semibold capitalize">{role}</span></p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
@@ -71,6 +81,16 @@ const Login = () => {
             <Button type="submit" className="w-full gradient-warm rounded-xl neon-glow-primary hover:shadow-xl transition-all" size="lg">Sign In</Button>
           </form>
 
+          {/* Skip button */}
+          <Button
+            variant="ghost"
+            className="w-full gap-2 text-muted-foreground hover:text-primary rounded-xl"
+            onClick={() => navigate(destination)}
+          >
+            <SkipForward className="h-4 w-4" />
+            Skip for now
+          </Button>
+
           <div className="relative">
             <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-border/50" /></div>
             <div className="relative flex justify-center text-xs uppercase"><span className="glass-card px-3 py-1 rounded-full text-muted-foreground">Or continue with</span></div>
@@ -82,7 +102,7 @@ const Login = () => {
           </div>
 
           <p className="text-center text-sm text-muted-foreground">
-            Don't have an account? <Link to="/signup" className="text-primary font-semibold hover:underline">Sign up</Link>
+            Don't have an account? <Link to={`/signup?role=${role}`} className="text-primary font-semibold hover:underline">Sign up</Link>
           </p>
         </motion.div>
       </div>
