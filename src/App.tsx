@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
+import BackToWelcome from "@/components/BackToWelcome";
 import SplashScreen from "./pages/SplashScreen";
 import Index from "./pages/Index";
 import SearchPage from "./pages/SearchPage";
@@ -21,6 +22,9 @@ import Orders from "./pages/Orders";
 import Dashboard from "./pages/Dashboard";
 import Driver from "./pages/Driver";
 import Admin from "./pages/Admin";
+import About from "./pages/About";
+import Blog from "./pages/Blog";
+import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -52,11 +56,15 @@ const App = () => (
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/driver" element={<Driver />} />
                     <Route path="/admin" element={<Admin />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/blog" element={<Blog />} />
+                    <Route path="/contact" element={<Contact />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </main>
                 <Footer />
                 <CartDrawer />
+                <BackToWelcome />
               </div>
             } />
           </Routes>
