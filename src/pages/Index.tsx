@@ -32,7 +32,11 @@ const Index = () => {
     <PageWrapper>
       <div className="min-h-screen">
         {/* Hero */}
-        <section className="relative overflow-hidden gradient-hero">
+        <section className="relative overflow-hidden gradient-hero min-h-[600px]">
+          {/* 3D Scene */}
+          <Suspense fallback={null}>
+            <HeroScene3D />
+          </Suspense>
           {/* Animated neon lines */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-primary/8 blur-[120px] animate-float" />
