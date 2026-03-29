@@ -4,9 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import RestaurantCard from '@/components/RestaurantCard';
 import { categories, restaurants } from '@/data/mockData';
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { PageWrapper } from '@/components/PageWrapper';
+
+const HeroScene3D = lazy(() => import('@/components/HeroScene3D'));
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
