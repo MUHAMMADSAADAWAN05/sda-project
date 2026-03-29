@@ -4,11 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import RestaurantCard from '@/components/RestaurantCard';
 import { categories, restaurants } from '@/data/mockData';
-import { useState, lazy, Suspense } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { PageWrapper } from '@/components/PageWrapper';
-
-const HeroScene3D = lazy(() => import('@/components/HeroScene3D'));
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -32,11 +30,7 @@ const Index = () => {
     <PageWrapper>
       <div className="min-h-screen">
         {/* Hero */}
-        <section className="relative overflow-hidden gradient-hero min-h-[600px]">
-          {/* 3D Scene */}
-          <Suspense fallback={null}>
-            <HeroScene3D />
-          </Suspense>
+        <section className="relative overflow-hidden gradient-hero">
           {/* Animated neon lines */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-primary/8 blur-[120px] animate-float" />
