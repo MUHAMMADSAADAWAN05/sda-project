@@ -40,10 +40,10 @@ const Contact = () => {
             {/* Contact Info */}
             <div className="space-y-6">
               <h2 className="text-2xl font-heading font-bold">Let's <span className="text-gradient">Connect</span></h2>
-              <p className="text-muted-foreground">Our team is available 24/7 to help with any questions about orders, partnerships, or driving with FoodDash.</p>
+              <p className="text-muted-foreground">Our team is available 24/7 to help with any questions about orders, partnerships, or driving with CraviX.</p>
 
               {[
-                { icon: Mail, label: 'Email', value: 'support@fooddash.com' },
+                { icon: Mail, label: 'Email', value: 'support@cravix.com' },
                 { icon: Phone, label: 'Phone', value: '+1 (555) 123-4567' },
                 { icon: MapPin, label: 'Address', value: '100 Innovation Drive, San Francisco, CA 94105' },
                 { icon: MessageCircle, label: 'Live Chat', value: 'Available 24/7 in the app' },

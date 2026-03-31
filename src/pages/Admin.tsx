@@ -2,15 +2,15 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Users, Store, ShoppingBag, DollarSign, Search, Check, X, Tag, Plus } from 'lucide-react';
+import { Users, Store, ShoppingBag, DollarSign, Search, Check, X, Tag, Plus, Shield, RefreshCw } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PageWrapper } from '@/components/PageWrapper';
 
 const platformStats = [
-  { label: 'Total Orders', value: '12,847', icon: ShoppingBag, change: '+23%' },
-  { label: 'Revenue', value: '$284,930', icon: DollarSign, change: '+18%' },
-  { label: 'Active Users', value: '3,421', icon: Users, change: '+12%' },
-  { label: 'Restaurants', value: '156', icon: Store, change: '+8' },
+  { label: 'Total Orders', value: '12,847', icon: ShoppingBag, change: '+23%', color: 'from-primary to-accent' },
+  { label: 'Revenue', value: '$284,930', icon: DollarSign, change: '+18%', color: 'from-accent to-[hsl(45,90%,55%)]' },
+  { label: 'Active Users', value: '3,421', icon: Users, change: '+12%', color: 'from-[hsl(280,60%,55%)] to-primary' },
+  { label: 'Restaurants', value: '156', icon: Store, change: '+8', color: 'from-success to-[hsl(180,60%,45%)]' },
 ];
 
 const mockRestaurants = [
@@ -35,141 +35,172 @@ const promoCodes = [
 
 const Admin = () => (
   <PageWrapper>
-    <div className="container py-8">
-      <motion.h1 initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="text-3xl font-heading font-extrabold mb-8">Admin Panel</motion.h1>
+    <div className="min-h-screen bg-dashboard">
+      <div className="container py-8">
+        {/* Header bar */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="rounded-2xl glass-deep p-5 mb-8 flex items-center justify-between"
+        >
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[hsl(280,60%,55%)] to-primary flex items-center justify-center shadow-lg">
+              <Shield className="h-5 w-5 text-white" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-heading font-extrabold text-white">CRAVIX ADMIN</h1>
+              <p className="text-white/50 text-sm">Platform Management</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" className="rounded-xl glass-deep border-white/10 text-white hover:bg-white/10 gap-1">
+              <RefreshCw className="h-4 w-4" /> Refresh
+            </Button>
+          </div>
+        </motion.div>
 
-      {/* Stats */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-        {platformStats.map((stat, i) => {
-          const Icon = stat.icon;
-          return (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={{ y: -4 }}
-              className="rounded-2xl glass-card neon-border p-5 shadow-card hover:shadow-card-hover transition-all"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-muted-foreground">{stat.label}</span>
-                <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Icon className="h-4 w-4 text-primary" />
+        {/* Stats */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+          {platformStats.map((stat, i) => {
+            const Icon = stat.icon;
+            return (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -4 }}
+                className="rounded-2xl glass-deep p-5 transition-all hover:bg-white/10"
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`h-12 w-12 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-lg`}>
+                    <Icon className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <span className="text-sm text-white/50">{stat.label}</span>
+                    <p className="text-2xl font-heading font-extrabold text-white">{stat.value}</p>
+                  </div>
+                </div>
+                <p className="text-xs text-success mt-2 font-semibold">{stat.change} this month</p>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        <Tabs defaultValue="restaurants" className="space-y-6">
+          <TabsList className="glass-deep rounded-2xl p-1.5 border-white/10">
+            <TabsTrigger value="restaurants" className="rounded-xl text-white data-[state=active]:gradient-warm data-[state=active]:text-white">Restaurants</TabsTrigger>
+            <TabsTrigger value="users" className="rounded-xl text-white data-[state=active]:gradient-warm data-[state=active]:text-white">Users</TabsTrigger>
+            <TabsTrigger value="promos" className="rounded-xl text-white data-[state=active]:gradient-warm data-[state=active]:text-white">Promo Codes</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="restaurants">
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-deep overflow-hidden">
+              <div className="flex items-center justify-between p-4 border-b border-white/10">
+                <div className="relative max-w-sm flex-1">
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
+                  <Input placeholder="Search restaurants..." className="pl-10 rounded-xl glass-deep border-white/10 text-white placeholder:text-white/30" />
                 </div>
               </div>
-              <p className="text-2xl font-heading font-extrabold">{stat.value}</p>
-              <p className="text-xs text-success mt-1 font-semibold">{stat.change} this month</p>
-            </motion.div>
-          );
-        })}
-      </div>
-
-      <Tabs defaultValue="restaurants" className="space-y-6">
-        <TabsList className="glass-card rounded-2xl p-1">
-          <TabsTrigger value="restaurants" className="rounded-xl">Restaurants</TabsTrigger>
-          <TabsTrigger value="users" className="rounded-xl">Users</TabsTrigger>
-          <TabsTrigger value="promos" className="rounded-xl">Promo Codes</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="restaurants">
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-card neon-border shadow-card-hover overflow-hidden">
-            <div className="flex items-center justify-between p-4 border-b border-border/30">
-              <div className="relative max-w-sm flex-1">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input placeholder="Search restaurants..." className="pl-10 rounded-xl glass-card border-border/50 focus:neon-border" />
+              {/* Table header - Parkify purple style */}
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="bg-[hsl(250,40%,20%/0.6)] text-white/70">
+                      <th className="p-4 text-left font-heading font-semibold">Restaurant</th>
+                      <th className="p-4 text-left font-heading font-semibold">Status</th>
+                      <th className="p-4 text-left font-heading font-semibold">Orders</th>
+                      <th className="p-4 text-left font-heading font-semibold">Revenue</th>
+                      <th className="p-4 text-left font-heading font-semibold">Rating</th>
+                      <th className="p-4 text-left font-heading font-semibold">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {mockRestaurants.map(r => (
+                      <tr key={r.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                        <td className="p-4 font-heading font-semibold text-white">{r.name}</td>
+                        <td className="p-4">
+                          <Badge className={`rounded-full ${r.status === 'active' ? 'bg-success/20 text-success border-success/30' : 'bg-accent/20 text-accent border-accent/30'}`}>{r.status}</Badge>
+                        </td>
+                        <td className="p-4 text-white/60">{r.orders.toLocaleString()}</td>
+                        <td className="p-4 font-heading font-semibold text-white">{r.revenue}</td>
+                        <td className="p-4">{r.rating > 0 ? <span className="text-accent font-bold">{r.rating}</span> : <span className="text-white/30">—</span>}</td>
+                        <td className="p-4">
+                          {r.status === 'pending' ? (
+                            <div className="flex gap-1">
+                              <Button size="sm" className="h-7 gap-1 gradient-warm rounded-lg border-0"><Check className="h-3 w-3" /> Approve</Button>
+                              <Button size="sm" variant="ghost" className="h-7 text-destructive rounded-lg"><X className="h-3 w-3" /></Button>
+                            </div>
+                          ) : (
+                            <Button size="sm" variant="ghost" className="h-7 rounded-lg text-white/50 hover:text-white hover:bg-white/10">Manage</Button>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-            </div>
-            <div className="overflow-x-auto">
+            </motion.div>
+          </TabsContent>
+
+          <TabsContent value="users">
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-deep overflow-x-auto">
               <table className="w-full text-sm">
-                <thead><tr className="border-b border-border/30 text-left text-muted-foreground">
-                  <th className="p-4 font-heading font-semibold">Restaurant</th>
-                  <th className="p-4 font-heading font-semibold">Status</th>
-                  <th className="p-4 font-heading font-semibold">Orders</th>
-                  <th className="p-4 font-heading font-semibold">Revenue</th>
-                  <th className="p-4 font-heading font-semibold">Rating</th>
-                  <th className="p-4 font-heading font-semibold">Actions</th>
-                </tr></thead>
+                <thead>
+                  <tr className="bg-[hsl(250,40%,20%/0.6)] text-white/70">
+                    <th className="p-4 text-left font-heading font-semibold">Name</th>
+                    <th className="p-4 text-left font-heading font-semibold">Email</th>
+                    <th className="p-4 text-left font-heading font-semibold">Role</th>
+                    <th className="p-4 text-left font-heading font-semibold">Orders</th>
+                    <th className="p-4 text-left font-heading font-semibold">Joined</th>
+                    <th className="p-4 text-left font-heading font-semibold">Actions</th>
+                  </tr>
+                </thead>
                 <tbody>
-                  {mockRestaurants.map(r => (
-                    <tr key={r.id} className="border-b border-border/20 last:border-0 hover:bg-muted/20 transition-colors">
-                      <td className="p-4 font-heading font-semibold">{r.name}</td>
-                      <td className="p-4"><Badge variant={r.status === 'active' ? 'default' : 'secondary'} className={`rounded-full ${r.status === 'active' ? 'gradient-warm border-0' : ''}`}>{r.status}</Badge></td>
-                      <td className="p-4">{r.orders.toLocaleString()}</td>
-                      <td className="p-4 font-heading font-semibold">{r.revenue}</td>
-                      <td className="p-4">{r.rating > 0 ? <span className="text-accent font-bold">{r.rating}</span> : '—'}</td>
-                      <td className="p-4">
-                        {r.status === 'pending' ? (
-                          <div className="flex gap-1">
-                            <Button size="sm" className="h-7 gap-1 gradient-warm rounded-lg"><Check className="h-3 w-3" /> Approve</Button>
-                            <Button size="sm" variant="ghost" className="h-7 text-destructive rounded-lg"><X className="h-3 w-3" /></Button>
-                          </div>
-                        ) : (
-                          <Button size="sm" variant="ghost" className="h-7 rounded-lg">Manage</Button>
-                        )}
-                      </td>
+                  {mockUsers.map(u => (
+                    <tr key={u.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                      <td className="p-4 font-heading font-semibold text-white">{u.name}</td>
+                      <td className="p-4 text-white/50">{u.email}</td>
+                      <td className="p-4"><Badge className="rounded-full bg-primary/20 text-primary border-primary/30">{u.role}</Badge></td>
+                      <td className="p-4 text-white/60">{u.orders}</td>
+                      <td className="p-4 text-white/40">{u.joined}</td>
+                      <td className="p-4"><Button size="sm" variant="ghost" className="h-7 rounded-lg text-white/50 hover:text-white hover:bg-white/10">View</Button></td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-            </div>
-          </motion.div>
-        </TabsContent>
+            </motion.div>
+          </TabsContent>
 
-        <TabsContent value="users">
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-card neon-border overflow-x-auto shadow-card-hover">
-            <table className="w-full text-sm">
-              <thead><tr className="border-b border-border/30 text-left text-muted-foreground">
-                <th className="p-4 font-heading font-semibold">Name</th>
-                <th className="p-4 font-heading font-semibold">Email</th>
-                <th className="p-4 font-heading font-semibold">Role</th>
-                <th className="p-4 font-heading font-semibold">Orders</th>
-                <th className="p-4 font-heading font-semibold">Joined</th>
-                <th className="p-4 font-heading font-semibold">Actions</th>
-              </tr></thead>
-              <tbody>
-                {mockUsers.map(u => (
-                  <tr key={u.id} className="border-b border-border/20 last:border-0 hover:bg-muted/20 transition-colors">
-                    <td className="p-4 font-heading font-semibold">{u.name}</td>
-                    <td className="p-4 text-muted-foreground">{u.email}</td>
-                    <td className="p-4"><Badge variant="secondary" className="rounded-full">{u.role}</Badge></td>
-                    <td className="p-4">{u.orders}</td>
-                    <td className="p-4 text-muted-foreground">{u.joined}</td>
-                    <td className="p-4"><Button size="sm" variant="ghost" className="h-7 rounded-lg">View</Button></td>
-                  </tr>
+          <TabsContent value="promos">
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-deep overflow-hidden">
+              <div className="flex items-center justify-between p-4 border-b border-white/10">
+                <h3 className="font-heading font-bold text-white">Promo Codes</h3>
+                <Button size="sm" className="gap-1 gradient-warm rounded-xl neon-glow-primary border-0"><Plus className="h-3.5 w-3.5" /> Create Code</Button>
+              </div>
+              <div className="divide-y divide-white/5">
+                {promoCodes.map(promo => (
+                  <motion.div key={promo.code} whileHover={{ backgroundColor: 'rgba(255,255,255,0.05)' }} className="flex items-center justify-between p-4 transition-colors">
+                    <div className="flex items-center gap-3">
+                      <div className="h-8 w-8 rounded-lg bg-primary/20 flex items-center justify-center">
+                        <Tag className="h-4 w-4 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-mono font-bold text-white">{promo.code}</p>
+                        <p className="text-sm text-white/40">{promo.discount} • Expires {promo.expires}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm text-white/40">{promo.usage}</span>
+                      <Badge className={`rounded-full ${promo.status === 'active' ? 'bg-success/20 text-success border-success/30' : 'bg-white/10 text-white/40 border-white/10'}`}>{promo.status}</Badge>
+                    </div>
+                  </motion.div>
                 ))}
-              </tbody>
-            </table>
-          </motion.div>
-        </TabsContent>
-
-        <TabsContent value="promos">
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-card neon-border shadow-card-hover overflow-hidden">
-            <div className="flex items-center justify-between p-4 border-b border-border/30">
-              <h3 className="font-heading font-bold">Promo Codes</h3>
-              <Button size="sm" className="gap-1 gradient-warm rounded-xl neon-glow-primary"><Plus className="h-3.5 w-3.5" /> Create Code</Button>
-            </div>
-            <div className="divide-y divide-border/30">
-              {promoCodes.map(promo => (
-                <motion.div key={promo.code} whileHover={{ backgroundColor: 'hsl(var(--muted) / 0.3)' }} className="flex items-center justify-between p-4 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Tag className="h-4 w-4 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-mono font-bold">{promo.code}</p>
-                      <p className="text-sm text-muted-foreground">{promo.discount} • Expires {promo.expires}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-sm text-muted-foreground">{promo.usage}</span>
-                    <Badge variant={promo.status === 'active' ? 'default' : 'secondary'} className={`rounded-full ${promo.status === 'active' ? 'gradient-warm border-0' : ''}`}>{promo.status}</Badge>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </TabsContent>
-      </Tabs>
+              </div>
+            </motion.div>
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   </PageWrapper>
 );

@@ -49,9 +49,9 @@ const Login = () => {
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-              className="flex h-14 w-14 mx-auto items-center justify-center rounded-2xl gradient-warm neon-glow-primary mb-5"
+              className="h-14 w-14 mx-auto rounded-2xl overflow-hidden neon-glow-primary mb-5"
             >
-              <span className="text-2xl font-bold text-primary-foreground">F</span>
+              <img src={new URL('@/assets/cravix-logo.jpeg', import.meta.url).href} alt="CraviX" className="h-full w-full object-cover" />
             </motion.div>
             <h1 className="text-2xl font-heading font-extrabold">Welcome back</h1>
             <p className="text-muted-foreground mt-1">Sign in as <span className="text-primary font-semibold capitalize">{role}</span></p>
