@@ -1,11 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Search, ShoppingCart, User, MapPin, Menu, Sun, Moon } from 'lucide-react';
+import { Search, ShoppingCart, User, Menu, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { useState } from 'react';
 import { useTheme } from '@/context/ThemeContext';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { motion, AnimatePresence } from 'framer-motion';
+import cravixLogo from '@/assets/cravix-logo.jpeg';
 
 const Header = () => {
   const { itemCount, setIsOpen } = useCart();
@@ -28,12 +29,12 @@ const Header = () => {
           <Link to="/" className="flex items-center gap-2 group">
             <motion.div
               whileHover={{ rotate: [0, -10, 10, 0], transition: { duration: 0.4 } }}
-              className="flex h-9 w-9 items-center justify-center rounded-xl gradient-warm shadow-glow"
+              className="flex h-9 w-9 items-center justify-center rounded-xl overflow-hidden shadow-glow"
             >
-              <span className="text-lg font-bold text-primary-foreground">F</span>
+              <img src={cravixLogo} alt="CraviX" className="h-full w-full object-cover" />
             </motion.div>
             <span className="hidden text-xl font-heading font-bold sm:inline-block">
-              Food<span className="text-gradient">Dash</span>
+              CRAVI<span className="text-gradient">X</span>
             </span>
           </Link>
 
@@ -70,12 +71,7 @@ const Header = () => {
           </Button>
 
           <motion.div whileTap={{ scale: 0.9 }}>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="relative gap-2 rounded-xl"
-              onClick={() => setIsOpen(true)}
-            >
+            <Button variant="ghost" size="sm" className="relative gap-2 rounded-xl" onClick={() => setIsOpen(true)}>
               <ShoppingCart className="h-4 w-4" />
               <AnimatePresence>
                 {itemCount > 0 && (
@@ -110,12 +106,10 @@ const Header = () => {
           </motion.div>
 
           <Button variant="ghost" size="sm" className="rounded-xl" asChild>
-            <Link to="/account">
-              <User className="h-4 w-4" />
-            </Link>
+            <Link to="/account"><User className="h-4 w-4" /></Link>
           </Button>
 
-          <Button size="sm" className="rounded-xl gradient-warm neon-glow-primary hover:shadow-xl transition-all font-semibold" asChild>
+          <Button size="sm" className="rounded-xl gradient-warm neon-glow-primary hover:shadow-xl transition-all font-semibold border-0" asChild>
             <Link to="/login">Sign In</Link>
           </Button>
         </div>
@@ -123,56 +117,33 @@ const Header = () => {
         {/* Mobile */}
         <div className="flex items-center gap-2 md:hidden">
           <motion.div whileTap={{ scale: 0.9 }}>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="relative"
-              onClick={() => setIsOpen(true)}
-            >
+            <Button variant="ghost" size="icon" className="relative" onClick={() => setIsOpen(true)}>
               <ShoppingCart className="h-5 w-5" />
               <AnimatePresence>
                 {itemCount > 0 && (
-                  <motion.span
-                    key="cart-count-mobile"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
+                  <motion.span key="cart-count-mobile" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
                     className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full gradient-warm text-[10px] font-bold text-primary-foreground"
-                  >
-                    {itemCount}
-                  </motion.span>
+                  >{itemCount}</motion.span>
                 )}
               </AnimatePresence>
             </Button>
           </motion.div>
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="h-5 w-5" />
-              </Button>
+              <Button variant="ghost" size="icon"><Menu className="h-5 w-5" /></Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-72">
               <nav className="mt-8 flex flex-col gap-2">
                 {navLinks.map(link => (
-                  <Link
-                    key={link.to}
-                    to={link.to}
-                    onClick={() => setMobileOpen(false)}
-                    className={`rounded-xl px-4 py-3 text-sm font-medium transition-colors ${
-                      isActive(link.to) ? 'bg-primary/10 text-primary' : 'hover:bg-muted'
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
+                  <Link key={link.to} to={link.to} onClick={() => setMobileOpen(false)}
+                    className={`rounded-xl px-4 py-3 text-sm font-medium transition-colors ${isActive(link.to) ? 'bg-primary/10 text-primary' : 'hover:bg-muted'}`}
+                  >{link.label}</Link>
                 ))}
                 <hr className="my-2" />
                 <Link to="/account" onClick={() => setMobileOpen(false)} className="rounded-xl px-4 py-3 text-sm font-medium hover:bg-muted">Account</Link>
-                <Link to="/dashboard" onClick={() => setMobileOpen(false)} className="rounded-xl px-4 py-3 text-sm font-medium hover:bg-muted">Restaurant Dashboard</Link>
-                <Link to="/driver" onClick={() => setMobileOpen(false)} className="rounded-xl px-4 py-3 text-sm font-medium hover:bg-muted">Driver View</Link>
-                <Link to="/admin" onClick={() => setMobileOpen(false)} className="rounded-xl px-4 py-3 text-sm font-medium hover:bg-muted">Admin Panel</Link>
                 <hr className="my-2" />
                 <Link to="/login" onClick={() => setMobileOpen(false)}>
-                  <Button className="w-full gradient-warm rounded-xl">Sign In</Button>
+                  <Button className="w-full gradient-warm rounded-xl border-0">Sign In</Button>
                 </Link>
               </nav>
             </SheetContent>

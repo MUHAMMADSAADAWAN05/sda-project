@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UtensilsCrossed, Truck, Store, ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import cravixLogo from '@/assets/cravix-logo.jpeg';
 
 const roles = [
   {
@@ -12,8 +13,8 @@ const roles = [
     description: 'Browse restaurants, customize meals & track delivery in real-time',
     icon: UtensilsCrossed,
     route: '/login?role=customer',
-    gradient: 'from-primary to-accent',
-    neonColor: 'hsl(var(--primary))',
+    gradient: 'from-[hsl(25,95%,53%)] to-[hsl(38,95%,55%)]',
+    neonColor: 'hsl(25, 95%, 53%)',
   },
   {
     id: 'restaurant',
@@ -22,8 +23,8 @@ const roles = [
     description: 'Handle orders, update menus & grow your customer base',
     icon: Store,
     route: '/login?role=restaurant',
-    gradient: 'from-accent to-success',
-    neonColor: 'hsl(var(--accent))',
+    gradient: 'from-[hsl(38,95%,55%)] to-[hsl(152,60%,42%)]',
+    neonColor: 'hsl(38, 95%, 55%)',
   },
   {
     id: 'driver',
@@ -32,8 +33,8 @@ const roles = [
     description: 'Accept deliveries, navigate routes & maximize your earnings',
     icon: Truck,
     route: '/login?role=driver',
-    gradient: 'from-success to-primary',
-    neonColor: 'hsl(var(--success))',
+    gradient: 'from-[hsl(15,90%,50%)] to-[hsl(35,95%,50%)]',
+    neonColor: 'hsl(15, 90%, 50%)',
   },
 ];
 
@@ -43,8 +44,8 @@ const SplashScreen = () => {
   const [showRoles, setShowRoles] = useState(false);
 
   return (
-    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-background">
-      {/* Animated background orbs */}
+    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[hsl(25,80%,8%)] via-[hsl(20,60%,12%)] to-[hsl(30,70%,6%)]">
+      {/* Animated background orbs - orange themed */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
           animate={{
@@ -53,7 +54,7 @@ const SplashScreen = () => {
             scale: [1, 1.3, 0.9, 1],
           }}
           transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-primary/10 blur-[100px]"
+          className="absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-[hsl(25,95%,53%/0.15)] blur-[120px]"
         />
         <motion.div
           animate={{
@@ -62,7 +63,7 @@ const SplashScreen = () => {
             scale: [1, 0.8, 1.2, 1],
           }}
           transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute -right-32 top-1/4 h-[400px] w-[400px] rounded-full bg-accent/10 blur-[100px]"
+          className="absolute -right-32 top-1/4 h-[400px] w-[400px] rounded-full bg-[hsl(38,95%,55%/0.12)] blur-[100px]"
         />
         <motion.div
           animate={{
@@ -70,61 +71,80 @@ const SplashScreen = () => {
             y: [0, -60, 80, 0],
           }}
           transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute bottom-0 left-1/3 h-[350px] w-[350px] rounded-full bg-success/8 blur-[80px]"
+          className="absolute bottom-0 left-1/3 h-[350px] w-[350px] rounded-full bg-[hsl(15,90%,50%/0.1)] blur-[80px]"
         />
       </div>
 
       {/* Grid pattern overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(hsl(var(--foreground)/0.02)_1px,transparent_1px),linear-gradient(90deg,hsl(var(--foreground)/0.02)_1px,transparent_1px)] bg-[size:60px_60px]" />
+      <div className="absolute inset-0 bg-[linear-gradient(hsl(25,95%,53%/0.04)_1px,transparent_1px),linear-gradient(90deg,hsl(25,95%,53%/0.04)_1px,transparent_1px)] bg-[size:60px_60px]" />
 
       <AnimatePresence mode="wait">
         {!showRoles ? (
           <motion.div
             key="logo"
-            className="relative flex flex-col items-center gap-8"
+            className="relative flex flex-col items-center gap-6"
             exit={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
             transition={{ duration: 0.5 }}
           >
-            {/* Animated logo */}
+            {/* Floating CraviX Logo */}
             <motion.div
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.8, type: 'spring', stiffness: 200, damping: 15 }}
               className="relative"
             >
+              {/* Outer glow ring */}
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                className="absolute -inset-4 rounded-3xl border border-primary/20"
-                style={{ borderRadius: '30%' }}
+                className="absolute -inset-6 rounded-full border border-[hsl(25,95%,53%/0.2)]"
               />
               <motion.div
                 animate={{ rotate: -360 }}
                 transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-                className="absolute -inset-8 rounded-3xl border border-accent/10"
-                style={{ borderRadius: '40%' }}
+                className="absolute -inset-12 rounded-full border border-[hsl(38,95%,55%/0.1)]"
               />
-              <div className="relative flex h-28 w-28 items-center justify-center rounded-3xl gradient-warm neon-glow-primary">
-                <span className="text-5xl font-heading font-extrabold text-primary-foreground">F</span>
-              </div>
+
+              {/* Floating animation */}
+              <motion.div
+                animate={{ y: [0, -12, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <div className="relative h-40 w-40 md:h-52 md:w-52 rounded-3xl overflow-hidden shadow-[0_0_60px_-10px_hsl(25,95%,53%/0.5),0_0_100px_-20px_hsl(38,95%,55%/0.3)]">
+                  <img
+                    src={cravixLogo}
+                    alt="CraviX Logo"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              </motion.div>
             </motion.div>
 
+            {/* Brand Name */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
               className="text-center"
             >
-              <h1 className="text-5xl font-heading font-extrabold tracking-tight md:text-7xl">
-                Food<span className="text-gradient">Dash</span>
+              <h1 className="text-5xl font-heading font-extrabold tracking-tight md:text-7xl text-white">
+                CRAVI<span className="text-gradient">X</span>
               </h1>
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.8 }}
-                className="mt-3 text-lg text-muted-foreground"
+                className="mt-3 text-xl font-medium text-[hsl(25,95%,70%)]"
               >
-                Delicious food, delivered fast
+                Welcome to CraviX
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.0 }}
+                className="mt-1 text-sm text-white/50"
+              >
+                crave it · order it · enjoy it
               </motion.p>
             </motion.div>
 
@@ -136,7 +156,7 @@ const SplashScreen = () => {
               <Button
                 size="lg"
                 onClick={() => setShowRoles(true)}
-                className="mt-4 rounded-2xl px-10 py-6 text-lg font-bold gradient-warm neon-glow-primary hover:shadow-xl transition-all group"
+                className="mt-4 rounded-2xl px-10 py-6 text-lg font-bold gradient-warm neon-glow-primary hover:shadow-xl transition-all group border-0"
               >
                 <Sparkles className="h-5 w-5 mr-2" />
                 Get Started
@@ -174,10 +194,10 @@ const SplashScreen = () => {
               animate={{ opacity: 1, y: 0 }}
               className="text-center"
             >
-              <h2 className="text-3xl font-heading font-extrabold md:text-5xl">
-                How will you use <span className="text-gradient">FoodDash</span>?
+              <h2 className="text-3xl font-heading font-extrabold md:text-5xl text-white">
+                How will you use <span className="text-gradient">CraviX</span>?
               </h2>
-              <p className="mt-3 text-muted-foreground text-lg">Choose your role to get started</p>
+              <p className="mt-3 text-white/60 text-lg">Choose your role to get started</p>
             </motion.div>
 
             <div className="grid w-full gap-5 sm:grid-cols-3 mt-4">
@@ -192,16 +212,15 @@ const SplashScreen = () => {
                   onHoverStart={() => setHoveredRole(role.id)}
                   onHoverEnd={() => setHoveredRole(null)}
                   onClick={() => navigate(role.route)}
-                  className="group relative flex flex-col items-center gap-4 rounded-3xl glass-card border border-border/50 p-8 text-center transition-all cursor-pointer hover:border-primary/30"
+                  className="group relative flex flex-col items-center gap-4 rounded-3xl p-8 text-center transition-all cursor-pointer border border-white/10 bg-white/5 backdrop-blur-xl"
                   style={{
                     boxShadow: hoveredRole === role.id
-                      ? `0 0 40px -10px ${role.neonColor}, 0 20px 60px -15px hsl(var(--foreground) / 0.1)`
-                      : 'var(--shadow-card)',
+                      ? `0 0 50px -10px ${role.neonColor}, 0 20px 60px -15px rgba(0,0,0,0.5)`
+                      : '0 4px 24px -4px rgba(0,0,0,0.3)',
                   }}
                 >
-                  {/* Glow bg on hover */}
                   <motion.div
-                    animate={{ opacity: hoveredRole === role.id ? 0.06 : 0 }}
+                    animate={{ opacity: hoveredRole === role.id ? 0.1 : 0 }}
                     className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${role.gradient}`}
                   />
 
@@ -212,13 +231,13 @@ const SplashScreen = () => {
                         : 'none',
                     }}
                   >
-                    <role.icon className="h-10 w-10 text-primary-foreground" />
+                    <role.icon className="h-10 w-10 text-white" />
                   </div>
 
                   <div className="relative">
-                    <h3 className="text-xl font-heading font-bold">{role.title}</h3>
+                    <h3 className="text-xl font-heading font-bold text-white">{role.title}</h3>
                     <p className="mt-1 text-sm font-medium text-primary">{role.subtitle}</p>
-                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{role.description}</p>
+                    <p className="mt-2 text-sm text-white/50 leading-relaxed">{role.description}</p>
                   </div>
 
                   <motion.div
