@@ -4,12 +4,12 @@ import { Calendar, ArrowRight, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const posts = [
-  { title: 'How FoodDash is Revolutionizing Food Delivery', excerpt: 'Our AI-powered routing system reduces delivery times by 40%, ensuring your food arrives hot and fresh every single time.', date: 'Mar 15, 2024', readTime: '5 min', img: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=400&fit=crop', tag: 'Technology' },
-  { title: 'Top 10 Restaurants You Must Try This Spring', excerpt: 'From artisan pizzerias to authentic sushi bars, discover the must-try restaurants that FoodDash users are raving about.', date: 'Mar 10, 2024', readTime: '4 min', img: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop', tag: 'Food' },
-  { title: 'Behind the Scenes: A Day in the Life of a FoodDash Driver', excerpt: 'Meet Alex, one of our top-rated drivers who delivers over 30 orders daily while maintaining a perfect 5-star rating.', date: 'Mar 5, 2024', readTime: '6 min', img: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=400&fit=crop', tag: 'Stories' },
+  { title: 'How CraviX is Revolutionizing Food Delivery', excerpt: 'Our AI-powered routing system reduces delivery times by 40%, ensuring your food arrives hot and fresh every single time.', date: 'Mar 15, 2024', readTime: '5 min', img: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&h=400&fit=crop', tag: 'Technology' },
+  { title: 'Top 10 Restaurants You Must Try This Spring', excerpt: 'From artisan pizzerias to authentic sushi bars, discover the must-try restaurants that CraviX users are raving about.', date: 'Mar 10, 2024', readTime: '4 min', img: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop', tag: 'Food' },
+  { title: 'Behind the Scenes: A Day in the Life of a CraviX Driver', excerpt: 'Meet Alex, one of our top-rated drivers who delivers over 30 orders daily while maintaining a perfect 5-star rating.', date: 'Mar 5, 2024', readTime: '6 min', img: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=400&fit=crop', tag: 'Stories' },
   { title: 'Sustainable Packaging: Our Green Initiative', excerpt: 'We\'re committed to reducing our carbon footprint. Learn about our switch to 100% biodegradable packaging materials.', date: 'Feb 28, 2024', readTime: '3 min', img: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&h=400&fit=crop', tag: 'Sustainability' },
   { title: 'New Feature: Group Ordering Made Easy', excerpt: 'Order together with friends and split the bill automatically. Group ordering is now available in all 200+ cities.', date: 'Feb 20, 2024', readTime: '3 min', img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&h=400&fit=crop', tag: 'Product' },
-  { title: 'Restaurant Success Story: From Local to National', excerpt: 'How Mario\'s Pizzeria grew from a single location to a 15-city franchise with FoodDash\'s restaurant partner program.', date: 'Feb 15, 2024', readTime: '7 min', img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&h=400&fit=crop', tag: 'Partners' },
+  { title: 'Restaurant Success Story: From Local to National', excerpt: 'How Mario\'s Pizzeria grew from a single location to a 15-city franchise with CraviX\'s restaurant partner program.', date: 'Feb 15, 2024', readTime: '7 min', img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&h=400&fit=crop', tag: 'Partners' },
 ];
 
 const Blog = () => (
@@ -22,7 +22,7 @@ const Blog = () => (
         </div>
         <div className="container relative text-center">
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl font-heading font-extrabold md:text-6xl">
-            The <span className="text-gradient">FoodDash</span> Blog
+            The <span className="text-gradient">CraviX</span> Blog
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
             Stories, updates, and insights from the world of food delivery.

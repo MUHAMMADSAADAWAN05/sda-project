@@ -27,10 +27,10 @@ const About = () => (
         </div>
         <div className="container relative text-center">
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl font-heading font-extrabold md:text-6xl">
-            About <span className="text-gradient">FoodDash</span>
+            About <span className="text-gradient">CraviX</span>
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            We started FoodDash in 2020 with a simple mission: make ordering food as easy, fast, and delightful as possible. Today we connect millions of customers with their favorite restaurants.
+            We started CraviX in 2020 with a simple mission: make ordering food as easy, fast, and delightful as possible. Today we connect millions of customers with their favorite restaurants.
           </motion.p>
         </div>
       </section>
