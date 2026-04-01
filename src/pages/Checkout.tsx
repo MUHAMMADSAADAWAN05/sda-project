@@ -107,7 +107,7 @@ const Checkout = () => {
                 <div className="flex justify-between"><span className="text-muted-foreground">Delivery</span><span className="font-medium">${deliveryFee.toFixed(2)}</span></div>
                 <div className="flex justify-between"><span className="text-muted-foreground">Tax</span><span className="font-medium">${tax.toFixed(2)}</span></div>
               </div>
-              <div className="flex justify-between font-heading font-extrabold text-xl border-t border-border/30 pt-3">
+              <div className="flex justify-between font-heading font-extrabold text-xl border-t border-white/10 pt-3 text-foreground">
                 <span>Total</span><span className="text-gradient">${total.toFixed(2)}</span>
               </div>
               <Button className="w-full gradient-warm rounded-xl neon-glow-primary hover:shadow-xl transition-all gap-2" size="lg" onClick={handlePlaceOrder} disabled={isPlacing}>
