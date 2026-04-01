@@ -46,25 +46,25 @@ const Dashboard = () => {
 
   return (
     <PageWrapper>
-      <div className="min-h-screen bg-dashboard">
+      <div className="min-h-screen">
         <div className="container py-8">
-          {/* Header bar - Parkify admin style */}
+          {/* Header bar - Parkify style */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-2xl glass-deep p-5 mb-8 flex items-center justify-between"
+            className="rounded-2xl glass-liquid neon-border-teal p-5 mb-8 flex items-center justify-between"
           >
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl gradient-warm flex items-center justify-center neon-glow-primary">
-                <ChefHat className="h-5 w-5 text-white" />
+              <div className="h-12 w-12 rounded-xl gradient-warm flex items-center justify-center neon-glow-primary shadow-lg">
+                <ChefHat className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-heading font-extrabold text-white">CRAVIX RESTAURANT</h1>
-                <p className="text-white/50 text-sm">Mario's Authentic Pizzeria</p>
+                <h1 className="text-2xl font-heading font-extrabold text-foreground">CRAVIX RESTAURANT</h1>
+                <p className="text-muted-foreground text-sm">Mario's Authentic Pizzeria</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm" className="rounded-xl glass-deep border-white/10 text-white hover:bg-white/10">
+              <Button variant="outline" size="sm" className="rounded-xl glass-deep border-white/10 text-foreground hover:bg-white/10">
                 <RefreshCw className="h-4 w-4 mr-1" /> Refresh
               </Button>
               <Badge variant="outline" className="gap-1 text-success border-success/30 rounded-full px-4 py-2 bg-success/10">
@@ -73,7 +73,7 @@ const Dashboard = () => {
             </div>
           </motion.div>
 
-          {/* Stats - Parkify admin style with icon circles */}
+          {/* Stats - Parkify style with icon circles */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
             {stats.map((stat, i) => {
               const Icon = stat.icon;
@@ -84,15 +84,15 @@ const Dashboard = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
                   whileHover={{ y: -4 }}
-                  className="rounded-2xl glass-deep p-5 transition-all hover:bg-white/10"
+                  className="rounded-2xl glass-liquid neon-border-teal p-5 transition-all hover:bg-white/5"
                 >
                   <div className="flex items-center gap-3">
                     <div className={`h-12 w-12 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-lg`}>
                       <Icon className="h-6 w-6 text-white" />
                     </div>
                     <div>
-                      <span className="text-sm text-white/50">{stat.label}</span>
-                      <p className="text-2xl font-heading font-extrabold text-white">{stat.value}</p>
+                      <span className="text-sm text-muted-foreground">{stat.label}</span>
+                      <p className="text-2xl font-heading font-extrabold text-foreground">{stat.value}</p>
                     </div>
                   </div>
                   <p className="text-xs text-success mt-2 font-semibold">{stat.change} from yesterday</p>
@@ -102,12 +102,12 @@ const Dashboard = () => {
           </div>
 
           <Tabs defaultValue="orders" className="space-y-6">
-            <TabsList className="glass-deep rounded-2xl p-1.5 border-white/10">
-              <TabsTrigger value="orders" className="gap-2 rounded-xl text-white data-[state=active]:gradient-warm data-[state=active]:text-white">
+            <TabsList className="glass-liquid rounded-2xl p-1.5 neon-border-teal">
+              <TabsTrigger value="orders" className="gap-2 rounded-xl text-foreground data-[state=active]:gradient-warm data-[state=active]:text-white">
                 Orders <Badge className="h-5 text-[10px] gradient-warm border-0">{orders.length}</Badge>
               </TabsTrigger>
-              <TabsTrigger value="menu" className="rounded-xl text-white data-[state=active]:gradient-warm data-[state=active]:text-white">Menu</TabsTrigger>
-              <TabsTrigger value="settings" className="rounded-xl text-white data-[state=active]:gradient-warm data-[state=active]:text-white">Settings</TabsTrigger>
+              <TabsTrigger value="menu" className="rounded-xl text-foreground data-[state=active]:gradient-warm data-[state=active]:text-white">Menu</TabsTrigger>
+              <TabsTrigger value="settings" className="rounded-xl text-foreground data-[state=active]:gradient-warm data-[state=active]:text-white">Settings</TabsTrigger>
             </TabsList>
 
             <TabsContent value="orders">
@@ -118,20 +118,20 @@ const Dashboard = () => {
                   { status: 'ready', label: 'Ready', dotColor: 'bg-success', animate: false },
                 ].map(col => (
                   <div key={col.status}>
-                    <h3 className="font-heading font-bold mb-3 flex items-center gap-2 text-white">
+                    <h3 className="font-heading font-bold mb-3 flex items-center gap-2 text-foreground">
                       <span className={`h-2 w-2 rounded-full ${col.dotColor} ${col.animate ? 'animate-pulse-dot' : ''}`} /> {col.label} ({ordersByStatus(col.status).length})
                     </h3>
                     <div className="space-y-3">
                       {ordersByStatus(col.status).map(order => (
                         <motion.div key={order.id} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} whileHover={{ y: -2 }}
-                          className="rounded-2xl glass-deep p-4 space-y-3 transition-all hover:bg-white/10"
+                          className="rounded-2xl glass-liquid neon-border-teal p-4 space-y-3 transition-all hover:bg-white/5"
                         >
                           <div className="flex justify-between text-sm">
-                            <span className="font-heading font-semibold text-white">{order.id}</span>
-                            <span className="text-white/40">{order.time}</span>
+                            <span className="font-heading font-semibold text-foreground">{order.id}</span>
+                            <span className="text-muted-foreground">{order.time}</span>
                           </div>
-                          <p className="text-sm font-medium text-white/80">{order.customer}</p>
-                          <p className="text-sm text-white/50">{order.items}</p>
+                          <p className="text-sm font-medium text-foreground/80">{order.customer}</p>
+                          <p className="text-sm text-muted-foreground">{order.items}</p>
                           <p className="font-heading font-bold text-gradient">${order.total.toFixed(2)}</p>
                           {col.status === 'incoming' && (
                             <div className="flex gap-2">
@@ -140,16 +140,16 @@ const Dashboard = () => {
                             </div>
                           )}
                           {col.status === 'preparing' && (
-                            <Button size="sm" className="w-full gap-1 rounded-xl glass-deep border-white/10 text-white hover:bg-white/10" variant="outline" onClick={() => updateOrderStatus(order.id, 'ready')}>
+                            <Button size="sm" className="w-full gap-1 rounded-xl glass-deep border-white/10 text-foreground hover:bg-white/10" variant="outline" onClick={() => updateOrderStatus(order.id, 'ready')}>
                               <ChefHat className="h-3.5 w-3.5" /> Mark Ready
                             </Button>
                           )}
                           {col.status === 'ready' && (
-                            <Badge variant="secondary" className="w-full justify-center rounded-xl glass-deep text-white/60">Waiting for pickup</Badge>
+                            <Badge variant="secondary" className="w-full justify-center rounded-xl glass-deep text-muted-foreground">Waiting for pickup</Badge>
                           )}
                         </motion.div>
                       ))}
-                      {ordersByStatus(col.status).length === 0 && <p className="text-sm text-white/40 text-center py-8 glass-deep rounded-2xl">No {col.label.toLowerCase()} orders</p>}
+                      {ordersByStatus(col.status).length === 0 && <p className="text-sm text-muted-foreground text-center py-8 glass-liquid rounded-2xl neon-border-teal">No {col.label.toLowerCase()} orders</p>}
                     </div>
                   </div>
                 ))}
@@ -157,24 +157,23 @@ const Dashboard = () => {
             </TabsContent>
 
             <TabsContent value="menu">
-              <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-deep overflow-hidden">
+              <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-liquid neon-border-teal overflow-hidden">
                 <div className="flex items-center justify-between p-4 border-b border-white/10">
-                  <h3 className="font-heading font-bold text-white">Menu Items</h3>
+                  <h3 className="font-heading font-bold text-foreground">Menu Items</h3>
                   <Button size="sm" className="gap-1 gradient-warm rounded-xl neon-glow-primary border-0"><Plus className="h-3.5 w-3.5" /> Add Item</Button>
                 </div>
-                {/* Table header - Parkify style */}
-                <div className="grid grid-cols-4 gap-4 p-4 text-sm font-heading font-semibold text-white/60 bg-[hsl(250,40%,20%/0.5)]">
+                <div className="grid grid-cols-4 gap-4 p-4 text-sm font-heading font-semibold text-muted-foreground table-header-purple">
                   <span>Item Name</span><span>Price</span><span>Orders</span><span className="text-right">Actions</span>
                 </div>
                 <div className="divide-y divide-white/5">
                   {menu.map(item => (
-                    <motion.div key={item.id} whileHover={{ backgroundColor: 'rgba(255,255,255,0.05)' }} className="grid grid-cols-4 gap-4 items-center p-4 transition-colors">
-                      <p className="font-heading font-semibold text-white">{item.name}</p>
-                      <p className="text-white/70">${item.price.toFixed(2)}</p>
-                      <p className="text-white/50">{item.orders}</p>
+                    <motion.div key={item.id} whileHover={{ backgroundColor: 'rgba(255,255,255,0.03)' }} className="grid grid-cols-4 gap-4 items-center p-4 transition-colors">
+                      <p className="font-heading font-semibold text-foreground">{item.name}</p>
+                      <p className="text-muted-foreground">${item.price.toFixed(2)}</p>
+                      <p className="text-muted-foreground">{item.orders}</p>
                       <div className="flex items-center gap-3 justify-end">
                         <Switch checked={item.available} onCheckedChange={() => toggleAvailability(item.id)} />
-                        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-xl text-white/50 hover:text-white hover:bg-white/10"><Edit className="h-3.5 w-3.5" /></Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-xl text-muted-foreground hover:text-foreground hover:bg-white/10"><Edit className="h-3.5 w-3.5" /></Button>
                         <Button variant="ghost" size="icon" className="h-8 w-8 rounded-xl text-destructive hover:bg-destructive/20"><Trash2 className="h-3.5 w-3.5" /></Button>
                       </div>
                     </motion.div>
@@ -184,8 +183,8 @@ const Dashboard = () => {
             </TabsContent>
 
             <TabsContent value="settings">
-              <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-deep p-6 space-y-6 max-w-2xl">
-                <h3 className="font-heading font-bold text-white">Business Profile</h3>
+              <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-liquid neon-border-teal p-6 space-y-6 max-w-2xl">
+                <h3 className="font-heading font-bold text-foreground">Business Profile</h3>
                 <div className="grid gap-4 sm:grid-cols-2">
                   {[
                     { label: 'Restaurant Name', value: "Mario's Authentic Pizzeria" },
@@ -194,13 +193,13 @@ const Dashboard = () => {
                     { label: 'Delivery Radius', value: '5 miles' },
                   ].map(field => (
                     <div key={field.label} className="space-y-2">
-                      <label className="text-sm font-heading font-semibold text-white/70">{field.label}</label>
-                      <Input defaultValue={field.value} className="rounded-xl glass-deep border-white/10 text-white placeholder:text-white/30 focus:border-primary/50" />
+                      <label className="text-sm font-heading font-semibold text-muted-foreground">{field.label}</label>
+                      <Input defaultValue={field.value} className="rounded-xl glass-deep border-white/10 text-foreground placeholder:text-muted-foreground focus:border-primary/50" />
                     </div>
                   ))}
                   <div className="space-y-2 sm:col-span-2">
-                    <label className="text-sm font-heading font-semibold text-white/70">Address</label>
-                    <Input defaultValue="123 Main St, Springfield" className="rounded-xl glass-deep border-white/10 text-white placeholder:text-white/30 focus:border-primary/50" />
+                    <label className="text-sm font-heading font-semibold text-muted-foreground">Address</label>
+                    <Input defaultValue="123 Main St, Springfield" className="rounded-xl glass-deep border-white/10 text-foreground placeholder:text-muted-foreground focus:border-primary/50" />
                   </div>
                 </div>
                 <Button className="gradient-warm rounded-xl neon-glow-primary border-0">Save Changes</Button>
