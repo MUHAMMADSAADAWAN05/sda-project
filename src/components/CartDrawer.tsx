@@ -105,7 +105,7 @@ const CartDrawer = () => {
                 <span>Total</span><span className="text-gradient">${total.toFixed(2)}</span>
               </div>
               <Button
-                className="w-full mt-3 gradient-warm rounded-xl neon-glow-primary hover:shadow-xl transition-all gap-2"
+                className="w-full mt-3 gradient-warm rounded-xl neon-glow-primary hover:shadow-xl transition-all gap-2 border-0"
                 size="lg"
                 onClick={() => { setIsOpen(false); navigate('/checkout'); }}
               >
