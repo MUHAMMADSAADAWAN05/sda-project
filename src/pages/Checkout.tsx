@@ -49,7 +49,7 @@ const Checkout = () => {
               <h2 className="font-heading font-bold flex items-center gap-2 text-foreground"><div className="h-8 w-8 rounded-lg gradient-warm neon-glow-primary flex items-center justify-center"><MapPin className="h-4 w-4 text-primary-foreground" /></div> Delivery Address</h2>
               <RadioGroup value={selectedAddress} onValueChange={setSelectedAddress}>
                 {savedAddresses.map(addr => (
-                  <div key={addr.id} className="flex items-center gap-3 rounded-xl glass-card border border-border/30 p-3.5 cursor-pointer hover:neon-border transition-all">
+                  <div key={addr.id} className="flex items-center gap-3 rounded-xl glass-deep border border-white/10 p-3.5 cursor-pointer hover:neon-border transition-all">
                     <RadioGroupItem value={addr.id} id={addr.id} />
                     <Label htmlFor={addr.id} className="cursor-pointer flex-1">
                       <p className="font-heading font-semibold">{addr.label}</p>
