@@ -96,7 +96,7 @@ const CartDrawer = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="border-t border-border/30 pt-4 space-y-2"
+              className="border-t border-white/10 pt-4 space-y-2"
             >
               <div className="flex justify-between text-sm"><span className="text-muted-foreground">Subtotal</span><span className="font-medium">${subtotal.toFixed(2)}</span></div>
               <div className="flex justify-between text-sm"><span className="text-muted-foreground">Delivery fee</span><span className="font-medium">${deliveryFee.toFixed(2)}</span></div>
