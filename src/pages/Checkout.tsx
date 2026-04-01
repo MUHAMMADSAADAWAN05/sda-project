@@ -94,7 +94,7 @@ const Checkout = () => {
             <div className="rounded-2xl glass-liquid neon-border-teal p-6 space-y-4 sticky top-24">
               <h2 className="font-heading font-bold">Order Summary</h2>
               <p className="text-sm font-semibold text-primary">{items[0]?.restaurantName}</p>
-              <div className="space-y-2 border-t border-border/30 pt-3">
+              <div className="space-y-2 border-t border-white/10 pt-3">
                 {items.map(item => (
                   <div key={item.id} className="flex justify-between text-sm">
                     <span>{item.quantity}x {item.menuItem.name}</span>
