@@ -38,7 +38,7 @@ const CartDrawer = () => {
               <p className="font-heading font-bold text-lg">Your cart is empty</p>
               <p className="text-sm text-muted-foreground mt-1">Add items from a restaurant to get started</p>
             </div>
-            <Button onClick={() => { setIsOpen(false); navigate('/'); }} className="gradient-warm rounded-xl neon-glow-primary">
+            <Button onClick={() => { setIsOpen(false); navigate('/'); }} className="gradient-warm rounded-xl neon-glow-primary border-0">
               Browse Restaurants
             </Button>
           </motion.div>
