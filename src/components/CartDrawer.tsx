@@ -101,7 +101,7 @@ const CartDrawer = () => {
               <div className="flex justify-between text-sm"><span className="text-muted-foreground">Subtotal</span><span className="font-medium">${subtotal.toFixed(2)}</span></div>
               <div className="flex justify-between text-sm"><span className="text-muted-foreground">Delivery fee</span><span className="font-medium">${deliveryFee.toFixed(2)}</span></div>
               <div className="flex justify-between text-sm"><span className="text-muted-foreground">Tax</span><span className="font-medium">${tax.toFixed(2)}</span></div>
-              <div className="flex justify-between font-heading font-extrabold text-lg border-t border-border/30 pt-3">
+              <div className="flex justify-between font-heading font-extrabold text-lg border-t border-white/10 pt-3 text-foreground">
                 <span>Total</span><span className="text-gradient">${total.toFixed(2)}</span>
               </div>
               <Button
