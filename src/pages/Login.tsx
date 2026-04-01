@@ -92,8 +92,8 @@ const Login = () => {
           </Button>
 
           <div className="relative">
-            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-border/50" /></div>
-            <div className="relative flex justify-center text-xs uppercase"><span className="glass-card px-3 py-1 rounded-full text-muted-foreground">Or continue with</span></div>
+            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/10" /></div>
+            <div className="relative flex justify-center text-xs uppercase"><span className="glass-deep px-3 py-1 rounded-full text-muted-foreground">Or continue with</span></div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
