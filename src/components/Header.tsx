@@ -23,7 +23,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b glass-strong neon-border">
+    <header className="sticky top-0 z-50 glass-strong">
       <div className="container flex h-16 items-center justify-between gap-4">
         <div className="flex items-center gap-6">
           <Link to="/" className="flex items-center gap-2 group">
@@ -33,7 +33,7 @@ const Header = () => {
             >
               <img src={cravixLogo} alt="CraviX" className="h-full w-full object-cover" />
             </motion.div>
-            <span className="hidden text-xl font-heading font-bold sm:inline-block">
+            <span className="hidden text-xl font-heading font-bold sm:inline-block text-foreground">
               CRAVI<span className="text-gradient">X</span>
             </span>
           </Link>
@@ -63,7 +63,7 @@ const Header = () => {
         </div>
 
         <div className="hidden items-center gap-2 md:flex">
-          <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground rounded-xl" asChild>
+          <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground rounded-xl hover:text-foreground hover:bg-white/5" asChild>
             <Link to="/search">
               <Search className="h-4 w-4" />
               <span className="hidden lg:inline">Search</span>
@@ -71,7 +71,7 @@ const Header = () => {
           </Button>
 
           <motion.div whileTap={{ scale: 0.9 }}>
-            <Button variant="ghost" size="sm" className="relative gap-2 rounded-xl" onClick={() => setIsOpen(true)}>
+            <Button variant="ghost" size="sm" className="relative gap-2 rounded-xl hover:bg-white/5" onClick={() => setIsOpen(true)}>
               <ShoppingCart className="h-4 w-4" />
               <AnimatePresence>
                 {itemCount > 0 && (
@@ -90,7 +90,7 @@ const Header = () => {
           </motion.div>
 
           <motion.div whileTap={{ scale: 0.9 }}>
-            <Button variant="ghost" size="sm" className="rounded-xl" onClick={toggleTheme}>
+            <Button variant="ghost" size="sm" className="rounded-xl hover:bg-white/5" onClick={toggleTheme}>
               <AnimatePresence mode="wait" initial={false}>
                 {theme === 'light' ? (
                   <motion.div key="sun" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
@@ -105,7 +105,7 @@ const Header = () => {
             </Button>
           </motion.div>
 
-          <Button variant="ghost" size="sm" className="rounded-xl" asChild>
+          <Button variant="ghost" size="sm" className="rounded-xl hover:bg-white/5" asChild>
             <Link to="/account"><User className="h-4 w-4" /></Link>
           </Button>
 
@@ -132,16 +132,16 @@ const Header = () => {
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon"><Menu className="h-5 w-5" /></Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-72">
+            <SheetContent side="right" className="w-72 glass-strong border-l border-white/10">
               <nav className="mt-8 flex flex-col gap-2">
                 {navLinks.map(link => (
                   <Link key={link.to} to={link.to} onClick={() => setMobileOpen(false)}
-                    className={`rounded-xl px-4 py-3 text-sm font-medium transition-colors ${isActive(link.to) ? 'bg-primary/10 text-primary' : 'hover:bg-muted'}`}
+                    className={`rounded-xl px-4 py-3 text-sm font-medium transition-colors ${isActive(link.to) ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-white/5'}`}
                   >{link.label}</Link>
                 ))}
-                <hr className="my-2" />
-                <Link to="/account" onClick={() => setMobileOpen(false)} className="rounded-xl px-4 py-3 text-sm font-medium hover:bg-muted">Account</Link>
-                <hr className="my-2" />
+                <hr className="my-2 border-white/10" />
+                <Link to="/account" onClick={() => setMobileOpen(false)} className="rounded-xl px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-white/5">Account</Link>
+                <hr className="my-2 border-white/10" />
                 <Link to="/login" onClick={() => setMobileOpen(false)}>
                   <Button className="w-full gradient-warm rounded-xl border-0">Sign In</Button>
                 </Link>

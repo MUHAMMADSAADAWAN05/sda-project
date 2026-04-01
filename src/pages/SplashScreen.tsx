@@ -44,73 +44,32 @@ const SplashScreen = () => {
   const [showRoles, setShowRoles] = useState(false);
 
   return (
-    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[hsl(25,80%,8%)] via-[hsl(20,60%,12%)] to-[hsl(30,70%,6%)]">
-      {/* Animated background orbs - orange themed */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          animate={{
-            x: [0, 100, -50, 0],
-            y: [0, -80, 60, 0],
-            scale: [1, 1.3, 0.9, 1],
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-[hsl(25,95%,53%/0.15)] blur-[120px]"
-        />
-        <motion.div
-          animate={{
-            x: [0, -120, 80, 0],
-            y: [0, 60, -40, 0],
-            scale: [1, 0.8, 1.2, 1],
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute -right-32 top-1/4 h-[400px] w-[400px] rounded-full bg-[hsl(38,95%,55%/0.12)] blur-[100px]"
-        />
-        <motion.div
-          animate={{
-            x: [0, 60, -80, 0],
-            y: [0, -60, 80, 0],
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute bottom-0 left-1/3 h-[350px] w-[350px] rounded-full bg-[hsl(15,90%,50%/0.1)] blur-[80px]"
-        />
-      </div>
-
-      {/* Grid pattern overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(hsl(25,95%,53%/0.04)_1px,transparent_1px),linear-gradient(90deg,hsl(25,95%,53%/0.04)_1px,transparent_1px)] bg-[size:60px_60px]" />
+    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden"
+      style={{ background: 'linear-gradient(135deg, hsl(25 80% 45%), hsl(25 95% 53%), hsl(30 90% 50%))' }}
+    >
+      {/* Subtle background texture */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,hsl(0_0%_100%/0.08),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,hsl(0_0%_0%/0.15),transparent_50%)]" />
 
       <AnimatePresence mode="wait">
         {!showRoles ? (
           <motion.div
             key="logo"
-            className="relative flex flex-col items-center gap-6"
+            className="relative flex flex-col items-center gap-8"
             exit={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
             transition={{ duration: 0.5 }}
           >
-            {/* Floating CraviX Logo */}
+            {/* Large floating CraviX Logo - Parkify style big logo */}
             <motion.div
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.8, type: 'spring', stiffness: 200, damping: 15 }}
-              className="relative"
             >
-              {/* Outer glow ring */}
               <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                className="absolute -inset-6 rounded-full border border-[hsl(25,95%,53%/0.2)]"
-              />
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-                className="absolute -inset-12 rounded-full border border-[hsl(38,95%,55%/0.1)]"
-              />
-
-              {/* Floating animation */}
-              <motion.div
-                animate={{ y: [0, -12, 0] }}
+                animate={{ y: [0, -15, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
               >
-                <div className="relative h-40 w-40 md:h-52 md:w-52 rounded-3xl overflow-hidden shadow-[0_0_60px_-10px_hsl(25,95%,53%/0.5),0_0_100px_-20px_hsl(38,95%,55%/0.3)]">
+                <div className="relative h-56 w-56 md:h-72 md:w-72 lg:h-80 lg:w-80 rounded-3xl overflow-hidden shadow-[0_20px_80px_-10px_rgba(0,0,0,0.4),0_0_60px_-10px_hsl(0_0%_100%/0.2)]">
                   <img
                     src={cravixLogo}
                     alt="CraviX Logo"
@@ -127,14 +86,14 @@ const SplashScreen = () => {
               transition={{ delay: 0.4, duration: 0.5 }}
               className="text-center"
             >
-              <h1 className="text-5xl font-heading font-extrabold tracking-tight md:text-7xl text-white">
-                CRAVI<span className="text-gradient">X</span>
+              <h1 className="text-5xl font-heading font-extrabold tracking-tight md:text-7xl text-white drop-shadow-lg">
+                CRAVIX
               </h1>
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.8 }}
-                className="mt-3 text-xl font-medium text-[hsl(25,95%,70%)]"
+                className="mt-3 text-xl font-medium text-white/90"
               >
                 Welcome to CraviX
               </motion.p>
@@ -142,7 +101,7 @@ const SplashScreen = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.0 }}
-                className="mt-1 text-sm text-white/50"
+                className="mt-1 text-sm text-white/60"
               >
                 crave it · order it · enjoy it
               </motion.p>
@@ -156,7 +115,7 @@ const SplashScreen = () => {
               <Button
                 size="lg"
                 onClick={() => setShowRoles(true)}
-                className="mt-4 rounded-2xl px-10 py-6 text-lg font-bold gradient-warm neon-glow-primary hover:shadow-xl transition-all group border-0"
+                className="mt-2 rounded-2xl px-10 py-6 text-lg font-bold bg-white text-[hsl(25,95%,45%)] hover:bg-white/90 hover:shadow-xl transition-all group border-0 shadow-lg"
               >
                 <Sparkles className="h-5 w-5 mr-2" />
                 Get Started
@@ -169,14 +128,14 @@ const SplashScreen = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.5 }}
-              className="flex gap-2 mt-4"
+              className="flex gap-2 mt-2"
             >
               {[0, 1, 2].map(i => (
                 <motion.div
                   key={i}
-                  animate={{ scale: [1, 1.4, 1], opacity: [0.3, 1, 0.3] }}
+                  animate={{ scale: [1, 1.4, 1], opacity: [0.4, 1, 0.4] }}
                   transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.3 }}
-                  className="h-2 w-2 rounded-full bg-primary"
+                  className="h-2 w-2 rounded-full bg-white"
                 />
               ))}
             </motion.div>
@@ -194,10 +153,10 @@ const SplashScreen = () => {
               animate={{ opacity: 1, y: 0 }}
               className="text-center"
             >
-              <h2 className="text-3xl font-heading font-extrabold md:text-5xl text-white">
-                How will you use <span className="text-gradient">CraviX</span>?
+              <h2 className="text-3xl font-heading font-extrabold md:text-5xl text-white drop-shadow-lg">
+                How will you use <span className="text-white underline decoration-white/30 underline-offset-4">CraviX</span>?
               </h2>
-              <p className="mt-3 text-white/60 text-lg">Choose your role to get started</p>
+              <p className="mt-3 text-white/70 text-lg">Choose your role to get started</p>
             </motion.div>
 
             <div className="grid w-full gap-5 sm:grid-cols-3 mt-4">
@@ -212,15 +171,15 @@ const SplashScreen = () => {
                   onHoverStart={() => setHoveredRole(role.id)}
                   onHoverEnd={() => setHoveredRole(null)}
                   onClick={() => navigate(role.route)}
-                  className="group relative flex flex-col items-center gap-4 rounded-3xl p-8 text-center transition-all cursor-pointer border border-white/10 bg-white/5 backdrop-blur-xl"
+                  className="group relative flex flex-col items-center gap-4 rounded-3xl p-8 text-center transition-all cursor-pointer border border-white/20 bg-white/10 backdrop-blur-xl"
                   style={{
                     boxShadow: hoveredRole === role.id
-                      ? `0 0 50px -10px ${role.neonColor}, 0 20px 60px -15px rgba(0,0,0,0.5)`
-                      : '0 4px 24px -4px rgba(0,0,0,0.3)',
+                      ? `0 0 50px -10px ${role.neonColor}, 0 20px 60px -15px rgba(0,0,0,0.3)`
+                      : '0 4px 24px -4px rgba(0,0,0,0.2)',
                   }}
                 >
                   <motion.div
-                    animate={{ opacity: hoveredRole === role.id ? 0.1 : 0 }}
+                    animate={{ opacity: hoveredRole === role.id ? 0.15 : 0 }}
                     className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${role.gradient}`}
                   />
 
@@ -236,13 +195,13 @@ const SplashScreen = () => {
 
                   <div className="relative">
                     <h3 className="text-xl font-heading font-bold text-white">{role.title}</h3>
-                    <p className="mt-1 text-sm font-medium text-primary">{role.subtitle}</p>
+                    <p className="mt-1 text-sm font-medium text-white/80">{role.subtitle}</p>
                     <p className="mt-2 text-sm text-white/50 leading-relaxed">{role.description}</p>
                   </div>
 
                   <motion.div
                     animate={{ opacity: hoveredRole === role.id ? 1 : 0, y: hoveredRole === role.id ? 0 : 8 }}
-                    className="flex items-center gap-1 text-sm font-semibold text-primary"
+                    className="flex items-center gap-1 text-sm font-semibold text-white"
                   >
                     Continue <ArrowRight className="h-4 w-4" />
                   </motion.div>
