@@ -31,7 +31,7 @@ const CartDrawer = () => {
             animate={{ opacity: 1, scale: 1 }}
             className="flex flex-1 flex-col items-center justify-center gap-4 text-center"
           >
-            <div className="flex h-24 w-24 items-center justify-center rounded-3xl glass-card neon-border">
+            <div className="flex h-24 w-24 items-center justify-center rounded-3xl glass-liquid neon-border-teal">
               <ShoppingBag className="h-12 w-12 text-muted-foreground" />
             </div>
             <div>
