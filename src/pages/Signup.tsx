@@ -82,7 +82,7 @@ const Signup = () => {
                 </Button>
               </div>
             </div>
-            <Button type="submit" className="w-full gradient-warm rounded-xl neon-glow-primary hover:shadow-xl transition-all" size="lg">Create Account</Button>
+            <Button type="submit" className="w-full gradient-warm rounded-xl neon-glow-primary hover:shadow-xl transition-all border-0" size="lg">Create Account</Button>
           </form>
 
           {/* Skip button */}
