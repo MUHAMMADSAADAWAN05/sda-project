@@ -76,7 +76,7 @@ const Signup = () => {
               <Label htmlFor="password" className="font-heading font-semibold">Password</Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input id="password" type={showPassword ? 'text' : 'password'} placeholder="••••••••" className="pl-10 pr-10 rounded-xl glass-card border-border/50 focus:neon-border transition-all" value={password} onChange={e => setPassword(e.target.value)} required />
+                <Input id="password" type={showPassword ? 'text' : 'password'} placeholder="••••••••" className="pl-10 pr-10 rounded-xl glass-deep border-white/10 focus:neon-border transition-all text-foreground placeholder:text-muted-foreground" value={password} onChange={e => setPassword(e.target.value)} required />
                 <Button type="button" variant="ghost" size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 rounded-lg" onClick={() => setShowPassword(!showPassword)}>
                   {showPassword ? <EyeOff className="h-4 w-4 text-muted-foreground" /> : <Eye className="h-4 w-4 text-muted-foreground" />}
                 </Button>
