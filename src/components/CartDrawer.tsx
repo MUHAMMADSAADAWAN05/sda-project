@@ -69,7 +69,7 @@ const CartDrawer = () => {
                             </p>
                           )}
                           <div className="mt-2 flex items-center justify-between">
-                            <div className="flex items-center gap-1.5 rounded-full glass-card neon-border">
+                            <div className="flex items-center gap-1.5 rounded-full glass-deep border border-white/10">
                               <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
                                 <Minus className="h-3 w-3" />
                               </Button>
