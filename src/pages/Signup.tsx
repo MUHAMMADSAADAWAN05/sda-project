@@ -62,7 +62,7 @@ const Signup = () => {
               <Label htmlFor="name" className="font-heading font-semibold">Full Name</Label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input id="name" placeholder="John Doe" className="pl-10 rounded-xl glass-card border-border/50 focus:neon-border transition-all" value={name} onChange={e => setName(e.target.value)} required />
+                <Input id="name" placeholder="John Doe" className="pl-10 rounded-xl glass-deep border-white/10 focus:neon-border transition-all text-foreground placeholder:text-muted-foreground" value={name} onChange={e => setName(e.target.value)} required />
               </div>
             </div>
             <div className="space-y-2">
