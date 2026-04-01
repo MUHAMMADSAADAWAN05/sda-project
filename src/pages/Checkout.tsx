@@ -45,11 +45,11 @@ const Checkout = () => {
         <div className="grid gap-8 lg:grid-cols-5">
           <div className="lg:col-span-3 space-y-6">
             {/* Delivery Address */}
-            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="rounded-2xl glass-card neon-border p-6 space-y-4 shadow-card-hover">
-              <h2 className="font-heading font-bold flex items-center gap-2"><div className="h-8 w-8 rounded-lg gradient-warm neon-glow-primary flex items-center justify-center"><MapPin className="h-4 w-4 text-primary-foreground" /></div> Delivery Address</h2>
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="rounded-2xl glass-liquid neon-border-teal p-6 space-y-4">
+              <h2 className="font-heading font-bold flex items-center gap-2 text-foreground"><div className="h-8 w-8 rounded-lg gradient-warm neon-glow-primary flex items-center justify-center"><MapPin className="h-4 w-4 text-primary-foreground" /></div> Delivery Address</h2>
               <RadioGroup value={selectedAddress} onValueChange={setSelectedAddress}>
                 {savedAddresses.map(addr => (
-                  <div key={addr.id} className="flex items-center gap-3 rounded-xl glass-card border border-border/30 p-3.5 cursor-pointer hover:neon-border transition-all">
+                  <div key={addr.id} className="flex items-center gap-3 rounded-xl glass-deep border border-white/10 p-3.5 cursor-pointer hover:neon-border transition-all">
                     <RadioGroupItem value={addr.id} id={addr.id} />
                     <Label htmlFor={addr.id} className="cursor-pointer flex-1">
                       <p className="font-heading font-semibold">{addr.label}</p>
@@ -61,14 +61,14 @@ const Checkout = () => {
             </motion.div>
 
             {/* Payment */}
-            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="rounded-2xl glass-card neon-border p-6 space-y-4 shadow-card-hover">
-              <h2 className="font-heading font-bold flex items-center gap-2"><div className="h-8 w-8 rounded-lg gradient-warm neon-glow-primary flex items-center justify-center"><CreditCard className="h-4 w-4 text-primary-foreground" /></div> Payment Method</h2>
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="rounded-2xl glass-liquid neon-border-teal p-6 space-y-4">
+              <h2 className="font-heading font-bold flex items-center gap-2 text-foreground"><div className="h-8 w-8 rounded-lg gradient-warm neon-glow-primary flex items-center justify-center"><CreditCard className="h-4 w-4 text-primary-foreground" /></div> Payment Method</h2>
               <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
                 {[
                   { id: 'card1', number: '•••• •••• •••• 4242', type: 'Visa • Expires 12/25' },
                   { id: 'card2', number: '•••• •••• •••• 8888', type: 'Mastercard • Expires 06/26' },
                 ].map(card => (
-                  <div key={card.id} className="flex items-center gap-3 rounded-xl glass-card border border-border/30 p-3.5 cursor-pointer hover:neon-border transition-all">
+                  <div key={card.id} className="flex items-center gap-3 rounded-xl glass-deep border border-white/10 p-3.5 cursor-pointer hover:neon-border transition-all">
                     <RadioGroupItem value={card.id} id={card.id} />
                     <Label htmlFor={card.id} className="cursor-pointer flex-1">
                       <p className="font-heading font-semibold">{card.number}</p>
@@ -80,21 +80,21 @@ const Checkout = () => {
             </motion.div>
 
             {/* Promo */}
-            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="rounded-2xl glass-card neon-border p-6 space-y-4 shadow-card-hover">
-              <h2 className="font-heading font-bold flex items-center gap-2"><div className="h-8 w-8 rounded-lg gradient-warm neon-glow-primary flex items-center justify-center"><Tag className="h-4 w-4 text-primary-foreground" /></div> Promo Code</h2>
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="rounded-2xl glass-liquid neon-border-teal p-6 space-y-4">
+              <h2 className="font-heading font-bold flex items-center gap-2 text-foreground"><div className="h-8 w-8 rounded-lg gradient-warm neon-glow-primary flex items-center justify-center"><Tag className="h-4 w-4 text-primary-foreground" /></div> Promo Code</h2>
               <div className="flex gap-2">
-                <Input placeholder="Enter promo code" value={promoCode} onChange={e => setPromoCode(e.target.value)} className="rounded-xl glass-card border-border/50 focus:neon-border" />
-                <Button variant="outline" className="rounded-xl glass-card neon-border">Apply</Button>
+                <Input placeholder="Enter promo code" value={promoCode} onChange={e => setPromoCode(e.target.value)} className="rounded-xl glass-deep border-white/10 focus:neon-border text-foreground placeholder:text-muted-foreground" />
+                <Button variant="outline" className="rounded-xl glass-deep border-white/10 text-foreground hover:bg-white/10">Apply</Button>
               </div>
             </motion.div>
           </div>
 
           {/* Summary */}
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="lg:col-span-2">
-            <div className="rounded-2xl glass-card neon-border p-6 space-y-4 sticky top-24 shadow-card-hover">
+            <div className="rounded-2xl glass-liquid neon-border-teal p-6 space-y-4 sticky top-24">
               <h2 className="font-heading font-bold">Order Summary</h2>
               <p className="text-sm font-semibold text-primary">{items[0]?.restaurantName}</p>
-              <div className="space-y-2 border-t border-border/30 pt-3">
+              <div className="space-y-2 border-t border-white/10 pt-3">
                 {items.map(item => (
                   <div key={item.id} className="flex justify-between text-sm">
                     <span>{item.quantity}x {item.menuItem.name}</span>
@@ -102,12 +102,12 @@ const Checkout = () => {
                   </div>
                 ))}
               </div>
-              <div className="space-y-2 border-t border-border/30 pt-3 text-sm">
+              <div className="space-y-2 border-t border-white/10 pt-3 text-sm">
                 <div className="flex justify-between"><span className="text-muted-foreground">Subtotal</span><span className="font-medium">${subtotal.toFixed(2)}</span></div>
                 <div className="flex justify-between"><span className="text-muted-foreground">Delivery</span><span className="font-medium">${deliveryFee.toFixed(2)}</span></div>
                 <div className="flex justify-between"><span className="text-muted-foreground">Tax</span><span className="font-medium">${tax.toFixed(2)}</span></div>
               </div>
-              <div className="flex justify-between font-heading font-extrabold text-xl border-t border-border/30 pt-3">
+              <div className="flex justify-between font-heading font-extrabold text-xl border-t border-white/10 pt-3 text-foreground">
                 <span>Total</span><span className="text-gradient">${total.toFixed(2)}</span>
               </div>
               <Button className="w-full gradient-warm rounded-xl neon-glow-primary hover:shadow-xl transition-all gap-2" size="lg" onClick={handlePlaceOrder} disabled={isPlacing}>

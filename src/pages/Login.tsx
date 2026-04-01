@@ -42,7 +42,7 @@ const Login = () => {
           initial={{ opacity: 0, y: 20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.5, type: 'spring', stiffness: 200 }}
-          className="relative w-full max-w-sm space-y-8 glass-card rounded-3xl p-8 neon-border shadow-card-hover"
+          className="relative w-full max-w-sm space-y-8 glass-liquid rounded-3xl p-8 neon-border-teal"
         >
           <div className="text-center">
             <motion.div
@@ -62,7 +62,7 @@ const Login = () => {
               <Label htmlFor="email" className="font-heading font-semibold">Email</Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input id="email" type="email" placeholder="you@example.com" className="pl-10 rounded-xl glass-card border-border/50 focus:neon-border transition-all" value={email} onChange={e => setEmail(e.target.value)} required />
+                <Input id="email" type="email" placeholder="you@example.com" className="pl-10 rounded-xl glass-deep border-white/10 focus:neon-border transition-all text-foreground placeholder:text-muted-foreground" value={email} onChange={e => setEmail(e.target.value)} required />
               </div>
             </div>
             <div className="space-y-2">
@@ -72,13 +72,13 @@ const Login = () => {
               </div>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input id="password" type={showPassword ? 'text' : 'password'} placeholder="••••••••" className="pl-10 pr-10 rounded-xl glass-card border-border/50 focus:neon-border transition-all" value={password} onChange={e => setPassword(e.target.value)} required />
+                <Input id="password" type={showPassword ? 'text' : 'password'} placeholder="••••••••" className="pl-10 pr-10 rounded-xl glass-deep border-white/10 focus:neon-border transition-all text-foreground placeholder:text-muted-foreground" value={password} onChange={e => setPassword(e.target.value)} required />
                 <Button type="button" variant="ghost" size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 rounded-lg" onClick={() => setShowPassword(!showPassword)}>
                   {showPassword ? <EyeOff className="h-4 w-4 text-muted-foreground" /> : <Eye className="h-4 w-4 text-muted-foreground" />}
                 </Button>
               </div>
             </div>
-            <Button type="submit" className="w-full gradient-warm rounded-xl neon-glow-primary hover:shadow-xl transition-all" size="lg">Sign In</Button>
+            <Button type="submit" className="w-full gradient-warm rounded-xl neon-glow-primary hover:shadow-xl transition-all border-0" size="lg">Sign In</Button>
           </form>
 
           {/* Skip button */}
@@ -92,13 +92,13 @@ const Login = () => {
           </Button>
 
           <div className="relative">
-            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-border/50" /></div>
-            <div className="relative flex justify-center text-xs uppercase"><span className="glass-card px-3 py-1 rounded-full text-muted-foreground">Or continue with</span></div>
+            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/10" /></div>
+            <div className="relative flex justify-center text-xs uppercase"><span className="glass-deep px-3 py-1 rounded-full text-muted-foreground">Or continue with</span></div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <Button variant="outline" className="w-full rounded-xl glass-card border-border/50 hover:neon-border transition-all">Google</Button>
-            <Button variant="outline" className="w-full rounded-xl glass-card border-border/50 hover:neon-border transition-all">Apple</Button>
+            <Button variant="outline" className="w-full rounded-xl glass-deep border-white/10 text-foreground hover:bg-white/10 transition-all">Google</Button>
+            <Button variant="outline" className="w-full rounded-xl glass-deep border-white/10 text-foreground hover:bg-white/10 transition-all">Apple</Button>
           </div>
 
           <p className="text-center text-sm text-muted-foreground">

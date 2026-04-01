@@ -29,25 +29,23 @@ const Index = () => {
     <PageWrapper>
       <div className="min-h-screen">
         {/* Hero */}
-        <section className="relative overflow-hidden gradient-hero">
+        <section className="relative overflow-hidden py-20 md:py-32">
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-primary/8 blur-[120px] animate-float" />
             <div className="absolute -right-32 top-16 h-80 w-80 rounded-full bg-accent/10 blur-[100px]" style={{ animationDelay: '1s' }} />
-            <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-success/6 blur-[80px]" style={{ animationDelay: '2s' }} />
-            <div className="absolute inset-0 bg-[linear-gradient(hsl(var(--primary)/0.03)_1px,transparent_1px),linear-gradient(90deg,hsl(var(--primary)/0.03)_1px,transparent_1px)] bg-[size:80px_80px]" />
           </div>
 
-          <div className="container relative py-20 md:py-32">
+          <div className="container relative">
             <div className="mx-auto max-w-2xl text-center">
               <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, type: 'spring', stiffness: 200 }}
-                className="mb-6 inline-flex items-center gap-2 rounded-full glass-card neon-border px-5 py-2.5 text-sm font-semibold text-primary"
+                className="mb-6 inline-flex items-center gap-2 rounded-full glass-liquid neon-border px-5 py-2.5 text-sm font-semibold text-primary"
               >
                 <Sparkles className="h-4 w-4" />
                 Free delivery on your first order!
               </motion.div>
 
               <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-4xl font-heading font-extrabold tracking-tight md:text-6xl lg:text-7xl"
+                className="text-4xl font-heading font-extrabold tracking-tight md:text-6xl lg:text-7xl text-foreground"
               >
                 Crave it,{' '}
                 <span className="text-gradient">Order it</span>
@@ -64,7 +62,7 @@ const Index = () => {
               >
                 <div className="relative flex-1">
                   <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-                  <Input placeholder="What are you craving?" className="h-14 rounded-2xl border-2 glass-card pl-12 text-base shadow-card transition-all focus:shadow-card-hover focus:neon-border" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
+                  <Input placeholder="What are you craving?" className="h-14 rounded-2xl glass-liquid neon-border-teal pl-12 text-base transition-all focus:neon-border text-foreground placeholder:text-muted-foreground" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
                 </div>
                 <Button type="submit" size="lg" className="h-14 rounded-2xl px-8 gradient-warm neon-glow-primary hover:shadow-xl transition-all border-0">Search</Button>
               </motion.form>
@@ -83,7 +81,7 @@ const Index = () => {
         {/* Stats Banner */}
         <section className="container -mt-6 relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="grid grid-cols-3 gap-4 rounded-2xl glass-card neon-border p-6 shadow-card-hover"
+            className="grid grid-cols-3 gap-4 rounded-2xl glass-liquid neon-border-teal p-6"
           >
             {[
               { icon: Zap, label: 'Lightning Fast', value: '15-30 min avg', color: 'text-accent' },
@@ -92,7 +90,7 @@ const Index = () => {
             ].map((stat, i) => (
               <motion.div key={stat.label} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="text-center">
                 <stat.icon className={`h-6 w-6 mx-auto mb-2 ${stat.color}`} />
-                <p className="font-heading font-bold text-sm">{stat.value}</p>
+                <p className="font-heading font-bold text-sm text-foreground">{stat.value}</p>
                 <p className="text-xs text-muted-foreground">{stat.label}</p>
               </motion.div>
             ))}
@@ -101,12 +99,12 @@ const Index = () => {
 
         {/* Categories */}
         <section className="container py-12">
-          <motion.h2 initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="text-2xl font-heading font-bold mb-6">Explore Categories</motion.h2>
+          <motion.h2 initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="text-2xl font-heading font-bold mb-6 text-foreground">Explore Categories</motion.h2>
           <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
             {categories.map((cat, i) => (
               <motion.div key={cat.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04 }} whileHover={{ y: -6, scale: 1.08 }} whileTap={{ scale: 0.95 }}>
                 <Link to={`/search?category=${cat.name}`} className="flex flex-col items-center gap-2.5 min-w-[88px] group">
-                  <div className="flex items-center justify-center rounded-2xl glass-card text-3xl transition-all group-hover:neon-glow-primary group-hover:neon-border border border-border/50" style={{ height: '72px', width: '72px' }}>{cat.icon}</div>
+                  <div className="flex items-center justify-center rounded-2xl glass-liquid text-3xl transition-all group-hover:neon-glow-primary group-hover:neon-border neon-border-teal" style={{ height: '72px', width: '72px' }}>{cat.icon}</div>
                   <span className="text-xs font-semibold text-muted-foreground group-hover:text-primary transition-colors">{cat.name}</span>
                 </Link>
               </motion.div>
@@ -119,7 +117,7 @@ const Index = () => {
           <div className="flex items-center justify-between mb-6">
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="flex items-center gap-2">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg gradient-warm neon-glow-primary"><Flame className="h-4 w-4 text-primary-foreground" /></div>
-              <h2 className="text-2xl font-heading font-bold">Featured Restaurants</h2>
+              <h2 className="text-2xl font-heading font-bold text-foreground">Featured Restaurants</h2>
             </motion.div>
             <Button variant="ghost" size="sm" className="gap-1 text-primary font-semibold group" asChild>
               <Link to="/search">See all <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></Link>
@@ -133,7 +131,7 @@ const Index = () => {
           <div className="flex items-center justify-between mb-6">
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="flex items-center gap-2">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-success/20 neon-glow-success"><TrendingUp className="h-4 w-4 text-success" /></div>
-              <h2 className="text-2xl font-heading font-bold">Top Rated Near You</h2>
+              <h2 className="text-2xl font-heading font-bold text-foreground">Top Rated Near You</h2>
             </motion.div>
             <Button variant="ghost" size="sm" className="gap-1 text-primary font-semibold group" asChild>
               <Link to="/search">See all <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></Link>

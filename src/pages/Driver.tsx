@@ -29,25 +29,25 @@ const Driver = () => {
 
   return (
     <PageWrapper>
-      <div className="min-h-screen bg-dashboard">
+      <div className="min-h-screen">
         <div className="container py-8 max-w-3xl">
-          {/* Header bar - Parkify admin style */}
+          {/* Header bar - Parkify style */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-2xl glass-deep p-5 mb-8 flex items-center justify-between"
+            className="rounded-2xl glass-liquid neon-border-teal p-5 mb-8 flex items-center justify-between"
           >
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl gradient-warm flex items-center justify-center neon-glow-primary">
-                <Truck className="h-5 w-5 text-white" />
+              <div className="h-12 w-12 rounded-xl gradient-warm flex items-center justify-center neon-glow-primary shadow-lg">
+                <Truck className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-heading font-extrabold text-white">CRAVIX DRIVER</h1>
-                <p className="text-white/50 text-sm">Alex Rivera</p>
+                <h1 className="text-2xl font-heading font-extrabold text-foreground">CRAVIX DRIVER</h1>
+                <p className="text-muted-foreground text-sm">Alex Rivera</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm" className="rounded-xl glass-deep border-white/10 text-white hover:bg-white/10">
+              <Button variant="outline" size="sm" className="rounded-xl glass-deep border-white/10 text-foreground hover:bg-white/10">
                 <RefreshCw className="h-4 w-4 mr-1" /> Refresh
               </Button>
               <Badge variant="outline" className="gap-1 text-success border-success/30 rounded-full px-4 py-2 bg-success/10">
@@ -69,13 +69,13 @@ const Driver = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ y: -4 }}
-                className="rounded-2xl glass-deep p-4 text-center transition-all hover:bg-white/10"
+                className="rounded-2xl glass-liquid neon-border-teal p-4 text-center transition-all hover:bg-white/5"
               >
                 <div className={`h-10 w-10 mx-auto rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center mb-2 shadow-lg`}>
                   <stat.icon className="h-5 w-5 text-white" />
                 </div>
-                <p className="text-2xl font-heading font-extrabold text-white">{stat.value}</p>
-                <p className="text-xs text-white/40 mt-1">{stat.label}</p>
+                <p className="text-2xl font-heading font-extrabold text-foreground">{stat.value}</p>
+                <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
               </motion.div>
             ))}
           </div>
@@ -85,44 +85,44 @@ const Driver = () => {
             <motion.div
               initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              className="rounded-2xl glass-deep border border-primary/30 p-6 mb-8 space-y-4 shadow-[0_0_40px_-10px_hsl(25,95%,53%/0.3)]"
+              className="rounded-2xl glass-liquid neon-border p-6 mb-8 space-y-4 shadow-[0_0_40px_-10px_hsl(25,95%,53%/0.3)]"
             >
               <div className="flex items-center justify-between">
-                <h2 className="font-heading font-bold text-lg text-white">Active Delivery</h2>
+                <h2 className="font-heading font-bold text-lg text-foreground">Active Delivery</h2>
                 <Badge className="gradient-warm border-0 rounded-full">{deliveryStatus === 'accepted' ? 'Head to Restaurant' : deliveryStatus === 'picked_up' ? 'Delivering' : 'Complete'}</Badge>
               </div>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl gradient-warm neon-glow-primary"><MapPin className="h-4 w-4 text-white" /></div>
                   <div>
-                    <p className="text-sm font-heading font-semibold text-white">Pickup: {activeDelivery.restaurant}</p>
-                    <p className="text-sm text-white/50">{activeDelivery.pickup}</p>
+                    <p className="text-sm font-heading font-semibold text-foreground">Pickup: {activeDelivery.restaurant}</p>
+                    <p className="text-sm text-muted-foreground">{activeDelivery.pickup}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-success/20"><Navigation className="h-4 w-4 text-success" /></div>
                   <div>
-                    <p className="text-sm font-heading font-semibold text-white">Dropoff</p>
-                    <p className="text-sm text-white/50">{activeDelivery.dropoff}</p>
+                    <p className="text-sm font-heading font-semibold text-foreground">Dropoff</p>
+                    <p className="text-sm text-muted-foreground">{activeDelivery.dropoff}</p>
                   </div>
                 </div>
               </div>
               <div className="flex items-center justify-between text-sm border-t border-white/10 pt-3">
-                <span className="text-white/40">{activeDelivery.distance} • {activeDelivery.items} items</span>
+                <span className="text-muted-foreground">{activeDelivery.distance} • {activeDelivery.items} items</span>
                 <span className="font-heading font-extrabold text-lg text-gradient">${activeDelivery.payout.toFixed(2)}</span>
               </div>
               <div className="flex gap-2">
                 <Button className="flex-1 gradient-warm rounded-xl neon-glow-primary border-0" onClick={advanceStatus}>
                   {deliveryStatus === 'accepted' ? 'Picked Up' : deliveryStatus === 'picked_up' ? 'Delivered' : 'Complete'}
                 </Button>
-                <Button variant="outline" size="icon" className="rounded-xl glass-deep border-white/10 text-white hover:bg-white/10"><Phone className="h-4 w-4" /></Button>
+                <Button variant="outline" size="icon" className="rounded-xl glass-deep border-white/10 text-foreground hover:bg-white/10"><Phone className="h-4 w-4" /></Button>
               </div>
             </motion.div>
           )}
 
           {/* Available Orders */}
           <div>
-            <h2 className="font-heading font-bold text-lg mb-4 text-white">Available Orders</h2>
+            <h2 className="font-heading font-bold text-lg mb-4 text-foreground">Available Orders</h2>
             <div className="space-y-3">
               {availableOrders.filter(o => o.id !== activeDelivery?.id).map((order, i) => (
                 <motion.div
@@ -131,12 +131,12 @@ const Driver = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
                   whileHover={{ y: -2 }}
-                  className="rounded-2xl glass-deep p-5 flex items-center justify-between transition-all hover:bg-white/10"
+                  className="rounded-2xl glass-liquid neon-border-teal p-5 flex items-center justify-between transition-all hover:bg-white/5"
                 >
                   <div>
-                    <p className="font-heading font-bold text-white">{order.restaurant}</p>
-                    <p className="text-sm text-white/50">{order.distance} • {order.items} items</p>
-                    <p className="text-sm text-white/40">{order.pickup} → {order.dropoff}</p>
+                    <p className="font-heading font-bold text-foreground">{order.restaurant}</p>
+                    <p className="text-sm text-muted-foreground">{order.distance} • {order.items} items</p>
+                    <p className="text-sm text-muted-foreground">{order.pickup} → {order.dropoff}</p>
                   </div>
                   <div className="text-right space-y-2">
                     <p className="font-heading font-extrabold text-gradient text-lg">${order.payout.toFixed(2)}</p>

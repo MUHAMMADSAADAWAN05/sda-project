@@ -23,7 +23,7 @@ const statusLabels: Record<string, string> = {
 const Orders = () => (
   <PageWrapper>
     <div className="container py-8 max-w-3xl">
-      <motion.h1 initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="text-3xl font-heading font-extrabold mb-8">Order History</motion.h1>
+      <motion.h1 initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="text-3xl font-heading font-extrabold mb-8 text-foreground">Order History</motion.h1>
 
       <div className="space-y-4">
         {mockOrders.map((order, i) => (
@@ -33,26 +33,26 @@ const Orders = () => (
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
             whileHover={{ y: -2 }}
-            className="rounded-2xl glass-card neon-border p-6 shadow-card hover:shadow-card-hover transition-all"
+            className="rounded-2xl glass-liquid neon-border-teal p-6 transition-all hover:bg-white/5"
           >
             <div className="flex items-start justify-between mb-3">
               <div>
-                <p className="font-heading font-bold">{order.restaurantName}</p>
+                <p className="font-heading font-bold text-foreground">{order.restaurantName}</p>
                 <p className="text-sm text-muted-foreground">Order {order.id} • {new Date(order.placedAt).toLocaleDateString()}</p>
               </div>
               <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${statusColors[order.status]}`}>
                 {statusLabels[order.status]}
               </span>
             </div>
-            <div className="flex items-center justify-between border-t border-border/30 pt-3">
+            <div className="flex items-center justify-between border-t border-white/10 pt-3">
               <p className="font-heading font-bold text-lg text-gradient">${order.total.toFixed(2)}</p>
               <div className="flex gap-2">
                 {order.status !== 'delivered' && (
-                  <Button size="sm" variant="outline" className="gap-1 rounded-xl glass-card border-border/50 hover:neon-border transition-all" asChild>
+                  <Button size="sm" variant="outline" className="gap-1 rounded-xl glass-deep border-white/10 text-foreground hover:bg-white/10 transition-all" asChild>
                     <Link to={`/tracking/${order.id}`}><Eye className="h-3.5 w-3.5" /> Track</Link>
                   </Button>
                 )}
-                <Button size="sm" variant="outline" className="gap-1 rounded-xl glass-card border-border/50 hover:neon-border transition-all">
+                <Button size="sm" variant="outline" className="gap-1 rounded-xl glass-deep border-white/10 text-foreground hover:bg-white/10 transition-all">
                   <RotateCcw className="h-3.5 w-3.5" /> Reorder
                 </Button>
               </div>
@@ -63,10 +63,10 @@ const Orders = () => (
 
       {mockOrders.length === 0 && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="py-20 text-center">
-          <div className="flex h-24 w-24 mx-auto items-center justify-center rounded-3xl glass-card neon-border mb-4">
+          <div className="flex h-24 w-24 mx-auto items-center justify-center rounded-3xl glass-liquid neon-border-teal mb-4">
             <Package className="h-12 w-12 text-muted-foreground" />
           </div>
-          <p className="text-xl font-heading font-bold">No orders yet</p>
+          <p className="text-xl font-heading font-bold text-foreground">No orders yet</p>
           <p className="text-muted-foreground mt-1">Your order history will appear here</p>
           <Button className="mt-4 gradient-warm rounded-xl neon-glow-primary" asChild><Link to="/">Browse Restaurants</Link></Button>
         </motion.div>
