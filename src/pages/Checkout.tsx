@@ -91,7 +91,7 @@ const Checkout = () => {
 
           {/* Summary */}
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="lg:col-span-2">
-            <div className="rounded-2xl glass-card neon-border p-6 space-y-4 sticky top-24 shadow-card-hover">
+            <div className="rounded-2xl glass-liquid neon-border-teal p-6 space-y-4 sticky top-24">
               <h2 className="font-heading font-bold">Order Summary</h2>
               <p className="text-sm font-semibold text-primary">{items[0]?.restaurantName}</p>
               <div className="space-y-2 border-t border-border/30 pt-3">
