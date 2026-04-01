@@ -78,7 +78,7 @@ const Login = () => {
                 </Button>
               </div>
             </div>
-            <Button type="submit" className="w-full gradient-warm rounded-xl neon-glow-primary hover:shadow-xl transition-all" size="lg">Sign In</Button>
+            <Button type="submit" className="w-full gradient-warm rounded-xl neon-glow-primary hover:shadow-xl transition-all border-0" size="lg">Sign In</Button>
           </form>
 
           {/* Skip button */}
