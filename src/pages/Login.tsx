@@ -42,7 +42,7 @@ const Login = () => {
           initial={{ opacity: 0, y: 20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.5, type: 'spring', stiffness: 200 }}
-          className="relative w-full max-w-sm space-y-8 glass-card rounded-3xl p-8 neon-border shadow-card-hover"
+          className="relative w-full max-w-sm space-y-8 glass-liquid rounded-3xl p-8 neon-border-teal"
         >
           <div className="text-center">
             <motion.div
