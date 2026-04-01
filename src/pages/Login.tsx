@@ -97,8 +97,8 @@ const Login = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <Button variant="outline" className="w-full rounded-xl glass-card border-border/50 hover:neon-border transition-all">Google</Button>
-            <Button variant="outline" className="w-full rounded-xl glass-card border-border/50 hover:neon-border transition-all">Apple</Button>
+            <Button variant="outline" className="w-full rounded-xl glass-deep border-white/10 text-foreground hover:bg-white/10 transition-all">Google</Button>
+            <Button variant="outline" className="w-full rounded-xl glass-deep border-white/10 text-foreground hover:bg-white/10 transition-all">Apple</Button>
           </div>
 
           <p className="text-center text-sm text-muted-foreground">
