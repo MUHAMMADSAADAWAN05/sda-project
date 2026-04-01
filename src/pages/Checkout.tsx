@@ -61,8 +61,8 @@ const Checkout = () => {
             </motion.div>
 
             {/* Payment */}
-            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="rounded-2xl glass-card neon-border p-6 space-y-4 shadow-card-hover">
-              <h2 className="font-heading font-bold flex items-center gap-2"><div className="h-8 w-8 rounded-lg gradient-warm neon-glow-primary flex items-center justify-center"><CreditCard className="h-4 w-4 text-primary-foreground" /></div> Payment Method</h2>
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="rounded-2xl glass-liquid neon-border-teal p-6 space-y-4">
+              <h2 className="font-heading font-bold flex items-center gap-2 text-foreground"><div className="h-8 w-8 rounded-lg gradient-warm neon-glow-primary flex items-center justify-center"><CreditCard className="h-4 w-4 text-primary-foreground" /></div> Payment Method</h2>
               <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
                 {[
                   { id: 'card1', number: '•••• •••• •••• 4242', type: 'Visa • Expires 12/25' },
