@@ -69,7 +69,7 @@ const Signup = () => {
               <Label htmlFor="email" className="font-heading font-semibold">Email</Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input id="email" type="email" placeholder="you@example.com" className="pl-10 rounded-xl glass-card border-border/50 focus:neon-border transition-all" value={email} onChange={e => setEmail(e.target.value)} required />
+                <Input id="email" type="email" placeholder="you@example.com" className="pl-10 rounded-xl glass-deep border-white/10 focus:neon-border transition-all text-foreground placeholder:text-muted-foreground" value={email} onChange={e => setEmail(e.target.value)} required />
               </div>
             </div>
             <div className="space-y-2">
