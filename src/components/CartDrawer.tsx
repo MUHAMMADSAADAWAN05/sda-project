@@ -58,7 +58,7 @@ const CartDrawer = () => {
                         initial={{ opacity: 0, x: 30 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -30, height: 0 }}
-                        className="flex gap-3 rounded-2xl glass-liquid neon-border-teal p-3">
+                        className="flex gap-3 rounded-2xl glass-liquid neon-border-teal p-3"
                       >
                         <img src={item.menuItem.image} alt={item.menuItem.name} className="h-16 w-16 rounded-xl object-cover" />
                         <div className="flex-1 min-w-0">
