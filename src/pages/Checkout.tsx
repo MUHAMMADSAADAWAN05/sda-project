@@ -80,11 +80,11 @@ const Checkout = () => {
             </motion.div>
 
             {/* Promo */}
-            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="rounded-2xl glass-card neon-border p-6 space-y-4 shadow-card-hover">
-              <h2 className="font-heading font-bold flex items-center gap-2"><div className="h-8 w-8 rounded-lg gradient-warm neon-glow-primary flex items-center justify-center"><Tag className="h-4 w-4 text-primary-foreground" /></div> Promo Code</h2>
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="rounded-2xl glass-liquid neon-border-teal p-6 space-y-4">
+              <h2 className="font-heading font-bold flex items-center gap-2 text-foreground"><div className="h-8 w-8 rounded-lg gradient-warm neon-glow-primary flex items-center justify-center"><Tag className="h-4 w-4 text-primary-foreground" /></div> Promo Code</h2>
               <div className="flex gap-2">
-                <Input placeholder="Enter promo code" value={promoCode} onChange={e => setPromoCode(e.target.value)} className="rounded-xl glass-card border-border/50 focus:neon-border" />
-                <Button variant="outline" className="rounded-xl glass-card neon-border">Apply</Button>
+                <Input placeholder="Enter promo code" value={promoCode} onChange={e => setPromoCode(e.target.value)} className="rounded-xl glass-deep border-white/10 focus:neon-border text-foreground placeholder:text-muted-foreground" />
+                <Button variant="outline" className="rounded-xl glass-deep border-white/10 text-foreground hover:bg-white/10">Apply</Button>
               </div>
             </motion.div>
           </div>
