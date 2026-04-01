@@ -68,7 +68,7 @@ const Checkout = () => {
                   { id: 'card1', number: '•••• •••• •••• 4242', type: 'Visa • Expires 12/25' },
                   { id: 'card2', number: '•••• •••• •••• 8888', type: 'Mastercard • Expires 06/26' },
                 ].map(card => (
-                  <div key={card.id} className="flex items-center gap-3 rounded-xl glass-card border border-border/30 p-3.5 cursor-pointer hover:neon-border transition-all">
+                  <div key={card.id} className="flex items-center gap-3 rounded-xl glass-deep border border-white/10 p-3.5 cursor-pointer hover:neon-border transition-all">
                     <RadioGroupItem value={card.id} id={card.id} />
                     <Label htmlFor={card.id} className="cursor-pointer flex-1">
                       <p className="font-heading font-semibold">{card.number}</p>
