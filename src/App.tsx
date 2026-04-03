@@ -64,7 +64,7 @@ const App = () => (
                 </main>
                 <Footer />
                 <CartDrawer />
-                <BackToWelcome />
+                
               </div>
             } />
           </Routes>
