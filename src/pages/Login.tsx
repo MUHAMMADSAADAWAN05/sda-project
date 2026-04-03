@@ -8,7 +8,11 @@ import { PageWrapper } from '@/components/PageWrapper';
 import { Mail, Lock, Eye, EyeOff, SkipForward } from 'lucide-react';
 
 const roleDestinations: Record<string, string> = {
+<<<<<<< HEAD
   customer: '/customer',
+=======
+  customer: '/',
+>>>>>>> 9ff8e9ec60d7bfcd236ee7588f3d2e9a4fc2ba55
   restaurant: '/dashboard',
   driver: '/driver',
 };

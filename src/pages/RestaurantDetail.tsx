@@ -84,14 +84,22 @@ const RestaurantDetail = () => {
             alt={restaurant.name}
             className="h-full w-full object-cover"
           />
+<<<<<<< HEAD
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
           <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}>
             <Button variant="secondary" size="icon" className="absolute left-6 top-6 rounded-xl glass-liquid neon-border shadow-lg z-20" onClick={() => navigate(-1)}>
               <ArrowLeft className="h-5 w-5" />
+=======
+          <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent" />
+          <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}>
+            <Button variant="secondary" size="icon" className="absolute left-4 top-4 rounded-xl glass neon-border" onClick={() => navigate(-1)}>
+              <ArrowLeft className="h-4 w-4" />
+>>>>>>> 9ff8e9ec60d7bfcd236ee7588f3d2e9a4fc2ba55
             </Button>
           </motion.div>
         </div>
 
+<<<<<<< HEAD
         <div className="container -mt-28 relative z-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -133,6 +141,29 @@ const RestaurantDetail = () => {
                   <Badge variant="outline" className="rounded-full px-4 py-1 glass-liquid neon-border-teal text-white font-semibold">{restaurant.priceRange}</Badge>
                   <Badge variant="outline" className="rounded-full px-4 py-1 glass-liquid neon-border-teal text-white font-semibold">${restaurant.deliveryFee.toFixed(2)} delivery</Badge>
                 </div>
+=======
+        <div className="container -mt-20 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="rounded-2xl glass-liquid neon-border-teal p-6 shadow-card-hover"
+          >
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h1 className="text-2xl font-heading font-extrabold md:text-3xl">{restaurant.name}</h1>
+                <p className="text-muted-foreground mt-1">{restaurant.description}</p>
+                <div className="flex flex-wrap gap-3 mt-3 text-sm text-muted-foreground">
+                  <span className="flex items-center gap-1.5 rounded-full glass-liquid neon-border-teal px-3 py-1"><Star className="h-4 w-4 fill-accent text-accent" /><span className="font-bold text-accent-foreground">{restaurant.rating}</span> ({restaurant.reviewCount.toLocaleString()}+)</span>
+                  <span className="flex items-center gap-1.5 rounded-full glass-deep border border-white/10 px-3 py-1"><Clock className="h-4 w-4 text-primary" />{restaurant.deliveryTime}</span>
+                  <span className="flex items-center gap-1.5 rounded-full glass-deep border border-white/10 px-3 py-1"><MapPin className="h-4 w-4" />{restaurant.address}</span>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Badge variant="secondary" className="rounded-full px-3 glass-card">{restaurant.cuisine}</Badge>
+                <Badge variant="outline" className="rounded-full px-3 glass-liquid neon-border-teal">{restaurant.priceRange}</Badge>
+                <Badge variant="outline" className="rounded-full px-3 glass-liquid neon-border-teal">${restaurant.deliveryFee.toFixed(2)} delivery</Badge>
+>>>>>>> 9ff8e9ec60d7bfcd236ee7588f3d2e9a4fc2ba55
               </div>
             </div>
           </motion.div>

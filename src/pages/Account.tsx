@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { User, MapPin, Heart, Settings, LogOut, LayoutDashboard, Sliders, History, CreditCard, Bell, HelpCircle, Shield, ShoppingBag, Edit3, Store } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -129,6 +130,100 @@ const Account = () => {
 
           </div>
         </div>
+=======
+import { User, MapPin, Heart, Settings, LogOut } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { savedAddresses, restaurants } from '@/data/mockData';
+import RestaurantCard from '@/components/RestaurantCard';
+import { motion } from 'framer-motion';
+import { PageWrapper } from '@/components/PageWrapper';
+
+const Account = () => {
+  const favorites = restaurants.slice(0, 3);
+
+  return (
+    <PageWrapper>
+      <div className="container py-8 max-w-4xl">
+        <motion.h1 initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="text-3xl font-heading font-extrabold mb-8 text-foreground">My Account</motion.h1>
+
+        <Tabs defaultValue="profile" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-4 max-w-md glass-liquid rounded-2xl p-1 neon-border-teal">
+            <TabsTrigger value="profile" className="rounded-xl text-foreground data-[state=active]:gradient-warm data-[state=active]:text-white">Profile</TabsTrigger>
+            <TabsTrigger value="addresses" className="rounded-xl text-foreground data-[state=active]:gradient-warm data-[state=active]:text-white">Addresses</TabsTrigger>
+            <TabsTrigger value="favorites" className="rounded-xl text-foreground data-[state=active]:gradient-warm data-[state=active]:text-white">Favorites</TabsTrigger>
+            <TabsTrigger value="settings" className="rounded-xl text-foreground data-[state=active]:gradient-warm data-[state=active]:text-white">Settings</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="profile">
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-liquid neon-border-teal p-6 space-y-6">
+              <div className="flex items-center gap-4">
+                <div className="flex h-20 w-20 items-center justify-center rounded-2xl gradient-warm neon-glow-primary text-2xl font-bold text-primary-foreground">JD</div>
+                <div>
+                  <h2 className="text-xl font-heading font-bold text-foreground">John Doe</h2>
+                  <p className="text-sm text-muted-foreground">john.doe@email.com</p>
+                  <p className="text-sm text-muted-foreground">Member since Jan 2024</p>
+                </div>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-2"><Label className="font-heading font-semibold text-muted-foreground">First Name</Label><Input defaultValue="John" className="rounded-xl glass-deep border-white/10 text-foreground focus:border-primary/50" /></div>
+                <div className="space-y-2"><Label className="font-heading font-semibold text-muted-foreground">Last Name</Label><Input defaultValue="Doe" className="rounded-xl glass-deep border-white/10 text-foreground focus:border-primary/50" /></div>
+                <div className="space-y-2"><Label className="font-heading font-semibold text-muted-foreground">Email</Label><Input defaultValue="john.doe@email.com" type="email" className="rounded-xl glass-deep border-white/10 text-foreground focus:border-primary/50" /></div>
+                <div className="space-y-2"><Label className="font-heading font-semibold text-muted-foreground">Phone</Label><Input defaultValue="(555) 123-4567" className="rounded-xl glass-deep border-white/10 text-foreground focus:border-primary/50" /></div>
+              </div>
+              <Button className="gradient-warm rounded-xl neon-glow-primary border-0">Save Changes</Button>
+            </motion.div>
+          </TabsContent>
+
+          <TabsContent value="addresses">
+            <div className="space-y-4">
+              {savedAddresses.map((addr, i) => (
+                <motion.div key={addr.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} className="flex items-center justify-between rounded-2xl glass-liquid neon-border-teal p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/20 neon-glow-primary">
+                      <MapPin className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-heading font-semibold text-foreground">{addr.label}</p>
+                      <p className="text-sm text-muted-foreground">{addr.street}, {addr.city} {addr.zip}</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button variant="ghost" size="sm" className="rounded-xl text-muted-foreground hover:text-foreground hover:bg-white/10">Edit</Button>
+                    <Button variant="ghost" size="sm" className="text-destructive rounded-xl hover:bg-destructive/10">Remove</Button>
+                  </div>
+                </motion.div>
+              ))}
+              <Button variant="outline" className="w-full rounded-xl glass-deep border-white/10 text-foreground hover:bg-white/10">+ Add New Address</Button>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="favorites">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {favorites.map(r => <RestaurantCard key={r.id} restaurant={r} />)}
+            </div>
+            {favorites.length === 0 && <p className="text-center py-10 text-muted-foreground">No favorites yet</p>}
+          </TabsContent>
+
+          <TabsContent value="settings">
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-liquid neon-border-teal p-6 space-y-6">
+              <h2 className="font-heading font-bold text-foreground">Preferences</h2>
+              <div className="space-y-4">
+                {['Push Notifications', 'Email Notifications', 'SMS Notifications'].map((item, i) => (
+                  <div key={item} className="flex items-center justify-between rounded-xl glass-deep border border-white/10 p-3">
+                    <span className="font-medium text-foreground">{item}</span>
+                    <Button variant="outline" size="sm" className="rounded-xl glass-deep border-white/10 text-foreground hover:bg-white/10">{i < 2 ? 'Enabled' : 'Disabled'}</Button>
+                  </div>
+                ))}
+              </div>
+              <hr className="border-white/10" />
+              <Button variant="destructive" className="gap-2 rounded-xl"><LogOut className="h-4 w-4" /> Sign Out</Button>
+            </motion.div>
+          </TabsContent>
+        </Tabs>
+>>>>>>> 9ff8e9ec60d7bfcd236ee7588f3d2e9a4fc2ba55
       </div>
     </PageWrapper>
   );

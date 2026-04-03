@@ -8,6 +8,10 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
+<<<<<<< HEAD
+=======
+import BackToWelcome from "@/components/BackToWelcome";
+>>>>>>> 9ff8e9ec60d7bfcd236ee7588f3d2e9a4fc2ba55
 import SplashScreen from "./pages/SplashScreen";
 import Index from "./pages/Index";
 import SearchPage from "./pages/SearchPage";
@@ -37,13 +41,21 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
+<<<<<<< HEAD
             <Route path="/" element={<SplashScreen />} />
+=======
+            <Route path="/welcome" element={<SplashScreen />} />
+>>>>>>> 9ff8e9ec60d7bfcd236ee7588f3d2e9a4fc2ba55
             <Route path="*" element={
               <div className="flex min-h-screen flex-col">
                 <Header />
                 <main className="flex-1">
                   <Routes>
+<<<<<<< HEAD
                     <Route path="/customer" element={<Index />} />
+=======
+                    <Route path="/" element={<Index />} />
+>>>>>>> 9ff8e9ec60d7bfcd236ee7588f3d2e9a4fc2ba55
                     <Route path="/search" element={<SearchPage />} />
                     <Route path="/restaurant/:id" element={<RestaurantDetail />} />
                     <Route path="/checkout" element={<Checkout />} />
@@ -63,6 +75,10 @@ const App = () => (
                 </main>
                 <Footer />
                 <CartDrawer />
+<<<<<<< HEAD
+=======
+                <BackToWelcome />
+>>>>>>> 9ff8e9ec60d7bfcd236ee7588f3d2e9a4fc2ba55
               </div>
             } />
           </Routes>
