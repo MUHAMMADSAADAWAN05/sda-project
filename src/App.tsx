@@ -8,7 +8,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
-import BackToWelcome from "@/components/BackToWelcome";
+
 import SplashScreen from "./pages/SplashScreen";
 import Index from "./pages/Index";
 import SearchPage from "./pages/SearchPage";
