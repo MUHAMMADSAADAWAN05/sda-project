@@ -73,7 +73,7 @@ const RestaurantDetail = () => {
 
   return (
     <PageWrapper>
-      <div className="min-h-screen">
+      <div className="min-h-screen pb-12">
         {/* Hero */}
         <div className="relative h-64 md:h-80 overflow-hidden">
           <motion.img
@@ -84,22 +84,14 @@ const RestaurantDetail = () => {
             alt={restaurant.name}
             className="h-full w-full object-cover"
           />
-<<<<<<< HEAD
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
           <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}>
             <Button variant="secondary" size="icon" className="absolute left-6 top-6 rounded-xl glass-liquid neon-border shadow-lg z-20" onClick={() => navigate(-1)}>
-              <ArrowLeft className="h-5 w-5" />
-=======
-          <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent" />
-          <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}>
-            <Button variant="secondary" size="icon" className="absolute left-4 top-4 rounded-xl glass neon-border" onClick={() => navigate(-1)}>
-              <ArrowLeft className="h-4 w-4" />
->>>>>>> 9ff8e9ec60d7bfcd236ee7588f3d2e9a4fc2ba55
+              <ArrowLeft className="h-5 w-5 font-bold" />
             </Button>
           </motion.div>
         </div>
 
-<<<<<<< HEAD
         <div className="container -mt-28 relative z-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -141,29 +133,6 @@ const RestaurantDetail = () => {
                   <Badge variant="outline" className="rounded-full px-4 py-1 glass-liquid neon-border-teal text-white font-semibold">{restaurant.priceRange}</Badge>
                   <Badge variant="outline" className="rounded-full px-4 py-1 glass-liquid neon-border-teal text-white font-semibold">${restaurant.deliveryFee.toFixed(2)} delivery</Badge>
                 </div>
-=======
-        <div className="container -mt-20 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="rounded-2xl glass-liquid neon-border-teal p-6 shadow-card-hover"
-          >
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <h1 className="text-2xl font-heading font-extrabold md:text-3xl">{restaurant.name}</h1>
-                <p className="text-muted-foreground mt-1">{restaurant.description}</p>
-                <div className="flex flex-wrap gap-3 mt-3 text-sm text-muted-foreground">
-                  <span className="flex items-center gap-1.5 rounded-full glass-liquid neon-border-teal px-3 py-1"><Star className="h-4 w-4 fill-accent text-accent" /><span className="font-bold text-accent-foreground">{restaurant.rating}</span> ({restaurant.reviewCount.toLocaleString()}+)</span>
-                  <span className="flex items-center gap-1.5 rounded-full glass-deep border border-white/10 px-3 py-1"><Clock className="h-4 w-4 text-primary" />{restaurant.deliveryTime}</span>
-                  <span className="flex items-center gap-1.5 rounded-full glass-deep border border-white/10 px-3 py-1"><MapPin className="h-4 w-4" />{restaurant.address}</span>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <Badge variant="secondary" className="rounded-full px-3 glass-card">{restaurant.cuisine}</Badge>
-                <Badge variant="outline" className="rounded-full px-3 glass-liquid neon-border-teal">{restaurant.priceRange}</Badge>
-                <Badge variant="outline" className="rounded-full px-3 glass-liquid neon-border-teal">${restaurant.deliveryFee.toFixed(2)} delivery</Badge>
->>>>>>> 9ff8e9ec60d7bfcd236ee7588f3d2e9a4fc2ba55
               </div>
             </div>
           </motion.div>
@@ -178,7 +147,7 @@ const RestaurantDetail = () => {
                 viewport={{ once: true }}
                 transition={{ delay: catIdx * 0.1 }}
               >
-                <h2 className="text-xl font-heading font-bold mb-4 flex items-center gap-2">
+                <h2 className="text-xl font-heading font-bold mb-4 flex items-center gap-2 text-white">
                   <div className="h-1 w-6 rounded-full gradient-warm" style={{ boxShadow: '0 0 8px hsl(var(--primary) / 0.4)' }} />
                   {category.name}
                 </h2>
@@ -197,15 +166,15 @@ const RestaurantDetail = () => {
                     >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <span className="font-heading font-semibold line-clamp-1">{item.name}</span>
-                          {item.popular && <Badge className="shrink-0 text-[10px] h-5 gradient-warm border-0 neon-glow-primary">🔥 Popular</Badge>}
+                          <span className="font-heading font-semibold line-clamp-1 text-white">{item.name}</span>
+                          {item.popular && <Badge className="shrink-0 text-[10px] h-5 gradient-warm border-0 neon-glow-primary text-white">🔥 Popular</Badge>}
                         </div>
-                        <p className="text-sm text-muted-foreground mt-1.5 line-clamp-2">{item.description}</p>
-                        <p className="mt-2.5 font-heading font-extrabold text-gradient text-lg">${item.price.toFixed(2)}</p>
+                        <p className="text-sm text-white/50 mt-1.5 line-clamp-2">{item.description}</p>
+                        <p className="mt-2.5 font-heading font-extrabold text-white text-lg">${item.price.toFixed(2)}</p>
                       </div>
                       <div className="relative">
                         <img src={item.image} alt={item.name} className="h-24 w-24 rounded-xl object-cover shrink-0 transition-transform duration-300 group-hover:scale-105" />
-                        <div className="absolute -bottom-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full gradient-warm neon-glow-primary text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="absolute -bottom-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full gradient-warm neon-glow-primary text-white opacity-0 group-hover:opacity-100 transition-opacity">
                           <Plus className="h-4 w-4" />
                         </div>
                       </div>
@@ -219,65 +188,86 @@ const RestaurantDetail = () => {
 
         {/* Item Dialog */}
         <Dialog open={!!selectedItem} onOpenChange={open => !open && setSelectedItem(null)}>
-          <DialogContent className="sm:max-w-lg max-h-[85vh] overflow-y-auto rounded-2xl glass-strong neon-border-teal">
+          <DialogContent className="sm:max-w-lg max-h-[85vh] overflow-y-auto rounded-2xl glass-strong border-white/10 shadow-2xl backdrop-blur-xl">
             {selectedItem && (
               <>
                 <div className="relative -mt-2 -mx-6 overflow-hidden rounded-t-2xl">
                   <img src={selectedItem.image} alt={selectedItem.name} className="w-full h-52 object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-card/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                 </div>
-                <DialogHeader className="mt-2">
-                  <DialogTitle className="font-heading text-xl font-extrabold">{selectedItem.name}</DialogTitle>
-                  <p className="text-sm text-muted-foreground">{selectedItem.description}</p>
-                  <p className="text-xl font-heading font-extrabold text-gradient">${selectedItem.price.toFixed(2)}</p>
+                <DialogHeader className="mt-4">
+                  <DialogTitle className="font-heading text-2xl font-black text-white">{selectedItem.name}</DialogTitle>
+                  <p className="text-white/60 text-base">{selectedItem.description}</p>
+                  <p className="text-2xl font-heading font-black text-white mt-1">${selectedItem.price.toFixed(2)}</p>
                 </DialogHeader>
 
-                {selectedItem.modifiers?.map(group => (
-                  <div key={group.id} className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <Label className="font-heading font-semibold">{group.name}</Label>
-                      {group.required && <Badge variant="destructive" className="text-[10px] rounded-full">Required</Badge>}
-                    </div>
-                    {group.maxSelect === 1 ? (
-                      <RadioGroup value={selectedModifiers[group.id]?.[0] || ''} onValueChange={v => toggleModifier(group.id, v, 1)}>
-                        {group.options.map(opt => (
-                          <div key={opt.id} className="flex items-center justify-between rounded-xl glass-deep border border-white/10 p-3 hover:neon-border transition-all">
-                            <div className="flex items-center gap-2">
-                              <RadioGroupItem value={opt.id} id={`${group.id}-${opt.id}`} />
-                              <Label htmlFor={`${group.id}-${opt.id}`} className="cursor-pointer">{opt.name}</Label>
-                            </div>
-                            {opt.price > 0 && <span className="text-sm text-muted-foreground">+${opt.price.toFixed(2)}</span>}
-                          </div>
-                        ))}
-                      </RadioGroup>
-                    ) : (
-                      <div className="space-y-2">
-                        {group.options.map(opt => (
-                          <div key={opt.id} className="flex items-center justify-between rounded-xl glass-deep border border-white/10 p-3 hover:neon-border transition-all">
-                            <div className="flex items-center gap-2">
-                              <Checkbox id={`${group.id}-${opt.id}`} checked={selectedModifiers[group.id]?.includes(opt.id)} onCheckedChange={() => toggleModifier(group.id, opt.id, group.maxSelect)} />
-                              <Label htmlFor={`${group.id}-${opt.id}`} className="cursor-pointer">{opt.name}</Label>
-                            </div>
-                            {opt.price > 0 && <span className="text-sm text-muted-foreground">+${opt.price.toFixed(2)}</span>}
-                          </div>
-                        ))}
+                <div className="space-y-6 my-4">
+                  {selectedItem.modifiers?.map(group => (
+                    <div key={group.id} className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <Label className="font-heading font-bold text-white/90">{group.name}</Label>
+                        {group.required && <Badge variant="destructive" className="text-[10px] rounded-full px-3">Required</Badge>}
                       </div>
-                    )}
-                  </div>
-                ))}
+                      {group.maxSelect === 1 ? (
+                        <RadioGroup value={selectedModifiers[group.id]?.[0] || ''} onValueChange={v => toggleModifier(group.id, v, 1)}>
+                          {group.options.map(opt => (
+                            <div key={opt.id} className="flex items-center justify-between rounded-xl glass-deep border border-white/10 p-4 hover:neon-border transition-all cursor-pointer group">
+                              <div className="flex items-center gap-3">
+                                <RadioGroupItem value={opt.id} id={`${group.id}-${opt.id}`} className="border-white/20 text-primary" />
+                                <Label htmlFor={`${group.id}-${opt.id}`} className="cursor-pointer text-white font-medium group-hover:text-primary transition-colors">{opt.name}</Label>
+                              </div>
+                              {opt.price > 0 && <span className="text-sm text-white/50">+${opt.price.toFixed(2)}</span>}
+                            </div>
+                          ))}
+                        </RadioGroup>
+                      ) : (
+                        <div className="space-y-2">
+                          {group.options.map(opt => (
+                            <div key={opt.id} className="flex items-center justify-between rounded-xl glass-deep border border-white/10 p-4 hover:neon-border transition-all cursor-pointer group">
+                              <div className="flex items-center gap-3">
+                                <Checkbox id={`${group.id}-${opt.id}`} checked={selectedModifiers[group.id]?.includes(opt.id)} onCheckedChange={() => toggleModifier(group.id, opt.id, group.maxSelect)} className="border-white/20 data-[state=checked]:bg-primary" />
+                                <Label htmlFor={`${group.id}-${opt.id}`} className="cursor-pointer text-white font-medium group-hover:text-primary transition-colors">{opt.name}</Label>
+                              </div>
+                              {opt.price > 0 && <span className="text-sm text-white/50">+${opt.price.toFixed(2)}</span>}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
 
-                <div className="space-y-2">
-                  <Label className="font-heading font-semibold">Special Instructions</Label>
-                  <Textarea placeholder="Any allergies or preferences?" value={specialInstructions} onChange={e => setSpecialInstructions(e.target.value)} className="resize-none rounded-xl glass-card border-white/10 focus:neon-border" rows={2} />
+                  <div className="space-y-3">
+                    <Label className="font-heading font-bold text-white/90">Special Instructions</Label>
+                    <Textarea 
+                      placeholder="Any allergies or preferences?" 
+                      value={specialInstructions} 
+                      onChange={e => setSpecialInstructions(e.target.value)} 
+                      className="resize-none rounded-xl glass-card border-white/10 text-white placeholder:text-white/20 focus:neon-border h-24" 
+                    />
+                  </div>
                 </div>
 
-                <DialogFooter className="flex-row items-center gap-3">
-                  <div className="flex items-center gap-3 rounded-full glass-liquid neon-border-teal px-2">
-                    <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full" onClick={() => setQuantity(q => Math.max(1, q - 1))}><Minus className="h-4 w-4" /></Button>
-                    <span className="font-bold w-4 text-center">{quantity}</span>
-                    <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full" onClick={() => setQuantity(q => q + 1)}><Plus className="h-4 w-4" /></Button>
+                <DialogFooter className="flex-row items-center gap-4 mt-6">
+                  <div className="flex items-center gap-4 rounded-full glass-deep border border-white/10 px-3 py-1.5">
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="h-8 w-8 rounded-full text-white/50 hover:text-white hover:bg-white/10" 
+                      onClick={() => setQuantity(q => Math.max(1, q - 1))}
+                    >
+                      <Minus className="h-4 w-4" />
+                    </Button>
+                    <span className="font-black text-white w-4 text-center">{quantity}</span>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="h-8 w-8 rounded-full text-white/50 hover:text-white hover:bg-white/10" 
+                      onClick={() => setQuantity(q => q + 1)}
+                    >
+                      <Plus className="h-4 w-4" />
+                    </Button>
                   </div>
-                  <Button className="flex-1 gradient-warm rounded-xl neon-glow-primary" size="lg" onClick={handleAddToCart}>
+                  <Button className="flex-1 gradient-warm rounded-xl neon-glow-primary text-white font-bold h-12 shadow-xl" onClick={handleAddToCart}>
                     Add to Cart — ${getItemTotal().toFixed(2)}
                   </Button>
                 </DialogFooter>
