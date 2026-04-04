@@ -156,6 +156,7 @@ const Dashboard = () => {
             ))}
           </div>
 
+          <div className="glass-deep rounded-3xl p-6">
           <Tabs defaultValue="orders" className="space-y-6">
             <TabsList className="glass-strong rounded-2xl p-1.5 border-white/10">
               <TabsTrigger value="orders" className="gap-2 rounded-xl text-white/70 data-[state=active]:gradient-warm data-[state=active]:text-white data-[state=active]:neon-glow-primary">
