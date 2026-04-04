@@ -107,15 +107,15 @@ const Dashboard = () => {
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="rounded-2xl glass-strong p-4 mb-6 flex flex-wrap items-center justify-between gap-4"
           >
-            <div className="flex items-center gap-3">
-              <div className="h-12 w-12 rounded-xl gradient-warm flex items-center justify-center neon-glow-primary shadow-lg shimmer-effect">
+            <Link to="/" className="flex items-center gap-3 group hover:opacity-90 transition-opacity">
+              <div className="h-12 w-12 rounded-xl gradient-warm flex items-center justify-center neon-glow-primary shadow-lg shimmer-effect group-hover:scale-105 transition-transform">
                 <ChefHat className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-heading font-extrabold text-white tracking-tight">CRAVIX RESTAURANT</h1>
+                <h1 className="text-2xl font-heading font-extrabold text-white tracking-tight group-hover:text-[hsl(25,95%,60%)] transition-colors">CRAVIX RESTAURANT</h1>
                 <p className="text-white/60 text-sm">Mario's Authentic Pizzeria</p>
               </div>
-            </div>
+            </Link>
             <div className="flex items-center gap-2">
               <Button variant="outline" size="sm" className="rounded-lg glass-card border-white/20 text-white hover:bg-white/10 gap-2 transition-all hover:scale-105" onClick={() => window.location.reload()}>
                 <RefreshCw className="h-4 w-4" /> Refresh
