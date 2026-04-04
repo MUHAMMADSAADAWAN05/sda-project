@@ -305,6 +305,7 @@ const Dashboard = () => {
               </motion.div>
             </TabsContent>
           </Tabs>
+          </div>
         </div>
       </div>
     </PageWrapper>
