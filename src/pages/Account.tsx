@@ -136,6 +136,7 @@ const Account = () => {
               </motion.div>
             </div>
           </div>
+        </div>
       </div>
     </PageWrapper>
   );
