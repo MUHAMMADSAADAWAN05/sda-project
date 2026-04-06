@@ -49,7 +49,7 @@ const Account = () => {
             </div>
           </motion.div>
 
-          <div className="glass-deep rounded-3xl p-6">
+          <div className="glass-ultra rounded-3xl p-6 liquid-shimmer">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
                 <Sliders className="h-6 w-6 text-white" />

@@ -135,7 +135,7 @@ const Dashboard = () => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ delay: i * 0.1, type: 'spring', stiffness: 200, damping: 20 }}
                 whileHover={{ y: -4, scale: 1.02 }}
-                className="rounded-xl glass-card border-white/10 p-5 flex items-center gap-4 hover:bg-white/5 transition-colors card-shine cursor-default"
+                className="rounded-xl glass-ultra border-white/10 p-5 flex items-center gap-4 hover:bg-white/5 transition-colors card-shine cursor-default breathing-glow"
               >
                 <div className={`relative h-14 w-14 rounded-xl flex items-center justify-center shrink-0 ${stat.color} shadow-lg`}>
                   {stat.showRing && (
@@ -156,9 +156,9 @@ const Dashboard = () => {
             ))}
           </div>
 
-          <div className="glass-deep rounded-3xl p-6">
+          <div className="glass-ultra rounded-3xl p-6 liquid-shimmer">
           <Tabs defaultValue="orders" className="space-y-6">
-            <TabsList className="glass-strong rounded-2xl p-1.5 border-white/10">
+            <TabsList className="glass-ultra rounded-2xl p-1.5 border-white/10">
               <TabsTrigger value="orders" className="gap-2 rounded-xl text-white/70 data-[state=active]:gradient-warm data-[state=active]:text-white data-[state=active]:neon-glow-primary">
                 Orders <Badge className="h-5 text-[10px] gradient-warm border-0 text-white">{orders.length}</Badge>
               </TabsTrigger>
@@ -187,7 +187,7 @@ const Dashboard = () => {
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.8, x: 20 }}
                             whileHover={{ y: -4, backgroundColor: 'rgba(255,255,255,0.05)' }}
-                            className="rounded-2xl glass-liquid neon-border-teal p-5 space-y-4 transition-all card-shine"
+                            className="rounded-2xl glass-ultra p-5 space-y-4 transition-all card-shine liquid-shimmer"
                           >
                             <div className="flex justify-between text-sm">
                               <span className="font-heading font-bold text-primary">{order.id}</span>
@@ -229,7 +229,7 @@ const Dashboard = () => {
             </TabsContent>
 
             <TabsContent value="menu">
-              <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-strong border-white/10 overflow-hidden shadow-2xl">
+              <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-ultra border-white/10 overflow-hidden shadow-2xl liquid-shimmer">
                 <div className="flex items-center justify-between p-6 border-b border-white/5">
                   <h3 className="font-heading font-bold text-white text-lg">Menu Management</h3>
                   <Button size="sm" className="gradient-warm rounded-xl neon-glow-primary border-0 text-white font-bold px-6 py-5 btn-premiere"><Plus className="h-4 w-4 mr-2" /> Add New Item</Button>
@@ -247,7 +247,7 @@ const Dashboard = () => {
                     </thead>
                     <tbody className="divide-y divide-white/5">
                       {menu.map(item => (
-                        <motion.tr key={item.id} whileHover={{ backgroundColor: 'rgba(255,255,255,0.02)' }} className="transition-colors group">
+                        <motion.tr key={item.id} whileHover={{ backgroundColor: 'rgba(255,255,255,0.02)' }} className="transition-colors group glass-table-row">
                           <td className="px-6 py-4">
                             <p className="font-heading font-bold text-white group-hover:text-primary transition-colors">{item.name}</p>
                           </td>

@@ -71,7 +71,7 @@ const Admin = () => {
             </div>
           </motion.div>
 
-          <div className="glass-deep rounded-3xl p-6">
+          <div className="glass-ultra rounded-3xl p-6 liquid-shimmer">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
                 <LayoutDashboard className="h-6 w-6 text-white" />
@@ -91,7 +91,7 @@ const Admin = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
                   whileHover={{ y: -4, scale: 1.02 }}
-                  className="rounded-xl glass-card border-white/10 p-5 flex items-center gap-4 hover:bg-white/5 transition-all shadow-lg"
+                  className="rounded-xl glass-ultra border-white/10 p-5 flex items-center gap-4 hover:bg-white/5 transition-all shadow-lg breathing-glow"
                 >
                   <div className={`h-12 w-12 rounded-full flex items-center justify-center ${stat.color}`}>
                     <stat.icon className="h-6 w-6" />
@@ -134,7 +134,7 @@ const Admin = () => {
                       </thead>
                       <tbody>
                         {restaurants.map(r => (
-                          <tr key={r.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                          <tr key={r.id} className="border-b border-white/5 hover:bg-white/5 transition-colors glass-table-row">
                             <td className="p-4 font-heading font-semibold text-white">{r.name}</td>
                             <td className="p-4">
                               <Badge className={`rounded-full border-0 px-3 py-1 ${r.status === 'active' ? 'bg-success/20 text-success' : 'bg-orange-500/20 text-orange-400'}`}>
@@ -178,7 +178,7 @@ const Admin = () => {
                       </thead>
                       <tbody>
                         {mockUsers.map(u => (
-                          <tr key={u.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                          <tr key={u.id} className="border-b border-white/5 hover:bg-white/5 transition-colors glass-table-row">
                             <td className="p-4 font-heading font-semibold text-white">{u.name}</td>
                             <td className="p-4 text-white/60">{u.email}</td>
                             <td className="p-4"><Badge className="rounded-full bg-white/10 text-white/70 border-white/20 capitalize px-3">{u.role}</Badge></td>

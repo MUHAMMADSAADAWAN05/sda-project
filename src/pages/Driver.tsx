@@ -164,7 +164,7 @@ const Driver = () => {
             </div>
           </motion.div>
 
-          <div className="glass-deep rounded-3xl p-6">
+          <div className="glass-ultra rounded-3xl p-6 liquid-shimmer">
             {/* Dashboard header with LIVE dot */}
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
@@ -196,7 +196,7 @@ const Driver = () => {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ delay: i * 0.1, type: 'spring', stiffness: 200, damping: 20 }}
                   whileHover={{ y: -4, scale: 1.02 }}
-                  className="rounded-xl glass-card border-white/10 p-4 flex items-center gap-4 hover:bg-white/5 transition-colors card-shine cursor-default"
+                  className="rounded-xl glass-ultra border-white/10 p-4 flex items-center gap-4 hover:bg-white/5 transition-colors card-shine cursor-default breathing-glow"
                 >
                   <div className={`h-12 w-12 rounded-full flex items-center justify-center shrink-0 ${stat.color}`}>
                     <stat.icon className="h-6 w-6" />
