@@ -317,6 +317,7 @@ const Dashboard = () => {
             </TabsContent>
           </Tabs>
           </div>
+          </div>
         </div>
       </div>
     </PageWrapper>

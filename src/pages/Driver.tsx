@@ -403,6 +403,7 @@ const Driver = () => {
               </div>
             </div>
           </div>
+          </div>
         </div>
       </div>
     </PageWrapper>
