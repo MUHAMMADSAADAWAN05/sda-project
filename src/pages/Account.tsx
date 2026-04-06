@@ -1,8 +1,9 @@
-import { User, MapPin, Heart, Settings, LogOut, LayoutDashboard, Sliders, History, CreditCard, Bell, HelpCircle, Shield, ShoppingBag, Edit3, Store } from 'lucide-react';
+import { User, MapPin, Heart, Settings, LogOut, LayoutDashboard, Sliders, History, CreditCard, Bell, HelpCircle, Shield, ShoppingBag, Edit3, Store, Home, Search, Package, UtensilsCrossed } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { PageWrapper } from '@/components/PageWrapper';
+import DashboardSideNav from '@/components/DashboardSideNav';
 
 const controls = [
   { id: 'profile', icon: User, label: 'Edit Profile', desc: 'Update your personal details', color: 'text-white bg-white/10' },
@@ -14,12 +15,21 @@ const controls = [
   { id: 'support', icon: HelpCircle, label: 'Help & Support', desc: 'Contact customer service', color: 'text-white bg-white/10' },
 ];
 
+const customerNavItems = [
+  { icon: Home, label: 'Home', to: '/customer' },
+  { icon: Search, label: 'Browse', to: '/search' },
+  { icon: Package, label: 'Orders', to: '/orders' },
+  { icon: User, label: 'Account', to: '/account' },
+  { icon: Heart, label: 'Favorites', to: '/account' },
+  { icon: CreditCard, label: 'Payments', to: '/account' },
+  { icon: HelpCircle, label: 'Support', to: '/contact' },
+];
+
 const Account = () => {
   return (
     <PageWrapper>
       <div className="min-h-screen pb-12">
-        <div className="container py-8 max-w-[1400px]">
-          
+        <div className="container py-8 max-w-[1400px] flex gap-6">
           {/* Top App Bar */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
