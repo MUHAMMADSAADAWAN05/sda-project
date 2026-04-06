@@ -33,7 +33,7 @@ const Orders = () => (
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
             whileHover={{ y: -2 }}
-            className="rounded-2xl glass-liquid neon-border-teal p-6 transition-all hover:bg-white/5"
+            className="rounded-2xl glass-ultra p-6 transition-all hover:bg-white/5 liquid-shimmer"
           >
             <div className="flex items-start justify-between mb-3">
               <div>

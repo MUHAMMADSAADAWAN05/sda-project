@@ -2,9 +2,10 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { DollarSign, Package, Navigation, MapPin, Phone, Truck, RefreshCw, LayoutDashboard, Settings, History, LogOut, CheckCircle2, Circle } from 'lucide-react';
+import { DollarSign, Package, Navigation, MapPin, Phone, Truck, RefreshCw, LayoutDashboard, Settings, History, LogOut, CheckCircle2, Circle, Home, Car, BarChart3 } from 'lucide-react';
 import { motion, useMotionValue, animate, useInView, AnimatePresence } from 'framer-motion';
 import { PageWrapper } from '@/components/PageWrapper';
+import DashboardSideNav from '@/components/DashboardSideNav';
 
 /* ── Animated Counter ──────────────────────────── */
 function AnimCounter({ to, prefix = '', suffix = '' }: { to: number; prefix?: string; suffix?: string }) {
@@ -111,6 +112,15 @@ const availableOrders = [
   { id: 'ORD-203', restaurant: 'Sakura Sushi',     pickup: '789 Cherry Ln',  dropoff: '221B Baker St',         distance: '1.8 mi', payout: 7.25,  items: 5 },
 ];
 
+const driverNavItems = [
+  { icon: LayoutDashboard, label: 'Dashboard', to: '/driver' },
+  { icon: Package, label: 'Deliveries', to: '/driver' },
+  { icon: BarChart3, label: 'Earnings', to: '/driver' },
+  { icon: Car, label: 'Vehicle', to: '/driver' },
+  { icon: Settings, label: 'Settings', to: '/driver' },
+  { icon: Home, label: 'Home', to: '/' },
+];
+
 const Driver = () => {
   const [activeDelivery, setActiveDelivery] = useState<typeof availableOrders[0] | null>(null);
   const [deliveryStatus, setDeliveryStatus] = useState<DeliveryStatus>('accepted');
@@ -130,7 +140,9 @@ const Driver = () => {
   return (
     <PageWrapper>
       <div className="min-h-screen pb-12">
-        <div className="container py-8 max-w-[1400px]">
+        <div className="container py-8 max-w-[1400px] flex gap-6">
+          <DashboardSideNav items={driverNavItems} title="Driver" />
+          <div className="flex-1 min-w-0">
 
           {/* Top App Bar */}
           <motion.div
@@ -164,7 +176,7 @@ const Driver = () => {
             </div>
           </motion.div>
 
-          <div className="glass-deep rounded-3xl p-6">
+          <div className="glass-ultra rounded-3xl p-6 liquid-shimmer">
             {/* Dashboard header with LIVE dot */}
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
@@ -196,7 +208,7 @@ const Driver = () => {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ delay: i * 0.1, type: 'spring', stiffness: 200, damping: 20 }}
                   whileHover={{ y: -4, scale: 1.02 }}
-                  className="rounded-xl glass-card border-white/10 p-4 flex items-center gap-4 hover:bg-white/5 transition-colors card-shine cursor-default"
+                  className="rounded-xl glass-ultra border-white/10 p-4 flex items-center gap-4 hover:bg-white/5 transition-colors card-shine cursor-default breathing-glow"
                 >
                   <div className={`h-12 w-12 rounded-full flex items-center justify-center shrink-0 ${stat.color}`}>
                     <stat.icon className="h-6 w-6" />
@@ -390,6 +402,7 @@ const Driver = () => {
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

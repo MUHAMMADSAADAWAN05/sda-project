@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, MapPin, ArrowRight, Sparkles, TrendingUp, Flame, Zap, Shield, Clock as ClockIcon } from 'lucide-react';
+import { Search, MapPin, ArrowRight, Sparkles, TrendingUp, Flame, Zap, Shield, Clock as ClockIcon, HelpCircle, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import RestaurantCard from '@/components/RestaurantCard';
@@ -7,6 +7,7 @@ import { categories, restaurants } from '@/data/mockData';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform, useInView, animate, useMotionValue, Variants, Transition } from 'framer-motion';
 import { PageWrapper } from '@/components/PageWrapper';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 /* ── Animated counter ──────────────────────────── */
 function AnimCounter({ to, duration = 1.8 }: { to: number; duration?: number }) {
@@ -66,6 +67,15 @@ const itemVariants: Variants = {
 
 const itemTransition: Transition = { duration: 0.5, ease: [0.22, 1, 0.36, 1] };
 
+const faqs = [
+  { q: 'How does CraviX delivery work?', a: 'Simply browse restaurants near you, add items to your cart, and place your order. A nearby driver will pick up your food and deliver it to your doorstep in real-time with GPS tracking.' },
+  { q: 'What are the delivery hours?', a: 'Most restaurants on CraviX operate between 8 AM and 11 PM. Some 24-hour restaurants are available around the clock. Check each restaurant\'s page for their specific hours.' },
+  { q: 'How can I track my order?', a: 'Once your order is confirmed, you\'ll see a live tracking page with real-time GPS updates showing your driver\'s location, estimated arrival time, and delivery progress steps.' },
+  { q: 'Is there a minimum order amount?', a: 'Minimum order amounts vary by restaurant, typically ranging from $10-$15. You can see the minimum for each restaurant on their detail page.' },
+  { q: 'How do I apply a promo code?', a: 'During checkout, you\'ll find a "Promo Code" section where you can enter your code and click "Apply" to see the discount reflected in your order total.' },
+  { q: 'Can I schedule an order for later?', a: 'Yes! When placing your order, you can choose "Schedule for Later" and pick a date and time that works best for you. Orders can be scheduled up to 7 days in advance.' },
+];
+
 /* ── Main Page ─────────────────────────────────── */
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -92,16 +102,15 @@ const Index = () => {
         <section ref={heroRef} className="relative overflow-hidden py-20 md:py-32">
           {/* Parallax orbs */}
           <motion.div
-            style={{ y: orb1Y }}
+            style={{ y: orb1Y, willChange: 'transform' }}
             className="absolute -left-40 -top-40 h-[500px] w-[500px] rounded-full bg-primary/10 blur-[120px] pointer-events-none animate-blob"
           />
           <motion.div
-            style={{ y: orb2Y }}
+            style={{ y: orb2Y, willChange: 'transform' }}
             className="absolute -right-32 top-12 h-[380px] w-[380px] rounded-full bg-accent/10 blur-[100px] pointer-events-none animate-blob"
-            initial={{ animationDelay: '2s' } as any}
           />
           <motion.div
-            style={{ y: orb3Y }}
+            style={{ y: orb3Y, willChange: 'transform' }}
             className="absolute left-1/2 bottom-0 h-[300px] w-[300px] -translate-x-1/2 rounded-full bg-primary/8 blur-[80px] pointer-events-none"
           />
 
@@ -112,13 +121,13 @@ const Index = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, type: 'spring', stiffness: 200 }}
-                className="mb-6 inline-flex items-center gap-2 rounded-full glass-liquid neon-border px-5 py-2.5 text-sm font-semibold text-primary shimmer-effect"
+                className="mb-6 inline-flex items-center gap-2 rounded-full glass-ultra neon-border px-5 py-2.5 text-sm font-semibold text-primary liquid-shimmer"
               >
                 <Sparkles className="h-4 w-4" />
                 Free delivery on your first order!
               </motion.div>
 
-              {/* Hero heading with cycling word */}
+              {/* Hero heading */}
               <motion.h1
                 initial={{ opacity: 0, y: 32 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -153,7 +162,7 @@ const Index = () => {
                   <Input
                     id="hero-search"
                     placeholder="What are you craving?"
-                    className="h-14 rounded-2xl glass-liquid neon-border-teal pl-12 text-base transition-all focus:neon-border text-foreground placeholder:text-muted-foreground"
+                    className="h-14 rounded-2xl glass-ultra pl-12 text-base transition-all focus:neon-border text-foreground placeholder:text-muted-foreground glass-input"
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
                   />
@@ -186,7 +195,7 @@ const Index = () => {
             initial={{ opacity: 0, y: 22 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="grid grid-cols-3 gap-4 rounded-2xl glass-liquid neon-border-teal p-6"
+            className="grid grid-cols-3 gap-4 rounded-2xl glass-ultra p-6 liquid-shimmer"
           >
             {[
               { icon: Zap, label: 'Lightning Fast', value: '15-30 min avg', color: 'text-accent', live: false },
@@ -243,7 +252,7 @@ const Index = () => {
               >
                 <Link to={`/search?category=${cat.name}`} className="flex flex-col items-center gap-2.5 min-w-[88px] group">
                   <motion.div
-                    className="flex items-center justify-center rounded-2xl glass-liquid text-3xl transition-all group-hover:neon-glow-primary group-hover:neon-border neon-border-teal card-shine"
+                    className="flex items-center justify-center rounded-2xl glass-ultra text-3xl transition-all group-hover:neon-glow-primary group-hover:neon-border card-shine"
                     style={{ height: '72px', width: '72px' }}
                   >
                     {cat.icon}
@@ -319,7 +328,7 @@ const Index = () => {
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="grid grid-cols-3 gap-6 rounded-2xl glass-liquid neon-border-teal p-8 text-center"
+            className="grid grid-cols-3 gap-6 rounded-2xl glass-ultra p-8 text-center liquid-shimmer"
           >
             {[
               { label: 'Restaurants', to: 350 },
@@ -342,6 +351,36 @@ const Index = () => {
           </motion.div>
         </section>
 
+        {/* ── FAQs ─────────────────────────────── */}
+        <section className="container pb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="flex items-center gap-3 mb-8">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg gradient-warm neon-glow-primary">
+                <HelpCircle className="h-4 w-4 text-primary-foreground" />
+              </div>
+              <h2 className="text-2xl font-heading font-bold text-foreground">Frequently Asked Questions</h2>
+            </div>
+            <div className="rounded-2xl glass-ultra p-6 liquid-shimmer">
+              <Accordion type="single" collapsible className="space-y-2">
+                {faqs.map((faq, i) => (
+                  <AccordionItem key={i} value={`faq-${i}`} className="border-white/10 rounded-xl overflow-hidden">
+                    <AccordionTrigger className="px-4 py-4 text-left text-white hover:text-primary hover:no-underline transition-colors font-heading font-semibold text-base">
+                      {faq.q}
+                    </AccordionTrigger>
+                    <AccordionContent className="px-4 pb-4 text-white/70 leading-relaxed">
+                      {faq.a}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          </motion.div>
+        </section>
+
         {/* ── CTA BANNER ───────────────────────── */}
         <motion.section
           initial={{ opacity: 0 }}
@@ -351,7 +390,6 @@ const Index = () => {
         >
           <div className="gradient-warm relative">
             <div className="absolute inset-0 bg-[linear-gradient(hsl(0_0%_100%/0.05)_1px,transparent_1px),linear-gradient(90deg,hsl(0_0%_100%/0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
-            {/* Animated shimmer overlay */}
             <div className="absolute inset-0 shimmer-effect" />
             <div className="container relative py-16 text-center">
               <motion.h2

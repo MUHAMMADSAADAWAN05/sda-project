@@ -2,8 +2,11 @@ import { Link } from 'react-router-dom';
 import cravixLogo from '@/assets/cravix-logo.jpeg';
 
 const Footer = () => (
-  <footer className="glass-strong mt-auto border-t border-white/10">
-    <div className="container py-12">
+  <footer className="glass-ultra mt-auto border-t border-white/10 liquid-shimmer">
+    {/* Top glow border */}
+    <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent pointer-events-none" />
+
+    <div className="container py-12 relative">
       <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
         <div>
           <div className="flex items-center gap-2 mb-4">

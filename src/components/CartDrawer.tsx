@@ -15,7 +15,7 @@ const CartDrawer = () => {
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetContent className="flex w-full flex-col sm:max-w-md glass-strong shadow-2xl border-l border-white/10">
+      <SheetContent className="flex w-full flex-col sm:max-w-md glass-ultra shadow-2xl border-l border-white/10">
         <SheetHeader>
           <SheetTitle className="flex items-center gap-2 font-heading">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg gradient-warm neon-glow-primary">
@@ -58,7 +58,7 @@ const CartDrawer = () => {
                         initial={{ opacity: 0, x: 30 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -30, height: 0 }}
-                        className="flex gap-3 rounded-2xl glass-liquid neon-border-teal p-3"
+                        className="flex gap-3 rounded-2xl glass-ultra p-3 liquid-shimmer"
                       >
                         <img src={item.menuItem.image} alt={item.menuItem.name} className="h-16 w-16 rounded-xl object-cover" />
                         <div className="flex-1 min-w-0">
