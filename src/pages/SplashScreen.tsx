@@ -122,14 +122,14 @@ function RoleCard({ role, index, hoveredRole, setHoveredRole, onClick }: {
       key={role.id}
       initial={{ opacity: 0, y: 50, scale: 0.88 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ delay: 0.18 + index * 0.14, type: 'spring', stiffness: 220, damping: 22 }}
+      transition={{ delay: 0.18 + index * 0.14, type: 'spring', stiffness: 180, damping: 18 }}
       whileTap={{ scale: 0.96 }}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setHoveredRole(role.id)}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
-      style={{ rotateX, rotateY, transformStyle: 'preserve-3d', perspective: 800 }}
-      className="group relative flex flex-col items-center gap-4 rounded-3xl p-8 text-center cursor-pointer glass-strong card-shine glow-border-hover"
+      style={{ rotateX, rotateY, transformStyle: 'preserve-3d', perspective: 800, willChange: 'transform' }}
+      className="group relative flex flex-col items-center gap-4 rounded-3xl p-8 text-center cursor-pointer glass-ultra card-shine glow-border-hover liquid-shimmer"
       tabIndex={0}
       aria-label={`Continue as ${role.title}`}
     >
@@ -225,6 +225,11 @@ const SplashScreen = () => {
             exit={{ opacity: 0, scale: 0.82, filter: 'blur(12px)' }}
             transition={{ duration: 0.5 }}
           >
+            {/* Ambient light rays */}
+            <div className="absolute inset-0 pointer-events-none" style={{ zIndex: -1 }}>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,hsl(25_95%_53%/0.15)_0%,transparent_70%)]" />
+            </div>
+
             {/* Logo with pulsing rings */}
             <motion.div
               initial={{ scale: 0, opacity: 0 }}
@@ -236,6 +241,7 @@ const SplashScreen = () => {
                 animate={{ y: [0, -12, 0] }}
                 transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
                 className="relative"
+                style={{ willChange: 'transform' }}
               >
                 {/* Spinning glow ring */}
                 <motion.div
@@ -363,7 +369,7 @@ const SplashScreen = () => {
               transition={{ type: 'spring', stiffness: 200, damping: 20 }}
               className="text-center"
             >
-              <div className="inline-flex items-center gap-2 rounded-full glass-liquid neon-border px-4 py-1.5 text-xs font-semibold text-white/80 uppercase tracking-widest mb-4">
+              <div className="inline-flex items-center gap-2 rounded-full glass-ultra neon-border px-4 py-1.5 text-xs font-semibold text-white/80 uppercase tracking-widest mb-4">
                 <Star className="h-3.5 w-3.5 text-accent" />
                 Choose your role
               </div>

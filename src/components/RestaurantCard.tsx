@@ -7,11 +7,10 @@ import { useRef } from 'react';
 const RestaurantCard = ({ restaurant, index = 0 }: { restaurant: Restaurant; index?: number }) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // 3-D tilt values
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
-  const rotateX = useSpring(useTransform(rawY, [-1, 1], [8, -8]), { stiffness: 300, damping: 30 });
-  const rotateY = useSpring(useTransform(rawX, [-1, 1], [-8, 8]), { stiffness: 300, damping: 30 });
+  const rotateX = useSpring(useTransform(rawY, [-1, 1], [8, -8]), { stiffness: 260, damping: 24 });
+  const rotateY = useSpring(useTransform(rawX, [-1, 1], [-8, 8]), { stiffness: 260, damping: 24 });
   const glareX  = useTransform(rawX, [-1, 1], ['0%', '100%']);
   const glareY  = useTransform(rawY, [-1, 1], ['0%', '100%']);
 
@@ -36,15 +35,15 @@ const RestaurantCard = ({ restaurant, index = 0 }: { restaurant: Restaurant; ind
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, transformStyle: 'preserve-3d', perspective: 900 }}
+      style={{ rotateX, rotateY, transformStyle: 'preserve-3d', perspective: 900, willChange: 'transform' }}
       whileTap={{ scale: 0.97 }}
       className="cursor-pointer"
     >
       <Link to={`/restaurant/${restaurant.id}`} className="group block">
-        <div className="overflow-hidden rounded-2xl glass-liquid neon-border-teal card-shine transition-all hover:neon-border relative"
+        <div className="overflow-hidden rounded-2xl glass-ultra card-shine transition-all hover:neon-border relative breathing-glow"
           style={{ transformStyle: 'preserve-3d' }}
         >
-          {/* Dynamic glare overlay following cursor */}
+          {/* Dynamic glare overlay */}
           <motion.div
             className="absolute inset-0 z-10 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             style={{
@@ -66,7 +65,6 @@ const RestaurantCard = ({ restaurant, index = 0 }: { restaurant: Restaurant; ind
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
 
-            {/* Featured badge */}
             {restaurant.featured && (
               <motion.span
                 initial={{ scale: 0, opacity: 0 }}
@@ -78,7 +76,6 @@ const RestaurantCard = ({ restaurant, index = 0 }: { restaurant: Restaurant; ind
               </motion.span>
             )}
 
-            {/* Free delivery badge */}
             {restaurant.deliveryFee < 1 && (
               <motion.span
                 initial={{ scale: 0, opacity: 0 }}
@@ -104,7 +101,7 @@ const RestaurantCard = ({ restaurant, index = 0 }: { restaurant: Restaurant; ind
             </div>
             <p className="mt-1.5 text-sm text-muted-foreground">{restaurant.cuisine} • {restaurant.priceRange}</p>
             <div className="mt-2.5 flex items-center gap-3 text-sm text-muted-foreground">
-              <span className="flex items-center gap-1.5 rounded-full glass-deep px-2.5 py-0.5">
+              <span className="flex items-center gap-1.5 rounded-full glass-frost px-2.5 py-0.5">
                 <Clock className="h-3.5 w-3.5 text-primary" />
                 {restaurant.deliveryTime}
               </span>

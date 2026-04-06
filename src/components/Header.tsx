@@ -5,7 +5,7 @@ import { useCart } from '@/context/CartContext';
 import { useState, useEffect } from 'react';
 import { useTheme } from '@/context/ThemeContext';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import cravixLogo from '@/assets/cravix-logo.jpeg';
 
 const Header = () => {
@@ -15,7 +15,6 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Scroll-aware header — track scroll position
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -32,17 +31,17 @@ const Header = () => {
 
   return (
     <motion.header
-      className="sticky top-0 z-50 glass-strong transition-all duration-300"
+      className="sticky top-0 z-50 glass-ultra transition-all duration-300"
       animate={{
-        backdropFilter: scrolled ? 'blur(40px) saturate(220%)' : 'blur(32px) saturate(200%)',
+        backdropFilter: scrolled ? 'blur(50px) saturate(220%)' : 'blur(40px) saturate(200%)',
         boxShadow: scrolled
           ? '0 4px 30px -4px hsl(0 0% 0% / 0.4), 0 0 1px 0 hsl(0 0% 100% / 0.1)'
           : '0 1px 0 0 hsl(0 0% 100% / 0.06)',
       }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
     >
-      {/* Subtle top shine line */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
+      {/* Rainbow shimmer top border */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] gradient-animated pointer-events-none opacity-60" />
 
       <div className="container flex h-16 items-center justify-between gap-4">
         <div className="flex items-center gap-6">
@@ -52,7 +51,6 @@ const Header = () => {
               whileTap={{ scale: 0.9 }}
               className="flex h-9 w-9 items-center justify-center rounded-xl overflow-hidden shadow-glow relative"
             >
-              {/* Spinning ring on logo hover */}
               <motion.div
                 className="absolute inset-0 rounded-xl"
                 style={{
@@ -178,7 +176,7 @@ const Header = () => {
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" aria-label="Menu"><Menu className="h-5 w-5" /></Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-72 glass-strong border-l border-white/10">
+              <SheetContent side="right" className="w-72 glass-ultra border-l border-white/10">
                 <nav className="mt-8 flex flex-col gap-2">
                   {navLinks.map(link => (
                     <Link key={link.to} to={link.to} onClick={() => setMobileOpen(false)}
