@@ -4,10 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
-import { DollarSign, ShoppingBag, Star, Clock, Check, X, ChefHat, Edit, Trash2, Plus, RefreshCw, LayoutDashboard, Settings, History, LogOut } from 'lucide-react';
+import { DollarSign, ShoppingBag, Star, Clock, Check, X, ChefHat, Edit, Trash2, Plus, RefreshCw, LayoutDashboard, Settings, History, LogOut, Home, UtensilsCrossed, BarChart3 } from 'lucide-react';
 import { motion, useMotionValue, animate, useInView, AnimatePresence } from 'framer-motion';
 import { PageWrapper } from '@/components/PageWrapper';
 import { Link } from 'react-router-dom';
+import DashboardSideNav from '@/components/DashboardSideNav';
 
 /* ── Animated counter ──────────────────────────── */
 function AnimCounter({ to, prefix = '', suffix = '', isFloat = false }: {
@@ -82,6 +83,15 @@ const menuItems = [
   { id: '5', name: 'Garlic Breadsticks', price: 6.99, available: true, orders: 210 },
 ];
 
+const restaurantNavItems = [
+  { icon: LayoutDashboard, label: 'Dashboard', to: '/dashboard' },
+  { icon: ShoppingBag, label: 'Orders', to: '/dashboard' },
+  { icon: UtensilsCrossed, label: 'Menu', to: '/dashboard' },
+  { icon: BarChart3, label: 'Analytics', to: '/dashboard' },
+  { icon: Settings, label: 'Settings', to: '/dashboard' },
+  { icon: Home, label: 'Home', to: '/' },
+];
+
 const Dashboard = () => {
   const [orders, setOrders] = useState(mockOrders);
   const [menu, setMenu] = useState(menuItems);
@@ -99,8 +109,9 @@ const Dashboard = () => {
   return (
     <PageWrapper>
       <div className="min-h-screen pb-12">
-        <div className="container py-8 max-w-[1400px]">
-          {/* Header bar - Premium style */}
+        <div className="container py-8 max-w-[1400px] flex gap-6">
+          <DashboardSideNav items={restaurantNavItems} title="Restaurant" />
+          <div className="flex-1 min-w-0">
           <motion.div
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
