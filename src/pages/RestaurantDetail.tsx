@@ -97,7 +97,7 @@ const RestaurantDetail = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.6 }}
-            className="rounded-3xl glass-ultra border border-white/10 p-8 shadow-2xl backdrop-blur-xl liquid-shimmer"
+            className="rounded-[28px] glass-ios border border-white/10 p-8 shadow-2xl backdrop-blur-xl specular-shimmer"
           >
             <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div className="flex-1 space-y-4">
@@ -161,7 +161,7 @@ const RestaurantDetail = () => {
                       transition={{ delay: itemIdx * 0.05 }}
                       whileHover={{ y: -3, transition: { duration: 0.2 } }}
                       whileTap={{ scale: 0.98 }}
-                      className="flex gap-4 rounded-2xl glass-ultra p-4 text-left transition-all hover:shadow-card-hover w-full group liquid-shimmer"
+                      className="flex gap-4 rounded-[22px] glass-ios-card p-4 text-left transition-all hover:shadow-card-hover w-full group specular-shimmer"
                       onClick={() => openItemDialog(item)}
                     >
                       <div className="flex-1 min-w-0">

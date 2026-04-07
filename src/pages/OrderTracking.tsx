@@ -35,7 +35,7 @@ const OrderTracking = () => {
         <p className="text-muted-foreground mb-8">Estimated delivery: <span className="font-bold text-gradient">{order.estimatedDelivery}</span></p>
 
         {/* Progress */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-frost p-6 mb-8 liquid-shimmer">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="rounded-[22px] glass-ios-card p-6 mb-8 specular-shimmer">
           <div className="relative">
             <div className="absolute left-5 top-5 bottom-5 w-0.5 bg-white/10" />
             <motion.div
@@ -83,7 +83,7 @@ const OrderTracking = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="rounded-2xl glass-ultra h-48 flex items-center justify-center mb-8 overflow-hidden relative liquid-shimmer"
+          className="rounded-[22px] glass-ios-card h-48 flex items-center justify-center mb-8 overflow-hidden relative specular-shimmer"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
           <div className="absolute inset-0 bg-[linear-gradient(hsl(var(--primary)/0.03)_1px,transparent_1px),linear-gradient(90deg,hsl(var(--primary)/0.03)_1px,transparent_1px)] bg-[size:30px_30px]" />
