@@ -116,7 +116,7 @@ const Dashboard = () => {
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="rounded-2xl glass-strong p-4 mb-6 flex flex-wrap items-center justify-between gap-4"
+            className="rounded-[22px] glass-ios p-4 mb-6 flex flex-wrap items-center justify-between gap-4"
           >
             <Link to="/" className="flex items-center gap-3 group hover:opacity-90 transition-opacity">
               <div className="h-12 w-12 rounded-xl gradient-warm flex items-center justify-center neon-glow-primary shadow-lg shimmer-effect group-hover:scale-105 transition-transform">
@@ -146,7 +146,7 @@ const Dashboard = () => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ delay: i * 0.1, type: 'spring', stiffness: 200, damping: 20 }}
                 whileHover={{ y: -4, scale: 1.02 }}
-                className="rounded-xl glass-ultra border-white/10 p-5 flex items-center gap-4 hover:bg-white/5 transition-colors card-shine cursor-default breathing-glow"
+                className="rounded-[22px] glass-ios-card border-white/10 p-5 flex items-center gap-4 hover:bg-white/5 transition-colors specular-shimmer cursor-default ios-breathe"
               >
                 <div className={`relative h-14 w-14 rounded-xl flex items-center justify-center shrink-0 ${stat.color} shadow-lg`}>
                   {stat.showRing && (
@@ -167,14 +167,14 @@ const Dashboard = () => {
             ))}
           </div>
 
-          <div className="glass-ultra rounded-3xl p-6 liquid-shimmer">
+          <div className="glass-ios rounded-[28px] p-6 specular-shimmer">
           <Tabs defaultValue="orders" className="space-y-6">
-            <TabsList className="glass-ultra rounded-2xl p-1.5 border-white/10">
-              <TabsTrigger value="orders" className="gap-2 rounded-xl text-white/70 data-[state=active]:gradient-warm data-[state=active]:text-white data-[state=active]:neon-glow-primary">
+            <TabsList className="glass-ios-pill rounded-full p-1.5 border-white/10">
+              <TabsTrigger value="orders" className="gap-2 rounded-full text-white/70 data-[state=active]:gradient-warm data-[state=active]:text-white data-[state=active]:neon-glow-primary">
                 Orders <Badge className="h-5 text-[10px] gradient-warm border-0 text-white">{orders.length}</Badge>
               </TabsTrigger>
-              <TabsTrigger value="menu" className="rounded-xl text-white/70 data-[state=active]:gradient-warm data-[state=active]:text-white data-[state=active]:neon-glow-primary">Menu</TabsTrigger>
-              <TabsTrigger value="settings" className="rounded-xl text-white/70 data-[state=active]:gradient-warm data-[state=active]:text-white data-[state=active]:neon-glow-primary">Settings</TabsTrigger>
+              <TabsTrigger value="menu" className="rounded-full text-white/70 data-[state=active]:gradient-warm data-[state=active]:text-white data-[state=active]:neon-glow-primary">Menu</TabsTrigger>
+              <TabsTrigger value="settings" className="rounded-full text-white/70 data-[state=active]:gradient-warm data-[state=active]:text-white data-[state=active]:neon-glow-primary">Settings</TabsTrigger>
             </TabsList>
 
             <TabsContent value="orders">
@@ -198,7 +198,7 @@ const Dashboard = () => {
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.8, x: 20 }}
                             whileHover={{ y: -4, backgroundColor: 'rgba(255,255,255,0.05)' }}
-                            className="rounded-2xl glass-ultra p-5 space-y-4 transition-all card-shine liquid-shimmer"
+                            className="rounded-[22px] glass-ios-card p-5 space-y-4 transition-all specular-shimmer"
                           >
                             <div className="flex justify-between text-sm">
                               <span className="font-heading font-bold text-primary">{order.id}</span>
@@ -240,7 +240,7 @@ const Dashboard = () => {
             </TabsContent>
 
             <TabsContent value="menu">
-              <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-ultra border-white/10 overflow-hidden shadow-2xl liquid-shimmer">
+              <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-[22px] glass-ios-card border-white/10 overflow-hidden shadow-2xl specular-shimmer">
                 <div className="flex items-center justify-between p-6 border-b border-white/5">
                   <h3 className="font-heading font-bold text-white text-lg">Menu Management</h3>
                   <Button size="sm" className="gradient-warm rounded-xl neon-glow-primary border-0 text-white font-bold px-6 py-5 btn-premiere"><Plus className="h-4 w-4 mr-2" /> Add New Item</Button>
@@ -287,7 +287,7 @@ const Dashboard = () => {
             </TabsContent>
 
             <TabsContent value="settings">
-              <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl glass-strong border-white/10 p-8 space-y-8 max-w-3xl shadow-2xl">
+              <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="rounded-[22px] glass-ios p-8 space-y-8 max-w-3xl shadow-2xl">
                 <div>
                   <h3 className="font-heading font-bold text-white text-xl">Restaurant Settings</h3>
                   <p className="text-white/40 text-sm mt-1">Manage your business profile and delivery preferences</p>
