@@ -23,7 +23,7 @@ const DashboardSideNav = ({ items, title, brandColor = 'gradient-warm' }: Dashbo
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="hidden lg:flex flex-col w-[220px] shrink-0 glass-ios rounded-[22px] p-4 h-fit sticky top-24 specular-shimmer"
+      className="hidden lg:flex flex-col w-[220px] shrink-0 glass-ultra rounded-2xl p-4 h-fit sticky top-24 liquid-shimmer"
     >
       <p className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] mb-4 px-2">{title}</p>
       <nav className="flex flex-col gap-1">

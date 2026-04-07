@@ -116,7 +116,7 @@
 
   body {
     @apply bg-background text-foreground font-body antialiased;
-    background: linear-gradient(180deg, hsl(225 45% 10%), hsl(230 50% 8%), hsl(220 55% 6%)) fixed;
+    background: linear-gradient(180deg, hsl(32 100% 55%), hsl(22 95% 48%), hsl(12 90% 35%)) fixed;
     min-height: 100vh;
     &::-webkit-scrollbar {
       display: none;
@@ -126,7 +126,7 @@
   }
 
   .dark body {
-    background: linear-gradient(180deg, hsl(225 45% 8%), hsl(230 50% 5%), hsl(220 55% 4%)) fixed;
+    background: linear-gradient(180deg, hsl(25 90% 45%), hsl(18 85% 35%), hsl(10 80% 20%)) fixed;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -244,22 +244,12 @@
 }
 
 @keyframes breathing-glow {
-  0%, 100% { box-shadow: 0 0 20px -5px hsl(25 95% 53% / 0.15), inset 0 1px 0 hsl(0 0% 100% / 0.08); }
-  50%      { box-shadow: 0 0 30px -5px hsl(25 95% 53% / 0.3), inset 0 1px 0 hsl(0 0% 100% / 0.15); }
-}
-
-@keyframes specular-shift {
-  0%   { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-@keyframes ios-breathe {
-  0%, 100% { transform: scale(1); }
-  50%      { transform: scale(1.005); }
+  0%, 100% { box-shadow: 0 0 20px -5px hsl(25 95% 53% / 0.2), inset 0 1px 0 hsl(0 0% 100% / 0.1); }
+  50%      { box-shadow: 0 0 35px -5px hsl(25 95% 53% / 0.4), inset 0 1px 0 hsl(0 0% 100% / 0.2); }
 }
 
 /* ============================================
-   iOS 26 LIQUID GLASS SYSTEM
+   GLASS UTILITIES
    ============================================ */
 @layer utilities {
   .gradient-warm {
@@ -289,249 +279,65 @@
     background-clip: text;
   }
 
-  /* ── iOS 26 SIGNATURE GLASS ── */
-  .glass-ios {
-    background: linear-gradient(
-      180deg,
-      hsl(0 0% 100% / 0.12) 0%,
-      hsl(0 0% 100% / 0.06) 50%,
-      hsl(0 0% 100% / 0.03) 100%
-    );
-    backdrop-filter: blur(80px) saturate(190%) brightness(1.1);
-    -webkit-backdrop-filter: blur(80px) saturate(190%) brightness(1.1);
-    border-top: 1px solid hsl(0 0% 100% / 0.25);
-    border-left: 1px solid hsl(0 0% 100% / 0.12);
-    border-right: 1px solid hsl(0 0% 100% / 0.06);
-    border-bottom: 1px solid hsl(0 0% 100% / 0.04);
-    box-shadow:
-      0 8px 32px -4px hsl(0 0% 0% / 0.3),
-      0 2px 8px -2px hsl(0 0% 0% / 0.2),
-      inset 0 1px 0 hsl(0 0% 100% / 0.25),
-      inset 0 -1px 0 hsl(0 0% 0% / 0.05);
-  }
-
-  /* ── iOS CARD ── */
-  .glass-ios-card {
-    background: linear-gradient(
-      180deg,
-      hsl(0 0% 100% / 0.14) 0%,
-      hsl(0 0% 100% / 0.07) 40%,
-      hsl(0 0% 100% / 0.04) 100%
-    );
-    backdrop-filter: blur(80px) saturate(190%) brightness(1.08);
-    -webkit-backdrop-filter: blur(80px) saturate(190%) brightness(1.08);
-    border-radius: 22px;
-    border-top: 1px solid hsl(0 0% 100% / 0.28);
-    border-left: 1px solid hsl(0 0% 100% / 0.15);
-    border-right: 1px solid hsl(0 0% 100% / 0.08);
-    border-bottom: 1px solid hsl(0 0% 100% / 0.04);
-    box-shadow:
-      0 12px 40px -8px hsl(0 0% 0% / 0.35),
-      0 4px 12px -2px hsl(0 0% 0% / 0.15),
-      0 1px 3px hsl(0 0% 0% / 0.1),
-      inset 0 1px 0 hsl(0 0% 100% / 0.22),
-      inset 0 -1px 0 hsl(0 0% 0% / 0.05);
-    transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .glass-ios-card:hover {
-    box-shadow:
-      0 20px 60px -12px hsl(0 0% 0% / 0.45),
-      0 8px 20px -4px hsl(0 0% 0% / 0.2),
-      0 1px 3px hsl(0 0% 0% / 0.1),
-      inset 0 1px 0 hsl(0 0% 100% / 0.3),
-      inset 0 -1px 0 hsl(0 0% 0% / 0.05);
-    transform: translateY(-2px);
-  }
-
-  /* ── iOS PILL ── */
-  .glass-ios-pill {
-    background: hsl(0 0% 100% / 0.1);
-    backdrop-filter: blur(40px) saturate(180%);
-    -webkit-backdrop-filter: blur(40px) saturate(180%);
-    border-radius: 9999px;
-    border: 1px solid hsl(0 0% 100% / 0.18);
-    box-shadow:
-      inset 0 1px 0 hsl(0 0% 100% / 0.2),
-      0 2px 8px -2px hsl(0 0% 0% / 0.2);
-    transition: all 0.25s ease;
-  }
-
-  .glass-ios-pill:hover {
-    background: hsl(0 0% 100% / 0.15);
-    border-color: hsl(0 0% 100% / 0.25);
-  }
-
-  /* ── iOS BUTTON ── */
-  .glass-ios-button {
-    background: linear-gradient(
-      180deg,
-      hsl(0 0% 100% / 0.15) 0%,
-      hsl(0 0% 100% / 0.08) 100%
-    );
-    backdrop-filter: blur(40px) saturate(180%);
-    -webkit-backdrop-filter: blur(40px) saturate(180%);
-    border: 1px solid hsl(0 0% 100% / 0.2);
-    box-shadow:
-      inset 0 1px 0 hsl(0 0% 100% / 0.25),
-      0 2px 8px -2px hsl(0 0% 0% / 0.15);
-    transition: all 0.25s ease;
-  }
-
-  .glass-ios-button:hover {
-    background: linear-gradient(
-      180deg,
-      hsl(0 0% 100% / 0.22) 0%,
-      hsl(0 0% 100% / 0.12) 100%
-    );
-    box-shadow:
-      inset 0 1px 0 hsl(0 0% 100% / 0.35),
-      0 4px 16px -4px hsl(0 0% 0% / 0.2),
-      0 0 20px -5px hsl(25 95% 53% / 0.15);
-  }
-
-  /* ── iOS INPUT ── */
-  .glass-ios-input {
-    background: hsl(0 0% 0% / 0.15);
-    backdrop-filter: blur(30px) saturate(180%);
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
-    border: 1px solid hsl(0 0% 100% / 0.1);
-    box-shadow: inset 0 2px 4px hsl(0 0% 0% / 0.15);
-    transition: all 0.3s ease;
-  }
-
-  .glass-ios-input:focus {
-    border-color: hsl(25 95% 53% / 0.5);
-    box-shadow:
-      inset 0 2px 4px hsl(0 0% 0% / 0.1),
-      0 0 0 3px hsl(25 95% 53% / 0.12),
-      0 0 20px -5px hsl(25 95% 53% / 0.2);
-  }
-
-  /* ── iOS SHEET ── */
-  .glass-ios-sheet {
-    background: linear-gradient(
-      180deg,
-      hsl(0 0% 100% / 0.14) 0%,
-      hsl(0 0% 100% / 0.06) 100%
-    );
-    backdrop-filter: blur(80px) saturate(200%) brightness(1.05);
-    -webkit-backdrop-filter: blur(80px) saturate(200%) brightness(1.05);
-    border-top: 1px solid hsl(0 0% 100% / 0.3);
-    box-shadow:
-      0 -20px 60px -10px hsl(0 0% 0% / 0.4),
-      inset 0 1px 0 hsl(0 0% 100% / 0.25);
-  }
-
-  /* ── GLASS DIVIDER ── */
-  .glass-divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, hsl(0 0% 100% / 0.08), transparent);
-  }
-
-  /* ── SPECULAR SHIMMER ── */
-  .specular-shimmer {
-    position: relative;
-    overflow: hidden;
-  }
-  .specular-shimmer::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      hsl(0 0% 100% / 0.04),
-      hsl(0 0% 100% / 0.1),
-      hsl(0 0% 100% / 0.04),
-      transparent
-    );
-    animation: specular-shift 6s ease-in-out infinite;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  /* ── iOS BREATHE ── */
-  .ios-breathe {
-    animation: ios-breathe 4s ease-in-out infinite;
-  }
-
-  /* ── LEGACY GLASS (kept for compat) ── */
   .glass {
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
   }
 
   .glass-card {
-    background: hsl(0 0% 100% / 0.08);
-    backdrop-filter: blur(60px) saturate(190%) brightness(1.05);
-    -webkit-backdrop-filter: blur(60px) saturate(190%) brightness(1.05);
+    background: hsl(0 0% 0% / 0.2);
+    backdrop-filter: blur(24px) saturate(200%);
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
     border: 1px solid hsl(0 0% 100% / 0.12);
-    box-shadow:
-      0 8px 32px -4px hsl(0 0% 0% / 0.25),
-      inset 0 1px 0 hsl(0 0% 100% / 0.15);
   }
 
   .glass-strong {
-    background: linear-gradient(180deg, hsl(0 0% 100% / 0.1), hsl(0 0% 100% / 0.04));
-    backdrop-filter: blur(80px) saturate(200%) brightness(1.08);
-    -webkit-backdrop-filter: blur(80px) saturate(200%) brightness(1.08);
-    border-top: 1px solid hsl(0 0% 100% / 0.22);
-    border-left: 1px solid hsl(0 0% 100% / 0.1);
-    border-right: 1px solid hsl(0 0% 100% / 0.06);
-    border-bottom: 1px solid hsl(0 0% 100% / 0.04);
-    box-shadow:
-      0 12px 40px -8px hsl(0 0% 0% / 0.35),
-      inset 0 1px 0 hsl(0 0% 100% / 0.2);
+    background: hsl(0 0% 0% / 0.35);
+    backdrop-filter: blur(32px) saturate(200%);
+    -webkit-backdrop-filter: blur(32px) saturate(200%);
+    border: 1px solid hsl(0 0% 100% / 0.15);
   }
 
   .glass-deep {
-    background: hsl(0 0% 100% / 0.06);
-    backdrop-filter: blur(60px) saturate(180%) brightness(1.05);
-    -webkit-backdrop-filter: blur(60px) saturate(180%) brightness(1.05);
-    border: 1px solid hsl(0 0% 100% / 0.1);
-    box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.12);
+    background: hsl(0 0% 0% / 0.3);
+    backdrop-filter: blur(36px) saturate(180%);
+    -webkit-backdrop-filter: blur(36px) saturate(180%);
+    border: 1px solid hsl(0 0% 100% / 0.15);
   }
 
   .glass-liquid {
-    background: linear-gradient(135deg, hsl(0 0% 100% / 0.1), hsl(0 0% 0% / 0.2));
-    backdrop-filter: blur(60px) saturate(200%) brightness(1.06);
-    -webkit-backdrop-filter: blur(60px) saturate(200%) brightness(1.06);
-    border-top: 1px solid hsl(0 0% 100% / 0.25);
-    border-left: 1px solid hsl(0 0% 100% / 0.15);
+    background: linear-gradient(135deg, hsl(0 0% 100% / 0.1), hsl(0 0% 0% / 0.3));
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    border-top: 1px solid hsl(0 0% 100% / 0.3);
+    border-left: 1px solid hsl(0 0% 100% / 0.2);
     border-right: 1px solid hsl(0 0% 100% / 0.05);
-    border-bottom: 1px solid hsl(0 0% 100% / 0.04);
-    box-shadow:
-      0 12px 40px 0 hsl(0 0% 0% / 0.25),
-      inset 0 1px 0 hsl(0 0% 100% / 0.2);
+    border-bottom: 1px solid hsl(0 0% 100% / 0.05);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3);
   }
 
+  /* ── ULTRA-PREMIUM GLASS ── */
   .glass-ultra {
-    background: linear-gradient(180deg, hsl(0 0% 100% / 0.12), hsl(0 0% 100% / 0.05), hsl(0 0% 100% / 0.02));
-    backdrop-filter: blur(80px) saturate(200%) brightness(1.1);
-    -webkit-backdrop-filter: blur(80px) saturate(200%) brightness(1.1);
-    border-top: 1px solid hsl(0 0% 100% / 0.28);
-    border-left: 1px solid hsl(0 0% 100% / 0.14);
-    border-right: 1px solid hsl(0 0% 100% / 0.07);
-    border-bottom: 1px solid hsl(0 0% 100% / 0.04);
+    background: linear-gradient(135deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.02), hsl(0 0% 0% / 0.35));
+    backdrop-filter: blur(50px) saturate(220%);
+    -webkit-backdrop-filter: blur(50px) saturate(220%);
+    border: 1px solid hsl(0 0% 100% / 0.18);
     box-shadow:
-      0 16px 48px -8px hsl(0 0% 0% / 0.35),
-      0 4px 12px -2px hsl(0 0% 0% / 0.15),
-      inset 0 1px 0 hsl(0 0% 100% / 0.22),
-      inset 0 -1px 0 hsl(0 0% 0% / 0.05);
+      0 16px 48px -8px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 hsl(0 0% 100% / 0.15),
+      inset 0 -1px 0 hsl(0 0% 0% / 0.1);
+    animation: rainbow-border 8s ease infinite;
   }
 
+  /* ── FROSTED GLASS ── */
   .glass-frost {
-    background: hsl(0 0% 100% / 0.07);
-    backdrop-filter: blur(80px) saturate(170%) brightness(1.06);
-    -webkit-backdrop-filter: blur(80px) saturate(170%) brightness(1.06);
+    background: hsl(0 0% 100% / 0.06);
+    backdrop-filter: blur(60px) saturate(160%) brightness(1.05);
+    -webkit-backdrop-filter: blur(60px) saturate(160%) brightness(1.05);
     border: 1px solid hsl(0 0% 100% / 0.12);
     box-shadow:
-      0 8px 32px -4px hsl(0 0% 0% / 0.2),
-      inset 0 1px 0 hsl(0 0% 100% / 0.18);
+      0 8px 32px -4px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 hsl(0 0% 100% / 0.2);
   }
 
   /* ── LIQUID SHIMMER REFLECTION ── */
@@ -549,74 +355,73 @@
     background: linear-gradient(
       90deg,
       transparent,
-      hsl(0 0% 100% / 0.04),
-      hsl(0 0% 100% / 0.08),
-      hsl(0 0% 100% / 0.04),
+      hsl(0 0% 100% / 0.06),
+      hsl(0 0% 100% / 0.12),
+      hsl(0 0% 100% / 0.06),
       transparent
     );
-    animation: liquid-shimmer-move 5s ease-in-out infinite;
+    animation: liquid-shimmer-move 4s ease-in-out infinite;
     pointer-events: none;
     z-index: 1;
   }
 
-  /* ── GLASS INPUT (legacy) ── */
+  /* ── GLASS INPUT ── */
   .glass-input {
-    background: hsl(0 0% 0% / 0.15);
-    backdrop-filter: blur(30px) saturate(180%);
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    background: hsl(0 0% 0% / 0.2);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid hsl(0 0% 100% / 0.1);
-    box-shadow: inset 0 2px 4px hsl(0 0% 0% / 0.15);
     transition: all 0.3s ease;
   }
   .glass-input:focus {
     border-color: hsl(25 95% 53% / 0.5);
     box-shadow:
-      inset 0 2px 4px hsl(0 0% 0% / 0.1),
-      0 0 0 3px hsl(25 95% 53% / 0.1),
-      0 0 20px -5px hsl(25 95% 53% / 0.15);
+      0 0 0 2px hsl(25 95% 53% / 0.1),
+      inset 0 0 20px -10px hsl(25 95% 53% / 0.15);
   }
 
   /* ── TABLE ROW HOVER ── */
   .glass-table-row {
-    transition: all 0.25s ease;
+    transition: all 0.2s ease;
   }
   .glass-table-row:hover {
     background: hsl(0 0% 100% / 0.04);
-    box-shadow: inset 0 0 30px -15px hsl(25 95% 53% / 0.08);
+    box-shadow: inset 0 0 30px -15px hsl(25 95% 53% / 0.1);
   }
 
+  /* ── BREATHING BORDER GLOW ── */
   .breathing-glow {
-    animation: breathing-glow 4s ease-in-out infinite;
+    animation: breathing-glow 3s ease-in-out infinite;
   }
 
   .neon-glow-primary {
-    box-shadow: 0 0 15px -5px hsl(var(--primary) / 0.5),
-                0 0 30px -10px hsl(var(--primary) / 0.3),
-                inset 0 1px 0 hsl(0 0% 100% / 0.2);
+    box-shadow: 0 0 20px -5px hsl(var(--primary) / 0.6),
+                0 0 40px -10px hsl(var(--primary) / 0.4),
+                inset 0 1px 0 hsl(0 0% 100% / 0.25);
   }
 
   .neon-glow-accent {
-    box-shadow: 0 0 15px -5px hsl(var(--accent) / 0.4),
-                0 0 30px -10px hsl(var(--accent) / 0.2),
-                inset 0 1px 0 hsl(0 0% 100% / 0.12);
+    box-shadow: 0 0 20px -5px hsl(var(--accent) / 0.5),
+                0 0 40px -10px hsl(var(--accent) / 0.3),
+                inset 0 1px 0 hsl(0 0% 100% / 0.15);
   }
 
   .neon-glow-success {
-    box-shadow: 0 0 15px -5px hsl(var(--success) / 0.4),
-                0 0 30px -10px hsl(var(--success) / 0.2),
-                inset 0 1px 0 hsl(0 0% 100% / 0.12);
+    box-shadow: 0 0 20px -5px hsl(var(--success) / 0.5),
+                0 0 40px -10px hsl(var(--success) / 0.3),
+                inset 0 1px 0 hsl(0 0% 100% / 0.15);
   }
 
   .neon-border {
-    border: 1px solid hsl(0 0% 100% / 0.18);
-    box-shadow: 0 0 12px -5px hsl(var(--primary) / 0.1),
-                inset 0 0 12px -5px hsl(var(--primary) / 0.04);
+    border: 1px solid hsl(0 0% 100% / 0.2);
+    box-shadow: 0 0 15px -5px hsl(var(--primary) / 0.15),
+                inset 0 0 15px -5px hsl(var(--primary) / 0.05);
   }
 
   .neon-border-teal {
-    border: 1px solid hsl(0 0% 100% / 0.15);
-    box-shadow: 0 0 15px -5px hsl(0 0% 0% / 0.15),
-                inset 0 0 12px -5px hsl(0 0% 100% / 0.06);
+    border: 1px solid hsl(0 0% 100% / 0.2);
+    box-shadow: 0 0 20px -5px rgba(0,0,0,0.2),
+                inset 0 0 15px -5px hsl(0 0% 100% / 0.1);
   }
 
   /* Shimmer sweep */
@@ -631,11 +436,11 @@
     background: linear-gradient(
       105deg,
       transparent 40%,
-      hsl(0 0% 100% / 0.1) 50%,
+      hsl(0 0% 100% / 0.14) 50%,
       transparent 60%
     );
     background-size: 200% 100%;
-    animation: shimmer 3s ease-in-out infinite;
+    animation: shimmer 2.8s ease-in-out infinite;
     pointer-events: none;
   }
 
@@ -654,7 +459,7 @@
     background: linear-gradient(
       120deg,
       transparent,
-      hsl(0 0% 100% / 0.06),
+      hsl(0 0% 100% / 0.1),
       transparent
     );
     transform: skewX(-20deg);
@@ -675,19 +480,19 @@
     position: absolute;
     inset: -14px;
     border-radius: inherit;
-    border: 2px solid hsl(25 95% 53% / 0.45);
-    animation: pulse-ring 3s ease-out infinite;
+    border: 2px solid hsl(25 95% 53% / 0.55);
+    animation: pulse-ring 2.8s ease-out infinite;
     pointer-events: none;
   }
   .pulse-ring-wrap::after {
     inset: -26px;
-    border-color: hsl(38 95% 55% / 0.2);
-    animation-delay: 1s;
+    border-color: hsl(38 95% 55% / 0.3);
+    animation-delay: 0.9s;
   }
 
   /* Text glow for hero headings */
   .text-glow {
-    animation: text-glow-pulse 3.5s ease-in-out infinite;
+    animation: text-glow-pulse 3.2s ease-in-out infinite;
   }
 
   .animate-float {
@@ -749,13 +554,13 @@
   }
 
   .glow-border-hover {
-    transition: box-shadow 0.35s ease, border-color 0.35s ease;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
   }
   .glow-border-hover:hover {
     box-shadow:
-      0 0 0 1px hsl(25 95% 53% / 0.4),
-      0 0 25px -5px hsl(25 95% 53% / 0.3),
-      0 0 50px -15px hsl(38 95% 55% / 0.15);
+      0 0 0 1px hsl(25 95% 53% / 0.5),
+      0 0 30px -5px hsl(25 95% 53% / 0.4),
+      0 0 60px -15px hsl(38 95% 55% / 0.2);
   }
 }
 
@@ -774,25 +579,25 @@
   }
   .btn-premiere:hover {
     box-shadow:
-      0 0 25px -5px hsl(25 95% 53% / 0.7),
-      0 0 50px -10px hsl(38 95% 55% / 0.3);
+      0 0 30px -5px hsl(25 95% 53% / 0.8),
+      0 0 60px -10px hsl(38 95% 55% / 0.4);
     transform: translateY(-2px);
   }
 
   /* Floating card lift */
   .card-float {
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
   }
   .card-float:hover {
-    transform: translateY(-6px);
+    transform: translateY(-8px);
     box-shadow:
-      0 20px 60px -10px hsl(0 0% 0% / 0.4),
-      0 0 25px -10px hsl(25 95% 53% / 0.15);
+      0 20px 60px -10px hsl(0 0% 0% / 0.5),
+      0 0 30px -10px hsl(25 95% 53% / 0.2);
   }
 
   /* Table header dark bg for dashboards */
   .table-header-dark {
-    background: hsl(0 0% 0% / 0.15);
+    background: hsl(0 0% 0% / 0.2);
   }
 }
 

@@ -121,7 +121,7 @@ const Index = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, type: 'spring', stiffness: 200 }}
-                className="mb-6 inline-flex items-center gap-2 glass-ios-pill px-5 py-2.5 text-sm font-semibold text-primary"
+                className="mb-6 inline-flex items-center gap-2 rounded-full glass-ultra neon-border px-5 py-2.5 text-sm font-semibold text-primary liquid-shimmer"
               >
                 <Sparkles className="h-4 w-4" />
                 Free delivery on your first order!
@@ -162,13 +162,13 @@ const Index = () => {
                   <Input
                     id="hero-search"
                     placeholder="What are you craving?"
-                    className="h-14 rounded-full pl-12 text-base transition-all text-foreground placeholder:text-muted-foreground glass-ios-input"
+                    className="h-14 rounded-2xl glass-ultra pl-12 text-base transition-all focus:neon-border text-foreground placeholder:text-muted-foreground glass-input"
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
                   />
                 </div>
                 <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-                  <Button type="submit" size="lg" className="h-14 rounded-full px-8 gradient-warm neon-glow-primary hover:shadow-xl transition-all border-0 btn-premiere">
+                  <Button type="submit" size="lg" className="h-14 rounded-2xl px-8 gradient-warm neon-glow-primary hover:shadow-xl transition-all border-0 btn-premiere">
                     Search
                   </Button>
                 </motion.div>
@@ -195,7 +195,7 @@ const Index = () => {
             initial={{ opacity: 0, y: 22 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="grid grid-cols-3 gap-4 rounded-[22px] glass-ios-card p-6 specular-shimmer"
+            className="grid grid-cols-3 gap-4 rounded-2xl glass-ultra p-6 liquid-shimmer"
           >
             {[
               { icon: Zap, label: 'Lightning Fast', value: '15-30 min avg', color: 'text-accent', live: false },
@@ -252,7 +252,7 @@ const Index = () => {
               >
                 <Link to={`/search?category=${cat.name}`} className="flex flex-col items-center gap-2.5 min-w-[88px] group">
                   <motion.div
-                    className="flex items-center justify-center rounded-[22px] glass-ios-card text-3xl transition-all group-hover:neon-glow-primary"
+                    className="flex items-center justify-center rounded-2xl glass-ultra text-3xl transition-all group-hover:neon-glow-primary group-hover:neon-border card-shine"
                     style={{ height: '72px', width: '72px' }}
                   >
                     {cat.icon}
@@ -328,7 +328,7 @@ const Index = () => {
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="grid grid-cols-3 gap-6 rounded-[22px] glass-ios-card p-8 text-center specular-shimmer"
+            className="grid grid-cols-3 gap-6 rounded-2xl glass-ultra p-8 text-center liquid-shimmer"
           >
             {[
               { label: 'Restaurants', to: 350 },
@@ -364,10 +364,10 @@ const Index = () => {
               </div>
               <h2 className="text-2xl font-heading font-bold text-foreground">Frequently Asked Questions</h2>
             </div>
-            <div className="rounded-[22px] glass-ios-card p-6 specular-shimmer">
+            <div className="rounded-2xl glass-ultra p-6 liquid-shimmer">
               <Accordion type="single" collapsible className="space-y-2">
                 {faqs.map((faq, i) => (
-                  <AccordionItem key={i} value={`faq-${i}`} className="border-white/8 rounded-[16px] overflow-hidden">
+                  <AccordionItem key={i} value={`faq-${i}`} className="border-white/10 rounded-xl overflow-hidden">
                     <AccordionTrigger className="px-4 py-4 text-left text-white hover:text-primary hover:no-underline transition-colors font-heading font-semibold text-base">
                       {faq.q}
                     </AccordionTrigger>

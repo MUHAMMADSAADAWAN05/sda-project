@@ -9,8 +9,8 @@ const RestaurantCard = ({ restaurant, index = 0 }: { restaurant: Restaurant; ind
 
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
-  const rotateX = useSpring(useTransform(rawY, [-1, 1], [6, -6]), { stiffness: 300, damping: 28 });
-  const rotateY = useSpring(useTransform(rawX, [-1, 1], [-6, 6]), { stiffness: 300, damping: 28 });
+  const rotateX = useSpring(useTransform(rawY, [-1, 1], [8, -8]), { stiffness: 260, damping: 24 });
+  const rotateY = useSpring(useTransform(rawX, [-1, 1], [-8, 8]), { stiffness: 260, damping: 24 });
   const glareX  = useTransform(rawX, [-1, 1], ['0%', '100%']);
   const glareY  = useTransform(rawY, [-1, 1], ['0%', '100%']);
 
@@ -40,17 +40,17 @@ const RestaurantCard = ({ restaurant, index = 0 }: { restaurant: Restaurant; ind
       className="cursor-pointer"
     >
       <Link to={`/restaurant/${restaurant.id}`} className="group block">
-        <div className="overflow-hidden rounded-[22px] glass-ios-card specular-shimmer transition-all relative"
+        <div className="overflow-hidden rounded-2xl glass-ultra card-shine transition-all hover:neon-border relative breathing-glow"
           style={{ transformStyle: 'preserve-3d' }}
         >
           {/* Dynamic glare overlay */}
           <motion.div
-            className="absolute inset-0 z-10 rounded-[22px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="absolute inset-0 z-10 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             style={{
               background: useTransform(
                 [glareX, glareY],
                 ([x, y]) =>
-                  `radial-gradient(circle at ${x} ${y}, hsl(0 0% 100% / 0.06), transparent 60%)`
+                  `radial-gradient(circle at ${x} ${y}, hsl(0 0% 100% / 0.08), transparent 60%)`
               ),
             }}
           />
@@ -60,10 +60,10 @@ const RestaurantCard = ({ restaurant, index = 0 }: { restaurant: Restaurant; ind
             <img
               src={restaurant.image}
               alt={restaurant.name}
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-108"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
 
             {restaurant.featured && (
               <motion.span
@@ -94,14 +94,14 @@ const RestaurantCard = ({ restaurant, index = 0 }: { restaurant: Restaurant; ind
               <h3 className="font-heading font-bold text-foreground line-clamp-1 group-hover:text-primary transition-colors duration-200">
                 {restaurant.name}
               </h3>
-              <div className="flex shrink-0 items-center gap-1 glass-ios-pill px-2.5 py-1">
+              <div className="flex shrink-0 items-center gap-1 rounded-full bg-accent/15 px-2.5 py-1">
                 <Star className="h-3.5 w-3.5 fill-accent text-accent" />
                 <span className="text-sm font-bold text-foreground">{restaurant.rating}</span>
               </div>
             </div>
             <p className="mt-1.5 text-sm text-muted-foreground">{restaurant.cuisine} • {restaurant.priceRange}</p>
             <div className="mt-2.5 flex items-center gap-3 text-sm text-muted-foreground">
-              <span className="flex items-center gap-1.5 glass-ios-pill px-2.5 py-0.5">
+              <span className="flex items-center gap-1.5 rounded-full glass-frost px-2.5 py-0.5">
                 <Clock className="h-3.5 w-3.5 text-primary" />
                 {restaurant.deliveryTime}
               </span>

@@ -5,6 +5,7 @@ import { UtensilsCrossed, Truck, Store, ArrowRight, Sparkles, Star } from 'lucid
 import { Button } from '@/components/ui/button';
 import cravixLogo from '@/assets/cravix-logo.jpeg';
 
+/* ─── Data ─────────────────────────────────────── */
 const roles = [
   {
     id: 'customer',
@@ -46,6 +47,7 @@ const STATS = [
   { value: 4.9, suffix: '★', label: 'Avg Rating', isDecimal: true },
 ];
 
+/* ─── Animated Counter ─────────────────────────── */
 function AnimatedCounter({ target, suffix, isDecimal }: { target: number; suffix: string; isDecimal?: boolean }) {
   const count = useMotionValue(0);
   const [display, setDisplay] = useState('0');
@@ -67,14 +69,15 @@ function AnimatedCounter({ target, suffix, isDecimal }: { target: number; suffix
   );
 }
 
+/* ─── Particle ─────────────────────────────────── */
 function Particle({ delay, x, size }: { delay: number; x: number; size: number }) {
   return (
     <motion.div
-      className="absolute bottom-0 rounded-full bg-white/20 pointer-events-none blur-[1px]"
+      className="absolute bottom-0 rounded-full bg-white/30 pointer-events-none"
       style={{ left: `${x}%`, width: size, height: size }}
-      animate={{ y: [0, -140], opacity: [0, 0.5, 0.5, 0] }}
+      animate={{ y: [0, -140], opacity: [0, 0.7, 0.7, 0] }}
       transition={{
-        duration: 5 + Math.random() * 4,
+        duration: 4 + Math.random() * 3,
         repeat: Infinity,
         delay,
         ease: 'easeOut',
@@ -83,6 +86,7 @@ function Particle({ delay, x, size }: { delay: number; x: number; size: number }
   );
 }
 
+/* ─── 3D Tilt Role Card ────────────────────────── */
 function RoleCard({ role, index, hoveredRole, setHoveredRole, onClick }: {
   role: typeof roles[0];
   index: number;
@@ -102,8 +106,8 @@ function RoleCard({ role, index, hoveredRole, setHoveredRole, onClick }: {
     const cy = rect.top + rect.height / 2;
     const dx = (e.clientX - cx) / (rect.width / 2);
     const dy = (e.clientY - cy) / (rect.height / 2);
-    rotateX.set(-dy * 8);
-    rotateY.set(dx * 8);
+    rotateX.set(-dy * 10);
+    rotateY.set(dx * 10);
   };
 
   const handleMouseLeave = () => {
@@ -118,44 +122,42 @@ function RoleCard({ role, index, hoveredRole, setHoveredRole, onClick }: {
       key={role.id}
       initial={{ opacity: 0, y: 50, scale: 0.88 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ delay: 0.18 + index * 0.14, type: 'spring', stiffness: 180, damping: 20 }}
+      transition={{ delay: 0.18 + index * 0.14, type: 'spring', stiffness: 180, damping: 18 }}
       whileTap={{ scale: 0.96 }}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setHoveredRole(role.id)}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
       style={{ rotateX, rotateY, transformStyle: 'preserve-3d', perspective: 800, willChange: 'transform' }}
-      className="group relative flex flex-col items-center gap-4 rounded-[28px] p-8 text-center cursor-pointer glass-ios-card specular-shimmer"
+      className="group relative flex flex-col items-center gap-4 rounded-3xl p-8 text-center cursor-pointer glass-ultra card-shine glow-border-hover liquid-shimmer"
       tabIndex={0}
       aria-label={`Continue as ${role.title}`}
     >
       {/* Gradient overlay on hover */}
       <motion.div
-        animate={{ opacity: hoveredRole === role.id ? 0.1 : 0 }}
+        animate={{ opacity: hoveredRole === role.id ? 0.14 : 0 }}
         transition={{ duration: 0.3 }}
-        className={`absolute inset-0 rounded-[28px] bg-gradient-to-br ${role.gradient}`}
+        className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${role.gradient}`}
       />
 
-      {/* Icon in glass pill */}
-      <div className="glass-ios-pill p-5">
-        <div
-          className={`flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${role.gradient}`}
-          style={{
-            boxShadow: hoveredRole === role.id
-              ? `0 0 30px -5px ${role.neonColor}, 0 0 60px -15px ${role.neonColor}`
-              : '0 4px 15px -5px hsl(0 0% 0% / 0.3)',
-            transition: 'box-shadow 0.35s ease',
-          }}
-        >
-          <role.icon className="h-8 w-8 text-white" />
-        </div>
+      {/* Icon */}
+      <div
+        className={`relative flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br ${role.gradient}`}
+        style={{
+          boxShadow: hoveredRole === role.id
+            ? `0 0 35px -5px ${role.neonColor}, 0 0 70px -15px ${role.neonColor}`
+            : 'none',
+          transition: 'box-shadow 0.3s ease',
+        }}
+      >
+        <role.icon className="h-10 w-10 text-white" />
       </div>
 
       {/* Text */}
       <div className="relative" style={{ transform: 'translateZ(20px)' }}>
         <h3 className="text-xl font-heading font-bold text-white">{role.title}</h3>
-        <p className="mt-1 text-sm font-medium text-white/75">{role.subtitle}</p>
-        <p className="mt-2 text-sm text-white/45 leading-relaxed">{role.description}</p>
+        <p className="mt-1 text-sm font-medium text-white/80">{role.subtitle}</p>
+        <p className="mt-2 text-sm text-white/50 leading-relaxed">{role.description}</p>
       </div>
 
       {/* CTA arrow */}
@@ -173,30 +175,26 @@ function RoleCard({ role, index, hoveredRole, setHoveredRole, onClick }: {
   );
 }
 
+/* ─── Main SplashScreen ────────────────────────── */
 const SplashScreen = () => {
   const navigate = useNavigate();
   const [hoveredRole, setHoveredRole] = useState<string | null>(null);
   const [showRoles, setShowRoles] = useState(false);
 
-  const particles = Array.from({ length: 16 }, (_, i) => ({
+  const particles = Array.from({ length: 22 }, (_, i) => ({
     id: i,
-    delay: i * 0.35,
-    x: 5 + (i * 5.5) % 90,
+    delay: i * 0.28,
+    x: 5 + (i * 4.3) % 90,
     size: 3 + (i % 4) * 2,
   }));
 
   return (
     <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden">
 
-      {/* Vignette overlay */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        background: 'radial-gradient(ellipse at center, transparent 50%, hsl(225 45% 6% / 0.6) 100%)',
-      }} />
-
-      {/* Soft ambient overlays */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,hsl(0_0%_100%/0.04),transparent_55%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_75%,hsl(0_0%_0%/0.12),transparent_55%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,hsl(25_95%_53%/0.08),transparent_60%)]" />
+      {/* Background radial overlays */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,hsl(0_0%_100%/0.07),transparent_55%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_75%,hsl(0_0%_0%/0.18),transparent_55%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,hsl(25_95%_53%/0.12),transparent_60%)]" />
 
       {/* Particle field */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -207,17 +205,19 @@ const SplashScreen = () => {
 
       {/* Floating blob orbs */}
       <motion.div
-        className="absolute -left-32 top-16 h-72 w-72 rounded-full bg-primary/6 blur-[100px] pointer-events-none animate-blob"
+        className="absolute -left-32 top-16 h-72 w-72 rounded-full bg-primary/10 blur-[80px] pointer-events-none animate-blob"
         animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
-        transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
-        className="absolute -right-32 bottom-24 h-64 w-64 rounded-full bg-accent/6 blur-[100px] pointer-events-none animate-blob"
+        className="absolute -right-32 bottom-24 h-64 w-64 rounded-full bg-accent/10 blur-[80px] pointer-events-none animate-blob"
         animate={{ x: [0, -25, 0], y: [0, 20, 0] }}
-        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+        style={{ animationDelay: '3s' }}
       />
 
       <AnimatePresence mode="wait">
+        {/* ── LOGO SCREEN ── */}
         {!showRoles ? (
           <motion.div
             key="logo"
@@ -227,11 +227,8 @@ const SplashScreen = () => {
           >
             {/* Ambient light rays */}
             <div className="absolute inset-0 pointer-events-none" style={{ zIndex: -1 }}>
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,hsl(25_95%_53%/0.1)_0%,transparent_70%)]" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,hsl(25_95%_53%/0.15)_0%,transparent_70%)]" />
             </div>
-
-            {/* Frosted backdrop panel */}
-            <div className="absolute inset-0 -m-12 rounded-[40px] glass-ios pointer-events-none opacity-30" />
 
             {/* Logo with pulsing rings */}
             <motion.div
@@ -246,13 +243,14 @@ const SplashScreen = () => {
                 className="relative"
                 style={{ willChange: 'transform' }}
               >
+                {/* Spinning glow ring */}
                 <motion.div
                   className="absolute -inset-3 rounded-full"
                   style={{
-                    background: 'conic-gradient(from 0deg, transparent 60%, hsl(25 95% 53% / 0.5) 100%)',
+                    background: 'conic-gradient(from 0deg, transparent 60%, hsl(25 95% 53% / 0.6) 100%)',
                   }}
                   animate={{ rotate: 360 }}
-                  transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+                  transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
                 />
                 <img
                   src={cravixLogo}
@@ -276,13 +274,13 @@ const SplashScreen = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.9 }}
-                className="text-sm md:text-base font-bold tracking-[0.25em] text-white/80 uppercase mt-1"
+                className="text-sm md:text-base font-bold tracking-[0.25em] text-white/85 uppercase mt-1"
               >
                 Online Food Ordering System
               </motion.p>
             </motion.div>
 
-            {/* Floating food icons */}
+            {/* Floating food icons orbiting around */}
             <div className="absolute inset-0 pointer-events-none">
               {FOOD_ICONS.map((icon, i) => {
                 const angle = (i / FOOD_ICONS.length) * 360;
@@ -293,7 +291,7 @@ const SplashScreen = () => {
                 return (
                   <motion.div
                     key={i}
-                    className="absolute text-2xl md:text-3xl select-none opacity-70"
+                    className="absolute text-2xl md:text-3xl select-none"
                     style={{ left: '50%', top: '42%' }}
                     animate={{
                       x: [x, x * 0.85, x],
@@ -302,10 +300,10 @@ const SplashScreen = () => {
                       scale: [0.8, 1, 0.8],
                     }}
                     transition={{
-                      duration: 10 + i * 1.5,
+                      duration: 8 + i * 1.2,
                       repeat: Infinity,
                       ease: 'easeInOut',
-                      delay: i * 0.5,
+                      delay: i * 0.4,
                     }}
                   >
                     {icon}
@@ -314,7 +312,7 @@ const SplashScreen = () => {
               })}
             </div>
 
-            {/* Stat counters */}
+            {/* Animated stat counters */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -330,7 +328,7 @@ const SplashScreen = () => {
                   className="text-center"
                 >
                   <AnimatedCounter target={stat.value} suffix={stat.suffix} isDecimal={stat.isDecimal} />
-                  <p className="text-xs text-white/55 font-medium tracking-wide mt-0.5">{stat.label}</p>
+                  <p className="text-xs text-white/60 font-medium tracking-wide mt-0.5">{stat.label}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -342,12 +340,12 @@ const SplashScreen = () => {
               transition={{ delay: 1.4 }}
               className="mt-2"
             >
-              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+              <motion.div whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.97 }}>
                 <Button
                   size="lg"
                   id="splash-get-started"
                   onClick={() => setShowRoles(true)}
-                  className="btn-premiere rounded-full px-12 py-7 text-xl font-bold bg-[#E63900] text-white border border-white/20 hover:bg-[#FF3D00] hover:border-white/40 transition-all shadow-[0_0_35px_-8px_rgba(230,57,0,0.6)] glass-ios-button"
+                  className="btn-premiere rounded-full px-12 py-7 text-xl font-bold bg-[#E63900] text-white border-2 border-white/20 hover:bg-[#FF3D00] hover:border-white/50 transition-all shadow-[0_0_40px_-8px_rgba(230,57,0,0.7)]"
                 >
                   <Sparkles className="h-5 w-5 mr-2" />
                   Welcome to CraviX
@@ -357,6 +355,7 @@ const SplashScreen = () => {
           </motion.div>
 
         ) : (
+          /* ── ROLES SCREEN ── */
           <motion.div
             key="roles"
             initial={{ opacity: 0 }}
@@ -370,7 +369,7 @@ const SplashScreen = () => {
               transition={{ type: 'spring', stiffness: 200, damping: 20 }}
               className="text-center"
             >
-              <div className="inline-flex items-center gap-2 glass-ios-pill px-4 py-1.5 text-xs font-semibold text-white/75 uppercase tracking-widest mb-4">
+              <div className="inline-flex items-center gap-2 rounded-full glass-ultra neon-border px-4 py-1.5 text-xs font-semibold text-white/80 uppercase tracking-widest mb-4">
                 <Star className="h-3.5 w-3.5 text-accent" />
                 Choose your role
               </div>
@@ -378,7 +377,7 @@ const SplashScreen = () => {
                 How will you use{' '}
                 <span className="text-gradient">CraviX</span>?
               </h2>
-              <p className="mt-3 text-white/55 text-base">Select your role to get started on the platform</p>
+              <p className="mt-3 text-white/65 text-base">Select your role to get started on the platform</p>
             </motion.div>
 
             <div className="grid w-full gap-5 sm:grid-cols-3 mt-2" style={{ perspective: '1200px' }}>

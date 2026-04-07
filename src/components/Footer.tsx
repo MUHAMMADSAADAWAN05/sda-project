@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import cravixLogo from '@/assets/cravix-logo.jpeg';
 
 const Footer = () => (
-  <footer className="glass-ios mt-auto relative">
-    {/* Top divider */}
-    <div className="glass-divider" />
+  <footer className="glass-ultra mt-auto border-t border-white/10 liquid-shimmer">
+    {/* Top glow border */}
+    <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent pointer-events-none" />
 
     <div className="container py-12 relative">
       <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
@@ -42,8 +42,7 @@ const Footer = () => (
           </div>
         </div>
       </div>
-      <div className="glass-divider mt-10" />
-      <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+      <div className="mt-10 border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
         <span>© 2024 CraviX. All rights reserved.</span>
         <div className="flex gap-6">
           <Link to="/about" className="hover:text-primary transition-colors">Privacy</Link>

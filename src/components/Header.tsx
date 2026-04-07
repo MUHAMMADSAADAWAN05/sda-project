@@ -31,14 +31,17 @@ const Header = () => {
 
   return (
     <motion.header
-      className="sticky top-0 z-50 glass-ios transition-all duration-300"
+      className="sticky top-0 z-50 glass-ultra transition-all duration-300"
       animate={{
-        backdropFilter: scrolled ? 'blur(80px) saturate(200%)' : 'blur(60px) saturate(190%)',
+        backdropFilter: scrolled ? 'blur(50px) saturate(220%)' : 'blur(40px) saturate(200%)',
+        boxShadow: scrolled
+          ? '0 4px 30px -4px hsl(0 0% 0% / 0.4), 0 0 1px 0 hsl(0 0% 100% / 0.1)'
+          : '0 1px 0 0 hsl(0 0% 100% / 0.06)',
       }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
     >
-      {/* Subtle bottom divider */}
-      <div className="absolute bottom-0 left-0 right-0 glass-divider" />
+      {/* Rainbow shimmer top border */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] gradient-animated pointer-events-none opacity-60" />
 
       <div className="container flex h-16 items-center justify-between gap-4">
         <div className="flex items-center gap-6">
@@ -48,6 +51,14 @@ const Header = () => {
               whileTap={{ scale: 0.9 }}
               className="flex h-9 w-9 items-center justify-center rounded-xl overflow-hidden shadow-glow relative"
             >
+              <motion.div
+                className="absolute inset-0 rounded-xl"
+                style={{
+                  background: 'conic-gradient(from 0deg, transparent 70%, hsl(25 95% 53% / 0.8) 100%)',
+                }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+              />
               <img src={cravixLogo} alt="CraviX" className="h-full w-full object-cover relative z-10" />
             </motion.div>
             <motion.span
@@ -65,7 +76,7 @@ const Header = () => {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                  className={`relative rounded-xl px-3.5 py-2 text-sm font-medium transition-colors ${
                     isActive(link.to)
                       ? 'text-primary'
                       : 'text-muted-foreground hover:text-foreground'
@@ -75,7 +86,7 @@ const Header = () => {
                   {isActive(link.to) && (
                     <motion.div
                       layoutId="activeNav"
-                      className="absolute inset-0 rounded-full glass-ios-pill"
+                      className="absolute inset-0 rounded-xl bg-primary/12 shimmer-effect"
                       transition={{ type: 'spring', stiffness: 320, damping: 30 }}
                     />
                   )}
@@ -89,7 +100,7 @@ const Header = () => {
         {!['/dashboard', '/driver', '/login', '/signup'].includes(location.pathname) && (
           <div className="hidden items-center gap-2 md:flex">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
-              <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground rounded-full hover:text-foreground hover:bg-white/5" asChild>
+              <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground rounded-xl hover:text-foreground hover:bg-white/5" asChild>
                 <Link to="/search">
                   <Search className="h-4 w-4" />
                   <span className="hidden lg:inline">Search</span>
@@ -98,7 +109,7 @@ const Header = () => {
             </motion.div>
 
             <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.05 }}>
-              <Button variant="ghost" size="sm" className="relative gap-2 rounded-full hover:bg-white/5" onClick={() => setIsOpen(true)} aria-label="Open cart">
+              <Button variant="ghost" size="sm" className="relative gap-2 rounded-xl hover:bg-white/5" onClick={() => setIsOpen(true)} aria-label="Open cart">
                 <ShoppingCart className="h-4 w-4" />
                 <AnimatePresence>
                   {itemCount > 0 && (
@@ -117,7 +128,7 @@ const Header = () => {
             </motion.div>
 
             <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.05 }}>
-              <Button variant="ghost" size="sm" className="rounded-full hover:bg-white/5" onClick={toggleTheme} aria-label="Toggle theme">
+              <Button variant="ghost" size="sm" className="rounded-xl hover:bg-white/5" onClick={toggleTheme} aria-label="Toggle theme">
                 <AnimatePresence mode="wait" initial={false}>
                   {theme === 'light' ? (
                     <motion.div key="sun" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.22 }}>
@@ -133,13 +144,13 @@ const Header = () => {
             </motion.div>
 
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
-              <Button variant="ghost" size="sm" className="rounded-full hover:bg-white/5" asChild>
+              <Button variant="ghost" size="sm" className="rounded-xl hover:bg-white/5" asChild>
                 <Link to="/account" aria-label="Account"><User className="h-4 w-4" /></Link>
               </Button>
             </motion.div>
 
             <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
-              <Button size="sm" className="rounded-full gradient-warm neon-glow-primary hover:shadow-xl transition-all font-semibold border-0 btn-premiere" asChild>
+              <Button size="sm" className="rounded-xl gradient-warm neon-glow-primary hover:shadow-xl transition-all font-semibold border-0 btn-premiere" asChild>
                 <Link to="/login">Sign In</Link>
               </Button>
             </motion.div>
@@ -165,18 +176,18 @@ const Header = () => {
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" aria-label="Menu"><Menu className="h-5 w-5" /></Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-72 glass-ios-sheet border-l border-white/10">
+              <SheetContent side="right" className="w-72 glass-ultra border-l border-white/10">
                 <nav className="mt-8 flex flex-col gap-2">
                   {navLinks.map(link => (
                     <Link key={link.to} to={link.to} onClick={() => setMobileOpen(false)}
-                      className={`rounded-[22px] px-4 py-3 text-sm font-medium transition-colors ${isActive(link.to) ? 'glass-ios-pill text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-white/5'}`}
+                      className={`rounded-xl px-4 py-3 text-sm font-medium transition-colors ${isActive(link.to) ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-white/5'}`}
                     >{link.label}</Link>
                   ))}
-                  <div className="glass-divider my-2" />
-                  <Link to="/account" onClick={() => setMobileOpen(false)} className="rounded-[22px] px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-white/5">Account</Link>
-                  <div className="glass-divider my-2" />
+                  <hr className="my-2 border-white/10" />
+                  <Link to="/account" onClick={() => setMobileOpen(false)} className="rounded-xl px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-white/5">Account</Link>
+                  <hr className="my-2 border-white/10" />
                   <Link to="/login" onClick={() => setMobileOpen(false)}>
-                    <Button className="w-full gradient-warm rounded-full border-0">Sign In</Button>
+                    <Button className="w-full gradient-warm rounded-xl border-0">Sign In</Button>
                   </Link>
                 </nav>
               </SheetContent>
@@ -185,7 +196,7 @@ const Header = () => {
         ) : (
           <div className="flex items-center gap-2 md:hidden">
             <motion.div whileTap={{ scale: 0.9 }}>
-              <Button variant="ghost" size="sm" className="rounded-full hover:bg-white/5" onClick={toggleTheme} aria-label="Toggle theme">
+              <Button variant="ghost" size="sm" className="rounded-xl hover:bg-white/5" onClick={toggleTheme} aria-label="Toggle theme">
                 <AnimatePresence mode="wait" initial={false}>
                   {theme === 'light' ? (
                     <motion.div key="sun" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.22 }}>

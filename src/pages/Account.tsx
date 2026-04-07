@@ -36,7 +36,7 @@ const Account = () => {
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="rounded-[22px] glass-ios p-4 mb-6 flex flex-wrap items-center justify-between gap-4"
+              className="rounded-2xl glass-strong p-4 mb-6 flex flex-wrap items-center justify-between gap-4"
             >
               <div className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded-xl gradient-warm flex items-center justify-center neon-glow-primary shadow-lg">
@@ -60,7 +60,7 @@ const Account = () => {
               </div>
             </motion.div>
 
-            <div className="glass-ios rounded-[28px] p-6 specular-shimmer">
+            <div className="glass-ultra rounded-3xl p-6 liquid-shimmer">
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-3">
                   <Sliders className="h-6 w-6 text-white" />
@@ -71,7 +71,7 @@ const Account = () => {
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="rounded-[22px] glass-ios-card border-white/10 p-6 mb-8 flex items-center gap-6"
+                className="rounded-xl glass-card border-white/10 p-6 mb-8 flex items-center gap-6"
               >
                 <div className="h-24 w-24 rounded-full gradient-warm flex items-center justify-center neon-glow-primary border-4 border-white/20 shadow-xl">
                   <span className="text-3xl font-heading font-black text-white">JD</span>
@@ -97,7 +97,7 @@ const Account = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 + (i * 0.05) }}
                     whileHover={{ y: -4, scale: 1.02 }}
-                    className={`rounded-[22px] border border-white/15 p-5 cursor-pointer flex flex-col items-center text-center justify-center gap-4 transition-all glass-ios-card hover:bg-white/5 ${
+                    className={`rounded-xl border border-white/20 p-5 cursor-pointer flex flex-col items-center text-center justify-center gap-4 transition-all hover:shadow-[0_0_30px_-5px_hsl(25,95%,53%/0.5)] glass-card hover:bg-white/5 ${
                       i === 0 || i === 1 ? 'bg-gradient-to-b from-white/10 to-transparent' : ''
                     }`}
                   >

@@ -45,7 +45,7 @@ const Checkout = () => {
         <div className="grid gap-8 lg:grid-cols-5">
           <div className="lg:col-span-3 space-y-6">
             {/* Delivery Address */}
-            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="rounded-[22px] glass-ios-card p-6 space-y-4 specular-shimmer">
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="rounded-2xl glass-ultra p-6 space-y-4 liquid-shimmer">
               <h2 className="font-heading font-bold flex items-center gap-2 text-foreground"><div className="h-8 w-8 rounded-lg gradient-warm neon-glow-primary flex items-center justify-center"><MapPin className="h-4 w-4 text-primary-foreground" /></div> Delivery Address</h2>
               <RadioGroup value={selectedAddress} onValueChange={setSelectedAddress}>
                 {savedAddresses.map(addr => (
@@ -61,7 +61,7 @@ const Checkout = () => {
             </motion.div>
 
             {/* Payment */}
-            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="rounded-[22px] glass-ios-card p-6 space-y-4 specular-shimmer">
+            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="rounded-2xl glass-frost p-6 space-y-4 liquid-shimmer">
               <h2 className="font-heading font-bold flex items-center gap-2 text-foreground"><div className="h-8 w-8 rounded-lg gradient-warm neon-glow-primary flex items-center justify-center"><CreditCard className="h-4 w-4 text-primary-foreground" /></div> Payment Method</h2>
               <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
                 {[
@@ -91,7 +91,7 @@ const Checkout = () => {
 
           {/* Summary */}
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="lg:col-span-2">
-            <div className="rounded-[22px] glass-ios-card p-6 space-y-4 sticky top-24 specular-shimmer">
+            <div className="rounded-2xl glass-ultra p-6 space-y-4 sticky top-24 liquid-shimmer">
               <h2 className="font-heading font-bold">Order Summary</h2>
               <p className="text-sm font-semibold text-primary">{items[0]?.restaurantName}</p>
               <div className="space-y-2 border-t border-white/10 pt-3">

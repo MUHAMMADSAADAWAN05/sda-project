@@ -46,7 +46,7 @@ const Admin = () => {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-[22px] glass-ios p-4 mb-6 flex flex-wrap items-center justify-between gap-4"
+            className="rounded-2xl glass-strong p-4 mb-6 flex flex-wrap items-center justify-between gap-4"
           >
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl gradient-warm flex items-center justify-center neon-glow-primary shadow-lg">
@@ -71,7 +71,7 @@ const Admin = () => {
             </div>
           </motion.div>
 
-          <div className="glass-ios rounded-[28px] p-6 specular-shimmer">
+          <div className="glass-ultra rounded-3xl p-6 liquid-shimmer">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
                 <LayoutDashboard className="h-6 w-6 text-white" />
@@ -91,7 +91,7 @@ const Admin = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
                   whileHover={{ y: -4, scale: 1.02 }}
-                  className="rounded-[22px] glass-ios-card border-white/10 p-5 flex items-center gap-4 hover:bg-white/5 transition-all shadow-lg ios-breathe"
+                  className="rounded-xl glass-ultra border-white/10 p-5 flex items-center gap-4 hover:bg-white/5 transition-all shadow-lg breathing-glow"
                 >
                   <div className={`h-12 w-12 rounded-full flex items-center justify-center ${stat.color}`}>
                     <stat.icon className="h-6 w-6" />

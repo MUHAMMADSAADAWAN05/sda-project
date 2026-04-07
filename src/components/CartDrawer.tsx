@@ -15,10 +15,10 @@ const CartDrawer = () => {
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetContent className="flex w-full flex-col sm:max-w-md glass-ios-sheet border-l border-white/10">
+      <SheetContent className="flex w-full flex-col sm:max-w-md glass-ultra shadow-2xl border-l border-white/10">
         <SheetHeader>
           <SheetTitle className="flex items-center gap-2 font-heading">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl gradient-warm neon-glow-primary">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg gradient-warm neon-glow-primary">
               <ShoppingBag className="h-4 w-4 text-primary-foreground" />
             </div>
             Your Cart ({itemCount})
@@ -31,14 +31,14 @@ const CartDrawer = () => {
             animate={{ opacity: 1, scale: 1 }}
             className="flex flex-1 flex-col items-center justify-center gap-4 text-center"
           >
-            <div className="flex h-24 w-24 items-center justify-center rounded-[28px] glass-ios-card">
+            <div className="flex h-24 w-24 items-center justify-center rounded-3xl glass-liquid neon-border-teal">
               <ShoppingBag className="h-12 w-12 text-muted-foreground" />
             </div>
             <div>
               <p className="font-heading font-bold text-lg">Your cart is empty</p>
               <p className="text-sm text-muted-foreground mt-1">Add items from a restaurant to get started</p>
             </div>
-            <Button onClick={() => { setIsOpen(false); navigate('/'); }} className="gradient-warm rounded-full neon-glow-primary border-0">
+            <Button onClick={() => { setIsOpen(false); navigate('/'); }} className="gradient-warm rounded-xl neon-glow-primary border-0">
               Browse Restaurants
             </Button>
           </motion.div>
@@ -58,7 +58,7 @@ const CartDrawer = () => {
                         initial={{ opacity: 0, x: 30 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -30, height: 0 }}
-                        className="flex gap-3 rounded-[22px] glass-ios-card p-3"
+                        className="flex gap-3 rounded-2xl glass-ultra p-3 liquid-shimmer"
                       >
                         <img src={item.menuItem.image} alt={item.menuItem.name} className="h-16 w-16 rounded-xl object-cover" />
                         <div className="flex-1 min-w-0">
@@ -69,7 +69,7 @@ const CartDrawer = () => {
                             </p>
                           )}
                           <div className="mt-2 flex items-center justify-between">
-                            <div className="flex items-center gap-1.5 glass-ios-pill px-1">
+                            <div className="flex items-center gap-1.5 rounded-full glass-deep border border-white/10">
                               <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
                                 <Minus className="h-3 w-3" />
                               </Button>
@@ -96,18 +96,16 @@ const CartDrawer = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="pt-4 space-y-2"
+              className="border-t border-white/10 pt-4 space-y-2"
             >
-              <div className="glass-divider mb-3" />
               <div className="flex justify-between text-sm"><span className="text-muted-foreground">Subtotal</span><span className="font-medium">${subtotal.toFixed(2)}</span></div>
               <div className="flex justify-between text-sm"><span className="text-muted-foreground">Delivery fee</span><span className="font-medium">${deliveryFee.toFixed(2)}</span></div>
               <div className="flex justify-between text-sm"><span className="text-muted-foreground">Tax</span><span className="font-medium">${tax.toFixed(2)}</span></div>
-              <div className="glass-divider my-2" />
-              <div className="flex justify-between font-heading font-extrabold text-lg text-foreground">
+              <div className="flex justify-between font-heading font-extrabold text-lg border-t border-white/10 pt-3 text-foreground">
                 <span>Total</span><span className="text-gradient">${total.toFixed(2)}</span>
               </div>
               <Button
-                className="w-full mt-3 gradient-warm rounded-full neon-glow-primary hover:shadow-xl transition-all gap-2 border-0 btn-premiere"
+                className="w-full mt-3 gradient-warm rounded-xl neon-glow-primary hover:shadow-xl transition-all gap-2 border-0"
                 size="lg"
                 onClick={() => { setIsOpen(false); navigate('/checkout'); }}
               >
