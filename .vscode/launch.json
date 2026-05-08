@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "ProjectApplication",
+            "request": "launch",
+            "mainClass": "COM.ONLIINE.FOOD.ORDERING.SYSTEM.PROJECT.ProjectApplication",
+            "projectName": "PROJECT",
+            "cwd": "${workspaceFolder}/BACKEND (SPRING BOOT)",
+            "vmArgs": "-Djava.library.path=\"${workspaceFolder}/BACKEND (SPRING BOOT)\""
+        }
+    ]
+}
