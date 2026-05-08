@@ -1,0 +1,13 @@
+{
+  "name": "cravix-workspace",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --cwd \"FRONTEND (REACT)\" dev -- --host 0.0.0.0",
+    "build": "bun run --cwd \"FRONTEND (REACT)\" build",
+    "build:dev": "bun run --cwd \"FRONTEND (REACT)\" build:dev",
+    "lint": "bun run --cwd \"FRONTEND (REACT)\" lint",
+    "preview": "bun run --cwd \"FRONTEND (REACT)\" preview",
+    "test": "bun run --cwd \"FRONTEND (REACT)\" test"
+  }
+}
