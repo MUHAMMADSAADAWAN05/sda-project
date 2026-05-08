@@ -3,11 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "bun --cwd 'FRONTEND (REACT)' run dev -- --host 0.0.0.0",
-    "build": "bun --cwd 'FRONTEND (REACT)' run build",
-    "build:dev": "bun --cwd 'FRONTEND (REACT)' run build:dev",
-    "lint": "bun --cwd 'FRONTEND (REACT)' run lint",
-    "preview": "bun --cwd 'FRONTEND (REACT)' run preview",
-    "test": "bun --cwd 'FRONTEND (REACT)' run test"
+    "dev": "bun run --cwd \"FRONTEND (REACT)\" dev -- --host 0.0.0.0",
+    "build": "bun run --cwd \"FRONTEND (REACT)\" build",
+    "build:dev": "bun run --cwd \"FRONTEND (REACT)\" build:dev",
+    "lint": "bun run --cwd \"FRONTEND (REACT)\" lint",
+    "preview": "bun run --cwd \"FRONTEND (REACT)\" preview",
+    "test": "bun run --cwd \"FRONTEND (REACT)\" test"
   }
 }
