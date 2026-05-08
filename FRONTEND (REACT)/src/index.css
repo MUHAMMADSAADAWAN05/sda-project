@@ -468,8 +468,7 @@
       hsl(15 90% 50%),
       hsl(25 95% 53%)
     );
-    background-size: 400% 400%;
-    animation: gradient-shift 6s ease infinite;
+    background-size: 100% 100%;
   }
 
   .stat-shimmer {
@@ -494,6 +493,20 @@
       0 0 0 1px hsl(25 95% 53% / 0.5),
       0 0 30px -5px hsl(25 95% 53% / 0.4),
       0 0 60px -15px hsl(38 95% 55% / 0.2);
+  }
+
+  [class*="shimmer"],
+  [class*="shine"] {
+    animation: none !important;
+    background-position: center !important;
+  }
+
+  [class*="shimmer"]::before,
+  [class*="shimmer"]::after,
+  [class*="shine"]::before,
+  [class*="shine"]::after {
+    content: none !important;
+    animation: none !important;
   }
 }
 
