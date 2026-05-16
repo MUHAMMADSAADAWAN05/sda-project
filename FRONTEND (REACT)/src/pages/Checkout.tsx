@@ -11,19 +11,17 @@ import { PageWrapper } from '@/components/PageWrapper';
 import { placeOrder } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 
-// Local mock data for addresses until we have an address API
-const savedAddresses = [
-  { id: '1', label: 'Home', street: '742 Evergreen Terrace', city: 'Springfield', zip: '62704' },
-  { id: '2', label: 'Work', street: '1600 Pennsylvania Ave', city: 'Washington', zip: '20500' },
-];
-
 const Checkout = () => {
   const { items, subtotal, clearCart } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [selectedAddress, setSelectedAddress] = useState(savedAddresses[0].id);
+
+  const userAddress = (user as any)?.address;
+  const userCard = (user as any)?.cardNumber;
+
+  const [selectedAddress, setSelectedAddress] = useState('db');
   const [promoCode, setPromoCode] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('card1');
+  const [paymentMethod, setPaymentMethod] = useState('db');
   const [isPlacing, setIsPlacing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -43,19 +41,21 @@ const Checkout = () => {
     setError(null);
     
     try {
-      const addressObj = savedAddresses.find(a => a.id === selectedAddress);
-      const fullAddress = `${addressObj?.street}, ${addressObj?.city} ${addressObj?.zip}`;
+      const finalAddress = selectedAddress === 'db' ? userAddress : "Selected Address";
+      if (!finalAddress || finalAddress.trim() === '') {
+        throw new Error("Please set a delivery address in your profile first.");
+      }
       
       const orderData = {
         user: { id: user?.id },
-        restaurant: { id: items[0].restaurantId }, // Link to the restaurant
-        deliveryAddress: fullAddress,
-        paymentMethod: paymentMethod === 'card1' ? 'CREDIT_CARD' : 'PAYPAL',
+        restaurant: { id: items[0].restaurantId },
+        deliveryAddress: finalAddress,
+        paymentMethod: paymentMethod === 'db' ? 'CREDIT_CARD' : 'PAYPAL',
         totalAmount: total,
         items: items.map(item => ({
-          name: item.menuItem.name,
+          menuItem: { id: (item.menuItem as any).id },
           quantity: item.quantity,
-          price: item.menuItem.price,
+          unitPrice: item.menuItem.price,
         }))
       };
 
@@ -80,36 +80,37 @@ const Checkout = () => {
           <div className="lg:col-span-3 space-y-6">
             {/* Delivery Address */}
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="rounded-2xl glass-ultra p-6 space-y-4 liquid-shimmer">
-              <h2 className="font-heading font-bold flex items-center gap-2"><div className="h-8 w-8 rounded-lg gradient-warm neon-glow-primary flex items-center justify-center"><MapPin className="h-4 w-4 text-white" /></div> Delivery Address</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="font-heading font-bold flex items-center gap-2"><div className="h-8 w-8 rounded-lg gradient-warm neon-glow-primary flex items-center justify-center"><MapPin className="h-4 w-4 text-white" /></div> Delivery Address</h2>
+                <Button variant="link" size="sm" className="text-primary p-0" onClick={() => navigate('/account')}>Update Profile</Button>
+              </div>
               <RadioGroup value={selectedAddress} onValueChange={setSelectedAddress}>
-                {savedAddresses.map(addr => (
-                  <div key={addr.id} className="flex items-center gap-3 rounded-xl glass-deep border border-white/10 p-3.5 cursor-pointer hover:neon-border transition-all">
-                    <RadioGroupItem value={addr.id} id={addr.id} className="border-white/20 data-[state=checked]:bg-primary" />
-                    <Label htmlFor={addr.id} className="cursor-pointer flex-1">
-                      <p className="font-heading font-semibold">{addr.label}</p>
-                      <p className="text-sm text-white/50">{addr.street}, {addr.city} {addr.zip}</p>
-                    </Label>
-                  </div>
-                ))}
+                <div className="flex items-center gap-3 rounded-xl glass-deep border border-white/10 p-3.5 cursor-pointer hover:neon-border transition-all">
+                  <RadioGroupItem value="db" id="db-addr" className="border-white/20 data-[state=checked]:bg-primary" />
+                  <Label htmlFor="db-addr" className="cursor-pointer flex-1">
+                    <p className="font-heading font-semibold">Saved Address</p>
+                    <p className="text-sm text-white/50">{userAddress || 'No address set in profile'}</p>
+                  </Label>
+                </div>
               </RadioGroup>
             </motion.div>
 
             {/* Payment */}
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="rounded-2xl glass-strong p-6 space-y-4 liquid-shimmer">
-              <h2 className="font-heading font-bold flex items-center gap-2"><div className="h-8 w-8 rounded-lg gradient-warm neon-glow-primary flex items-center justify-center"><CreditCard className="h-4 w-4 text-white" /></div> Payment Method</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="font-heading font-bold flex items-center gap-2"><div className="h-8 w-8 rounded-lg gradient-warm neon-glow-primary flex items-center justify-center"><CreditCard className="h-4 w-4 text-white" /></div> Payment Method</h2>
+                <Button variant="link" size="sm" className="text-primary p-0" onClick={() => navigate('/account')}>Manage Cards</Button>
+              </div>
               <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
-                {[
-                  { id: 'card1', number: '•••• •••• •••• 4242', type: 'Visa • Expires 12/25' },
-                  { id: 'card2', number: '•••• •••• •••• 8888', type: 'Mastercard • Expires 06/26' },
-                ].map(card => (
-                  <div key={card.id} className="flex items-center gap-3 rounded-xl glass-deep border border-white/10 p-3.5 cursor-pointer hover:neon-border transition-all">
-                    <RadioGroupItem value={card.id} id={card.id} className="border-white/20 data-[state=checked]:bg-primary" />
-                    <Label htmlFor={card.id} className="cursor-pointer flex-1">
-                      <p className="font-heading font-semibold">{card.number}</p>
-                      <p className="text-sm text-white/50">{card.type}</p>
-                    </Label>
-                  </div>
-                ))}
+                <div className="flex items-center gap-3 rounded-xl glass-deep border border-white/10 p-3.5 cursor-pointer hover:neon-border transition-all">
+                  <RadioGroupItem value="db" id="db-card" className="border-white/20 data-[state=checked]:bg-primary" />
+                  <Label htmlFor="db-card" className="cursor-pointer flex-1">
+                    <p className="font-heading font-semibold">
+                      {userCard ? `•••• •••• •••• ${userCard.slice(-4)}` : 'No card saved'}
+                    </p>
+                    <p className="text-sm text-white/50">{userCard ? 'Primary Card' : 'Add a card in your profile settings'}</p>
+                  </Label>
+                </div>
               </RadioGroup>
             </motion.div>
 

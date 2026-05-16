@@ -1,7 +1,9 @@
+import { useState, useEffect } from 'react';
 import { User, MapPin, Heart, Settings, LogOut, LayoutDashboard, Sliders, History, CreditCard, Bell, HelpCircle, Shield, ShoppingBag, Edit3, Store, Home, Search, Package, UtensilsCrossed } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { PageWrapper } from '@/components/PageWrapper';
 import DashboardSideNav from '@/components/DashboardSideNav';
 import { useAuth } from '@/context/AuthContext';
@@ -20,15 +22,49 @@ const customerNavItems = [
   { icon: Home, label: 'Home', to: '/customer' },
   { icon: Search, label: 'Browse', to: '/search' },
   { icon: Package, label: 'Orders', to: '/orders' },
-  { icon: User, label: 'Account', to: '/account' },
-  { icon: Heart, label: 'Favorites', to: '/account' },
-  { icon: CreditCard, label: 'Payments', to: '/account' },
   { icon: HelpCircle, label: 'Support', to: '/contact' },
 ];
 
 const Account = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, login } = useAuth();
   const navigate = useNavigate();
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [profileForm, setProfileForm] = useState({
+    name: user?.name || '',
+    email: user?.email || '',
+    address: (user as any)?.address || '',
+    cardNumber: (user as any)?.cardNumber || '',
+  });
+  const [loading, setLoading] = useState(false);
+
+  // Sync form when user loads
+  useEffect(() => {
+    if (user) {
+      setProfileForm({
+        name: user.name || '',
+        email: user.email || '',
+        address: (user as any).address || '',
+        cardNumber: (user as any).cardNumber || '',
+      });
+    }
+  }, [user]);
+
+  const handleUpdateProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user?.id) return;
+    try {
+      setLoading(true);
+      const { updateProfile } = await import('@/lib/api');
+      const updatedUser = await updateProfile(user.id, profileForm);
+      login(updatedUser as any);
+      setIsEditingProfile(false);
+      alert('Profile updated successfully!');
+    } catch (err) {
+      alert('Failed to update profile');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLogout = () => {
     logout();
@@ -40,7 +76,7 @@ const Account = () => {
     : '??';
 
   return (
-    <PageWrapper>
+    <PageWrapper key={user?.id || 'guest'}>
       <div className="min-h-screen pb-12">
         <div className="container py-8 max-w-[1400px] flex gap-6">
           <DashboardSideNav items={customerNavItems} title="Customer" />
@@ -99,9 +135,72 @@ const Account = () => {
                     </Link>
                   </div>
                 </div>
-                <Button variant="ghost" className="rounded-xl glass-deep border-white/20 text-white hover:bg-white/20 h-12 w-12 p-0">
+                <Button 
+                  variant="ghost" 
+                  className="rounded-xl glass-deep border-white/20 text-white hover:bg-white/20 h-12 w-12 p-0"
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsEditingProfile(true); }}
+                >
                   <Edit3 className="h-5 w-5" />
                 </Button>
+
+                <AnimatePresence>
+                  {isEditingProfile && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+                      <motion.div 
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        className="w-full max-w-md rounded-2xl glass-ultra border border-white/10 p-6 shadow-2xl relative"
+                      >
+                        <h2 className="font-heading text-2xl font-bold text-white mb-4">Edit Profile</h2>
+                        <form onSubmit={handleUpdateProfile} className="space-y-4">
+                          <div className="space-y-2">
+                            <label className="text-sm font-semibold text-white/70">Full Name</label>
+                            <input 
+                              className="w-full h-11 rounded-xl glass-deep border border-white/10 px-3 text-white outline-none focus:border-primary"
+                              value={profileForm.name}
+                              onChange={e => setProfileForm({ ...profileForm, name: e.target.value })}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-sm font-semibold text-white/70">Email Address</label>
+                            <input 
+                              type="email"
+                              className="w-full h-11 rounded-xl glass-deep border border-white/10 px-3 text-white outline-none focus:border-primary"
+                              value={profileForm.email}
+                              onChange={e => setProfileForm({ ...profileForm, email: e.target.value })}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-sm font-semibold text-white/70">Delivery Address</label>
+                            <input 
+                              type="text"
+                              className="w-full h-11 rounded-xl glass-deep border border-white/10 px-3 text-white outline-none focus:border-primary"
+                              value={profileForm.address}
+                              onChange={e => setProfileForm({ ...profileForm, address: e.target.value })}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-sm font-semibold text-white/70">Card Number (Optional)</label>
+                            <input 
+                              type="text"
+                              placeholder="**** **** **** ****"
+                              className="w-full h-11 rounded-xl glass-deep border border-white/10 px-3 text-white outline-none focus:border-primary"
+                              value={profileForm.cardNumber}
+                              onChange={e => setProfileForm({ ...profileForm, cardNumber: e.target.value })}
+                            />
+                          </div>
+                          <div className="mt-6 flex justify-end gap-2">
+                            <Button type="button" variant="ghost" onClick={() => setIsEditingProfile(false)}>Cancel</Button>
+                            <Button type="submit" disabled={loading} className="gradient-warm border-0 font-bold">
+                              Save Changes
+                            </Button>
+                          </div>
+                        </form>
+                      </motion.div>
+                    </div>
+                  )}
+                </AnimatePresence>
               </motion.div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -123,7 +222,15 @@ const Account = () => {
                       <h3 className="font-heading font-bold text-lg text-white mb-1">{control.label}</h3>
                       <p className="text-sm text-white/50">{control.desc}</p>
                     </div>
-                    <Button className="w-full mt-2 rounded-lg bg-white/10 border-white/20 text-white hover:bg-white/20 border" variant="ghost">
+                    <Button 
+                      className="w-full mt-2 rounded-lg bg-white/10 border-white/20 text-white hover:bg-white/20 border" 
+                      variant="ghost"
+                      onClick={(e) => {
+                        e.preventDefault(); e.stopPropagation();
+                        if (['profile', 'addresses', 'payment'].includes(control.id)) setIsEditingProfile(true);
+                        else alert(`${control.label} feature requires additional database tables and is coming soon!`);
+                      }}
+                    >
                       Manage
                     </Button>
                   </motion.div>

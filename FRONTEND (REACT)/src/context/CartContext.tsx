@@ -22,7 +22,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const addItem = useCallback((item: Omit<CartItem, 'id'>) => {
     const id = `${item.menuItem.id}-${Date.now()}`;
     setItems(prev => [...prev, { ...item, id }]);
-    setIsOpen(true);
   }, []);
 
   const removeItem = useCallback((id: string) => {

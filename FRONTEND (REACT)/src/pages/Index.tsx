@@ -69,12 +69,12 @@ const itemVariants: Variants = {
 const itemTransition: Transition = { duration: 0.5, ease: [0.22, 1, 0.36, 1] };
 
 const faqs = [
-  { q: 'How does CraviX delivery work?', a: 'Simply browse restaurants near you, add items to your cart, and place your order. A nearby driver will pick up your food and deliver it to your doorstep in real-time with GPS tracking.' },
-  { q: 'What are the delivery hours?', a: 'Most restaurants on CraviX operate between 8 AM and 11 PM. Some 24-hour restaurants are available around the clock. Check each restaurant\'s page for their specific hours.' },
-  { q: 'How can I track my order?', a: 'Once your order is confirmed, you\'ll see a live tracking page with real-time GPS updates showing your driver\'s location, estimated arrival time, and delivery progress steps.' },
-  { q: 'Is there a minimum order amount?', a: 'Minimum order amounts vary by restaurant, typically ranging from $10-$15. You can see the minimum for each restaurant on their detail page.' },
-  { q: 'How do I apply a promo code?', a: 'During checkout, you\'ll find a "Promo Code" section where you can enter your code and click "Apply" to see the discount reflected in your order total.' },
-  { q: 'Can I schedule an order for later?', a: 'Yes! When placing your order, you can choose "Schedule for Later" and pick a date and time that works best for you. Orders can be scheduled up to 7 days in advance.' },
+  { q: 'What is CraviX?', a: 'CraviX is a high-performance food delivery platform connecting customers with the best local restaurants and professional drivers for a seamless dining experience.' },
+  { q: 'How do I start ordering?', a: 'Simply sign up as a Customer, browse your favorite restaurants, add delicious items to your cart, and proceed to checkout with our secure payment system.' },
+  { q: 'Can I join as a Restaurant Partner or Driver?', a: 'Absolutely! CraviX is a multi-role platform. You can sign up as a Restaurant to manage your menu and orders, or as a Driver to earn by delivering food.' },
+  { q: 'How do I track my order status?', a: 'After placing an order, you can view its progress in the "My Orders" section of your dashboard, where you will see status updates from preparation to delivery.' },
+  { q: 'Where can I manage my delivery addresses?', a: 'You can save and update your delivery locations in the "Account" section of your profile to ensure your food always reaches the right spot.' },
+  { q: 'Is my payment information secure?', a: 'Yes, CraviX uses industry-standard encryption to protect your data. You can manage your saved cards and payment preferences securely in your profile.' },
 ];
 
 /* ── Main Page ─────────────────────────────────── */
@@ -87,7 +87,7 @@ const Index = () => {
 
   useEffect(() => {
     fetchRestaurants()
-      .then(data => setRestaurants(data))
+      .then(data => setRestaurants(data as any))
       .catch(err => console.error('Error fetching restaurants:', err));
   }, []);
 
@@ -144,7 +144,7 @@ const Index = () => {
               >
                 Crave it,{' '}
                 <span className="inline-block min-w-[7ch]">
-                   <CyclingWord />
+                  <CyclingWord />
                 </span>
               </motion.h1>
 
@@ -190,48 +190,14 @@ const Index = () => {
                 className="mt-5 flex items-center justify-center gap-2 text-sm text-white/60"
               >
                 <MapPin className="h-4 w-4 text-primary" />
-                <span>742 Evergreen Terrace, Springfield</span>
-                <Button variant="link" size="sm" className="h-auto p-0 text-primary font-semibold">Change</Button>
+                <span>Set your delivery location</span>
+                <Button variant="link" size="sm" className="h-auto p-0 text-primary font-semibold" onClick={() => navigate('/account')}>Change</Button>
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* ── STATS BANNER ─────────────────────── */}
-        <section className="container -mt-6 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="grid grid-cols-3 gap-4 rounded-2xl glass-ultra p-6 liquid-shimmer"
-          >
-            {[
-              { icon: Zap, label: 'Lightning Fast', value: '15-30 min avg', color: 'text-accent', live: false },
-              { icon: Shield, label: 'Secure Payments', value: '100% Protected', color: 'text-success', live: false },
-              { icon: ClockIcon, label: 'Live Tracking', value: 'Real-time GPS', color: 'text-primary', live: true },
-            ].map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.11 }}
-                className="text-center"
-              >
-                <div className="relative inline-flex items-center justify-center mb-2">
-                  <stat.icon className={`h-6 w-6 ${stat.color}`} />
-                  {stat.live && (
-                    <span className="absolute -right-3 -top-1">
-                      <span className="live-dot" />
-                    </span>
-                  )}
-                </div>
-                <p className="font-heading font-bold text-sm text-white">{stat.value}</p>
-                <p className="text-xs text-white/50">{stat.label}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </section>
+
 
         {/* ── CATEGORIES ───────────────────────── */}
         <section className="container py-12">
@@ -330,34 +296,7 @@ const Index = () => {
           </motion.div>
         </section>
 
-        {/* ── ANIMATED STATS ROW ───────────────── */}
-        <section className="container pb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="grid grid-cols-3 gap-6 rounded-2xl glass-ultra p-8 text-center liquid-shimmer"
-          >
-            {[
-              { label: 'Restaurants', to: 350 },
-              { label: 'Deliveries Today', to: 1240 },
-              { label: 'Happy Customers', to: 52000 },
-            ].map((s, i) => (
-              <motion.div
-                key={s.label}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.12, type: 'spring', stiffness: 200 }}
-              >
-                <p className="text-3xl font-heading font-black text-white md:text-4xl">
-                  <AnimCounter to={s.to} />+
-                </p>
-                <p className="text-sm text-white/65 mt-1 font-medium">{s.label}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </section>
+
 
         {/* ── FAQs ─────────────────────────────── */}
         <section className="container pb-16">

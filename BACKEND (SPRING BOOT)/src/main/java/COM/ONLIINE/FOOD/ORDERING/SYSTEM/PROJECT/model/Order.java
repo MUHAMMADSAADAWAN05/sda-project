@@ -27,18 +27,18 @@ public class Order {
     @Column(name = "total_amount")
     private Double totalAmount;
     
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "driver_id")
     private User driver;
 
     @Column(name = "created_at")
     private Date createdAt;
 
-    // For frontend structure mapping
+    // For frontend structure mapping (incoming JSON only)
     @Transient
     private Long restaurantId;
     @Transient
@@ -78,9 +78,9 @@ public class Order {
     public User getDriver() { return driver; }
     public void setDriver(User driver) { this.driver = driver; }
 
-    public Long getRestaurantId() { return restaurant != null ? restaurant.getId() : restaurantId; }
+    public Long getRestaurantId() { return restaurantId; }
     public void setRestaurantId(Long restaurantId) { this.restaurantId = restaurantId; }
-    public String getRestaurantName() { return restaurant != null ? restaurant.getName() : restaurantName; }
+    public String getRestaurantName() { return restaurantName; }
     public void setRestaurantName(String restaurantName) { this.restaurantName = restaurantName; }
 
     public Double getDeliveryFee() { return deliveryFee; }

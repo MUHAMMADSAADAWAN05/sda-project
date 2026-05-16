@@ -13,9 +13,10 @@ interface DashboardSideNavProps {
   items: SideNavItem[];
   title: string;
   brandColor?: string;
+  activeTab?: string;
 }
 
-const DashboardSideNav = ({ items, title, brandColor = 'gradient-warm' }: DashboardSideNavProps) => {
+const DashboardSideNav = ({ items, title, brandColor = 'gradient-warm', activeTab }: DashboardSideNavProps) => {
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -29,7 +30,13 @@ const DashboardSideNav = ({ items, title, brandColor = 'gradient-warm' }: Dashbo
       <p className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] mb-4 px-2">{title}</p>
       <nav className="flex flex-col gap-1">
         {items.map((item, idx) => {
-          const active = item.to ? currentPath === item.to : false;
+          let active = false;
+          if (item.to) {
+            active = currentPath === item.to;
+          } else if (activeTab) {
+            active = activeTab.toLowerCase() === item.label.toLowerCase() || 
+                     (activeTab === 'dashboard' && item.label === 'Analytics'); // Edge case for restaurant
+          }
           
           const content = (
             <>

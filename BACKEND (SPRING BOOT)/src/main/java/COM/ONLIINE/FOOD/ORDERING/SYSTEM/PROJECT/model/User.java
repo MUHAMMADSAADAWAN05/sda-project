@@ -16,6 +16,9 @@ public class User {
 
     private String passwordHash;
     private String role;
+    
+    private String address;
+    private String cardNumber;
 
     // Getters and Setters
     public Long getId() {
@@ -56,5 +59,21 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 }

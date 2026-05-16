@@ -17,9 +17,21 @@ const request = async <T>(path: string, options: RequestOptions = {}): Promise<T
       body: body !== undefined ? JSON.stringify(body) : undefined,
     });
 
+    // Read response text
     const text = await response.text();
-    const data = text ? JSON.parse(text) : null;
 
+    // Try to parse as JSON, but don't crash if it's empty or not JSON
+    let data: any = null;
+    if (text && text.trim().length > 0) {
+      try {
+        data = JSON.parse(text);
+      } catch {
+        // Response is not JSON - that's OK for void endpoints
+        data = null;
+      }
+    }
+
+    // Check if the request was successful
     if (!response.ok) {
       const message =
         (data && (data.error || data.message)) ||
@@ -29,10 +41,6 @@ const request = async <T>(path: string, options: RequestOptions = {}): Promise<T
 
     return data as T;
   } catch (error) {
-    if (error instanceof SyntaxError) {
-      throw new Error('Server returned invalid JSON response');
-    }
-
     if (error instanceof TypeError) {
       throw new Error(
         'Cannot connect to backend API. Make sure Spring Boot is running on port 8080.',
@@ -101,10 +109,9 @@ export const updateOrderStatus = async (orderId: number, status: string) => {
   });
 };
 
-export const acceptOrder = async (orderId: number, driverData: any) => {
-  return request(`/orders/${orderId}/accept`, {
+export const acceptOrder = async (orderId: number, driverId: number) => {
+  return request(`/orders/${orderId}/accept?driverId=${driverId}`, {
     method: 'PUT',
-    body: driverData,
   });
 };
 
@@ -127,7 +134,7 @@ export const fetchProfile = async (userId: number) => {
   return request(`/auth/profile/${userId}`);
 };
 
-export const updateProfile = async (userId: number, profileData: { name?: string; email?: string }) => {
+export const updateProfile = async (userId: number, profileData: { name?: string; email?: string; address?: string; cardNumber?: string }) => {
   return request(`/auth/profile/${userId}`, {
     method: 'PUT',
     body: profileData,

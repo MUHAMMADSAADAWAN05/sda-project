@@ -19,8 +19,10 @@ const Signup = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [searchParams] = useSearchParams();
-  const role = searchParams.get('role') || 'customer';
-  const destination = roleDestinations[role] || '/';
+  const initialRole = searchParams.get('role') || 'customer';
+  
+  const [selectedRole, setSelectedRole] = useState(initialRole);
+  const destination = roleDestinations[selectedRole] || '/';
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -34,9 +36,11 @@ const Signup = () => {
     setError('');
     setLoading(true);
     try {
-      const userData = await signupUser(name, email, password, role);
-      login(userData);
-      navigate(destination);
+      localStorage.removeItem('cravix_user'); // Force clear old session
+      const userData = await signupUser(name, email, password, selectedRole);
+      login(userData as any);
+      const finalDest = roleDestinations[(userData as any).role] || destination;
+      navigate(finalDest);
     } catch (err: any) {
       setError(err.message || 'Signup failed');
     } finally {
@@ -69,10 +73,22 @@ const Signup = () => {
               <img src={new URL('@/assets/cravix-logo.jpeg', import.meta.url).href} alt="CraviX" className="h-full w-full object-cover" />
             </motion.div>
             <h1 className="text-2xl font-heading font-extrabold">Create your account</h1>
-            <p className="text-muted-foreground mt-1">Join as <span className="text-primary font-semibold capitalize">{role}</span></p>
+            <p className="text-muted-foreground mt-1">Join as <span className="text-primary font-semibold capitalize">{selectedRole}</span></p>
           </div>
 
           <form onSubmit={handleSignup} className="space-y-4">
+            <div className="space-y-2">
+              <Label className="font-heading font-semibold">I want to join as a:</Label>
+              <select 
+                className="w-full h-11 rounded-xl glass-deep border border-white/10 px-3 text-foreground bg-transparent focus:neon-border outline-none"
+                value={selectedRole}
+                onChange={e => setSelectedRole(e.target.value)}
+              >
+                <option value="customer" className="bg-[#1a1a1a]">Customer</option>
+                <option value="restaurant" className="bg-[#1a1a1a]">Restaurant Owner</option>
+                <option value="driver" className="bg-[#1a1a1a]">Driver</option>
+              </select>
+            </div>
             <div className="space-y-2">
               <Label htmlFor="name" className="font-heading font-semibold">Full Name</Label>
               <div className="relative">
@@ -101,28 +117,10 @@ const Signup = () => {
             <Button type="submit" className="w-full gradient-warm rounded-xl neon-glow-primary hover:shadow-xl transition-all border-0" size="lg" disabled={loading}>{loading ? 'Creating...' : 'Create Account'}</Button>
           </form>
 
-          {/* Skip button */}
-          <Button
-            variant="ghost"
-            className="w-full gap-2 text-muted-foreground hover:text-primary rounded-xl"
-            onClick={() => navigate(destination)}
-          >
-            <SkipForward className="h-4 w-4" />
-            Skip for now
-          </Button>
 
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/10" /></div>
-            <div className="relative flex justify-center text-xs uppercase"><span className="glass-deep px-3 py-1 rounded-full text-muted-foreground">Or continue with</span></div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <Button variant="outline" className="w-full rounded-xl glass-deep border-white/10 text-foreground hover:bg-white/10 transition-all">Google</Button>
-            <Button variant="outline" className="w-full rounded-xl glass-deep border-white/10 text-foreground hover:bg-white/10 transition-all">Apple</Button>
-          </div>
 
           <p className="text-center text-sm text-muted-foreground">
-            Already have an account? <Link to={`/login?role=${role}`} className="text-primary font-semibold hover:underline">Sign in</Link>
+            Already have an account? <Link to={`/login?role=${selectedRole}`} className="text-primary font-semibold hover:underline">Sign in</Link>
           </p>
         </motion.div>
       </div>

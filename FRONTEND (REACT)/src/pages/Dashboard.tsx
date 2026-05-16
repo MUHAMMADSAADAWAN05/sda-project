@@ -86,7 +86,7 @@ const Dashboard = () => {
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState<any[]>([]);
-  
+
   // Creation/Edit form state
   const [isCreating, setIsCreating] = useState(false);
   const [formData, setFormData] = useState({
@@ -131,14 +131,14 @@ const Dashboard = () => {
 
         const fetchedOrders = await fetchRestaurantOrders(rest.id) as any[];
         setOrders(fetchedOrders);
-        
+
         const todayOrders = fetchedOrders.filter((o: any) => new Date(o.createdAt).toDateString() === new Date().toDateString());
         const revenue = todayOrders.reduce((sum: number, o: any) => sum + o.totalAmount, 0);
-        
+
         setStats([
           { label: "Today's Orders", value: todayOrders.length, icon: ShoppingBag, color: 'bg-[hsl(25,95%,53%)]/20 text-[hsl(25,95%,53%)]' },
           { label: "Today's Revenue", value: revenue, icon: DollarSign, color: 'bg-white/10 text-white', prefix: '$' },
-          { label: 'Avg Rating', value: rest.rating || 4.5, icon: Star, color: 'bg-white/10 text-white', isFloat: true, showRing: true, ringColor: 'hsl(38 95% 55%)' },
+          { label: 'Avg Rating', value: rest.rating || 0, icon: Star, color: 'bg-white/10 text-white', isFloat: true, showRing: true, ringColor: 'hsl(38 95% 55%)' },
           { label: 'Menu Items', value: rest.menuItems?.length || 0, icon: UtensilsCrossed, color: 'bg-white/10 text-white' },
         ]);
       }
@@ -160,11 +160,11 @@ const Dashboard = () => {
       const newRest = await createRestaurant({
         ...formData,
         owner: { id: user?.id },
-        rating: 4.5,
+        rating: 0,
         reviewCount: 0,
         featured: false
       });
-      setRestaurant(newRest);
+      setRestaurant(newRest as RestaurantData);
       await loadData();
     } catch (err) {
       alert('Failed to create restaurant');
@@ -298,50 +298,63 @@ const Dashboard = () => {
               <div className="grid gap-6 sm:grid-cols-2">
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-white/40 uppercase tracking-widest">Restaurant Name</label>
-                  <Input 
-                    required 
-                    placeholder="e.g. Mario's Pizzeria" 
-                    className="h-12 rounded-xl glass-card border-white/10 text-white placeholder:text-white/20 focus:neon-border" 
+                  <Input
+                    required
+                    placeholder="e.g. Mario's Pizzeria"
+                    className="h-12 rounded-xl glass-card border-white/10 text-white placeholder:text-white/20 focus:neon-border"
                     value={formData.name}
-                    onChange={e => setFormData({...formData, name: e.target.value})}
+                    onChange={e => setFormData({ ...formData, name: e.target.value })}
                   />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-white/40 uppercase tracking-widest">Cuisine Type</label>
-                  <Input 
-                    required 
-                    placeholder="e.g. Italian, Pizza" 
-                    className="h-12 rounded-xl glass-card border-white/10 text-white placeholder:text-white/20 focus:neon-border" 
+                  <Input
+                    required
+                    placeholder="e.g. Italian, Pizza"
+                    className="h-12 rounded-xl glass-card border-white/10 text-white placeholder:text-white/20 focus:neon-border"
                     value={formData.cuisine}
-                    onChange={e => setFormData({...formData, cuisine: e.target.value})}
+                    onChange={e => setFormData({ ...formData, cuisine: e.target.value })}
                   />
                 </div>
                 <div className="space-y-2 sm:col-span-2">
                   <label className="text-xs font-bold text-white/40 uppercase tracking-widest">Address / Location</label>
                   <div className="relative">
                     <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
-                    <Input 
-                      required 
-                      placeholder="Enter full address" 
-                      className="h-12 rounded-xl glass-card border-white/10 pl-12 text-white placeholder:text-white/20 focus:neon-border" 
+                    <Input
+                      required
+                      placeholder="Enter full address"
+                      className="h-12 rounded-xl glass-card border-white/10 pl-12 text-white placeholder:text-white/20 focus:neon-border"
                       value={formData.location}
-                      onChange={e => setFormData({...formData, location: e.target.value})}
+                      onChange={e => setFormData({ ...formData, location: e.target.value })}
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2 sm:col-span-2">
+                  <label className="text-xs font-bold text-white/40 uppercase tracking-widest">Restaurant Image URL</label>
+                  <div className="relative">
+                    <Camera className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                    <Input
+                      required
+                      placeholder="https://images.unsplash.com/..."
+                      className="h-12 rounded-xl glass-card border-white/10 pl-12 text-white placeholder:text-white/20 focus:neon-border"
+                      value={formData.image}
+                      onChange={e => setFormData({ ...formData, image: e.target.value })}
                     />
                   </div>
                 </div>
                 <div className="space-y-2 sm:col-span-2">
                   <label className="text-xs font-bold text-white/40 uppercase tracking-widest">Description</label>
-                  <Input 
-                    placeholder="A brief description of your restaurant" 
-                    className="h-12 rounded-xl glass-card border-white/10 text-white placeholder:text-white/20 focus:neon-border" 
+                  <Input
+                    placeholder="A brief description of your restaurant"
+                    className="h-12 rounded-xl glass-card border-white/10 text-white placeholder:text-white/20 focus:neon-border"
                     value={formData.description}
-                    onChange={e => setFormData({...formData, description: e.target.value})}
+                    onChange={e => setFormData({ ...formData, description: e.target.value })}
                   />
                 </div>
               </div>
 
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full gradient-warm rounded-xl neon-glow-primary text-white font-bold h-14 shadow-xl text-lg mt-4"
                 disabled={isCreating}
               >
@@ -358,226 +371,228 @@ const Dashboard = () => {
     <PageWrapper>
       <div className="min-h-screen pb-12">
         <div className="container py-8 max-w-[1400px] flex gap-6">
-          <DashboardSideNav items={restaurantNavItems} title="Restaurant" />
+          <DashboardSideNav items={restaurantNavItems} title="Restaurant" activeTab={activeTab} />
           <div className="flex-1 min-w-0">
-          <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="rounded-2xl glass-strong p-4 mb-6 flex flex-wrap items-center justify-between gap-4"
-          >
-            <Link to="/" className="flex items-center gap-3 group hover:opacity-90 transition-opacity">
-              <div className="h-12 w-12 rounded-xl gradient-warm flex items-center justify-center neon-glow-primary shadow-lg shimmer-effect group-hover:scale-105 transition-transform">
-                <ChefHat className="h-6 w-6 text-white" />
+            <motion.div
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="rounded-2xl glass-strong p-4 mb-6 flex flex-wrap items-center justify-between gap-4"
+            >
+              <Link to="/" className="flex items-center gap-3 group hover:opacity-90 transition-opacity">
+                <div className="h-12 w-12 rounded-xl gradient-warm flex items-center justify-center neon-glow-primary shadow-lg shimmer-effect group-hover:scale-105 transition-transform">
+                  <ChefHat className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-2xl font-heading font-extrabold text-white tracking-tight group-hover:text-[hsl(25,95%,60%)] transition-colors uppercase">
+                    {restaurant?.name}
+                  </h1>
+                  <p className="text-white/60 text-sm">{restaurant?.cuisine}</p>
+                </div>
+              </Link>
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="sm" className="rounded-lg glass-card border-white/20 text-white hover:bg-white/10 gap-2 transition-all hover:scale-105" onClick={loadData} disabled={loading}>
+                  {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />} Refresh
+                </Button>
+                <Button variant="outline" size="sm" className="rounded-lg glass-card border-white/20 text-white hover:bg-white/10 gap-2 transition-all hover:scale-105" onClick={handleLogout}>
+                  <LogOut className="h-4 w-4" /> Logout
+                </Button>
               </div>
-              <div>
-                <h1 className="text-2xl font-heading font-extrabold text-white tracking-tight group-hover:text-[hsl(25,95%,60%)] transition-colors uppercase">
-                  {restaurant?.name}
-                </h1>
-                <p className="text-white/60 text-sm">{restaurant?.cuisine}</p>
-              </div>
-            </Link>
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" className="rounded-lg glass-card border-white/20 text-white hover:bg-white/10 gap-2 transition-all hover:scale-105" onClick={loadData} disabled={loading}>
-                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />} Refresh
-              </Button>
-              <Button variant="outline" size="sm" className="rounded-lg glass-card border-white/20 text-white hover:bg-white/10 gap-2 transition-all hover:scale-105" onClick={handleLogout}>
-                <LogOut className="h-4 w-4" /> Logout
-              </Button>
-            </div>
-          </motion.div>
+            </motion.div>
 
-          {/* Stats Row */}
-          {activeTab === 'dashboard' && (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-              {stats.map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 24, scale: 0.92 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ delay: i * 0.1, type: 'spring', stiffness: 200, damping: 20 }}
-                  whileHover={{ y: -4, scale: 1.02 }}
-                  className="rounded-xl glass-ultra border-white/10 p-5 flex items-center gap-4 hover:bg-white/5 transition-colors card-shine cursor-default breathing-glow"
-                >
-                  <div className={`relative h-14 w-14 rounded-xl flex items-center justify-center shrink-0 ${stat.color} shadow-lg`}>
-                    {stat.showRing && (
-                      <ProgressRing value={stat.value} max={5} color={stat.ringColor} />
-                    )}
-                    <stat.icon className="h-7 w-7 relative z-10" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-semibold text-white/70">{stat.label}</h3>
-                    <AnimCounter to={stat.value} prefix={stat.prefix} suffix={stat.suffix || ''} isFloat={stat.isFloat} />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          )}
-
-          <div className="glass-ultra rounded-3xl p-6 liquid-shimmer">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="glass-ultra rounded-2xl p-1.5 border-white/10">
-              <TabsTrigger value="dashboard" className="gap-2 rounded-xl text-white/70 data-[state=active]:gradient-warm data-[state=active]:text-white">Dashboard</TabsTrigger>
-              <TabsTrigger value="orders" className="gap-2 rounded-xl text-white/70 data-[state=active]:gradient-warm data-[state=active]:text-white">Orders <Badge className="h-5 text-[10px] bg-white/20 text-white">{orders.length}</Badge></TabsTrigger>
-              <TabsTrigger value="menu" className="rounded-xl text-white/70 data-[state=active]:gradient-warm data-[state=active]:text-white">Menu</TabsTrigger>
-              <TabsTrigger value="settings" className="rounded-xl text-white/70 data-[state=active]:gradient-warm data-[state=active]:text-white">Settings</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="dashboard" className="space-y-6">
-               <div className="p-8 text-center glass-card rounded-3xl border border-white/10">
-                 <BarChart3 className="h-16 w-16 mx-auto mb-4 text-white/20" />
-                 <h2 className="text-2xl font-heading font-bold text-white mb-2">Welcome Back, {user?.name}</h2>
-                 <p className="text-white/50">Everything is looking good for {restaurant.name} today.</p>
-               </div>
-            </TabsContent>
-
-            <TabsContent value="orders">
-              <div className="grid gap-6 lg:grid-cols-3">
-                {[
-                  { status: 'incoming', label: 'Incoming', dotColor: 'bg-amber-400' },
-                  { status: 'preparing', label: 'Preparing', dotColor: 'bg-primary' },
-                  { status: 'ready', label: 'Ready', dotColor: 'bg-emerald-400' },
-                ].map(col => (
-                  <div key={col.status}>
-                    <h3 className="font-heading font-bold mb-4 flex items-center gap-2 text-white/90">
-                      <span className={`h-2.5 w-2.5 rounded-full ${col.dotColor} shadow-glow`} /> {col.label} ({ordersByStatus(col.status).length})
-                    </h3>
-                    <div className="space-y-4">
-                      {ordersByStatus(col.status).map(order => (
-                        <motion.div key={order.id} className="rounded-2xl glass-ultra p-5 space-y-4 transition-all border border-white/5 hover:border-white/20">
-                          <div className="flex justify-between text-sm">
-                            <span className="font-heading font-bold text-primary">#{order.id}</span>
-                            <span className="text-white/40 flex items-center gap-1"><Clock className="h-3 w-3" /> {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-                          </div>
-                          <div>
-                            <p className="text-base font-bold text-white">{order.user?.name || 'Customer'}</p>
-                            <p className="text-sm text-white/50">{order.items?.map((i: any) => i.name).join(', ')}</p>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <p className="font-heading font-black text-xl text-white">${order.totalAmount.toFixed(2)}</p>
-                            {col.status === 'incoming' && (
-                              <Button size="sm" className="gradient-warm rounded-xl" onClick={() => updateOrderStatus(order.id, 'PREPARING')}>Accept</Button>
-                            )}
-                            {col.status === 'preparing' && (
-                              <Button size="sm" className="glass-card text-white hover:bg-white/10" onClick={() => updateOrderStatus(order.id, 'READY')}>Ready</Button>
-                            )}
-                          </div>
-                        </motion.div>
-                      ))}
+            {/* Stats Row */}
+            {activeTab === 'dashboard' && (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                {stats.map((stat, i) => (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, y: 24, scale: 0.92 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ delay: i * 0.1, type: 'spring', stiffness: 200, damping: 20 }}
+                    whileHover={{ y: -4, scale: 1.02 }}
+                    className="rounded-xl glass-ultra border-white/10 p-5 flex items-center gap-4 hover:bg-white/5 transition-colors card-shine cursor-default breathing-glow"
+                  >
+                    <div className={`relative h-14 w-14 rounded-xl flex items-center justify-center shrink-0 ${stat.color} shadow-lg`}>
+                      {stat.showRing && (
+                        <ProgressRing value={stat.value} max={5} color={stat.ringColor} />
+                      )}
+                      <stat.icon className="h-7 w-7 relative z-10" />
                     </div>
-                  </div>
+                    <div>
+                      <h3 className="text-sm font-semibold text-white/70">{stat.label}</h3>
+                      <AnimCounter to={stat.value} prefix={stat.prefix} suffix={stat.suffix || ''} isFloat={stat.isFloat} />
+                    </div>
+                  </motion.div>
                 ))}
               </div>
-            </TabsContent>
+            )}
 
-            <TabsContent value="menu">
-              <div className="rounded-2xl glass-ultra border border-white/10 overflow-hidden shadow-2xl">
-                <div className="flex items-center justify-between p-6 border-b border-white/5">
-                  <h3 className="font-heading font-bold text-white text-lg">Menu Management</h3>
-                  
-                  <Dialog open={showAddItem} onOpenChange={setShowAddItem}>
-                    <DialogTrigger asChild>
-                      <Button size="sm" className="gradient-warm rounded-xl text-white font-bold"><Plus className="h-4 w-4 mr-2" /> Add New Item</Button>
-                    </DialogTrigger>
-                    <DialogContent className="glass-strong border-white/10 text-white">
-                      <DialogHeader><DialogTitle className="font-heading text-xl">Add Menu Item</DialogTitle></DialogHeader>
-                      <div className="grid gap-4 py-4">
-                        <div className="space-y-2">
-                          <label className="text-xs font-bold text-white/50 uppercase">Item Name</label>
-                          <Input value={newItem.name} onChange={e => setNewItem({...newItem, name: e.target.value})} className="glass-card border-white/10 text-white" />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <label className="text-xs font-bold text-white/50 uppercase">Price ($)</label>
-                            <Input type="number" value={newItem.price} onChange={e => setNewItem({...newItem, price: parseFloat(e.target.value)})} className="glass-card border-white/10 text-white" />
-                          </div>
-                          <div className="space-y-2">
-                            <label className="text-xs font-bold text-white/50 uppercase">Category</label>
-                            <Input value={newItem.category} onChange={e => setNewItem({...newItem, category: e.target.value})} className="glass-card border-white/10 text-white" />
-                          </div>
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-xs font-bold text-white/50 uppercase">Description</label>
-                          <Input value={newItem.description} onChange={e => setNewItem({...newItem, description: e.target.value})} className="glass-card border-white/10 text-white" />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-xs font-bold text-white/50 uppercase">Image URL</label>
-                          <div className="relative">
-                            <Camera className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
-                            <Input placeholder="https://..." value={newItem.imageUrl} onChange={e => setNewItem({...newItem, imageUrl: e.target.value})} className="glass-card border-white/10 pl-10 text-white" />
-                          </div>
+            <div className="glass-ultra rounded-3xl p-6 liquid-shimmer">
+              <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+                <TabsContent value="dashboard" className="space-y-6 mt-0">
+                  <div className="p-8 text-center glass-card rounded-3xl border border-white/10">
+                    <BarChart3 className="h-16 w-16 mx-auto mb-4 text-white/20" />
+                    <h2 className="text-2xl font-heading font-bold text-white mb-2">Welcome Back, {user?.name}</h2>
+                    <p className="text-white/50">Everything is looking good for {restaurant.name} today.</p>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="orders">
+                  <div className="grid gap-6 lg:grid-cols-3">
+                    {[
+                      { status: 'incoming', label: 'Incoming', dotColor: 'bg-amber-400' },
+                      { status: 'preparing', label: 'Preparing', dotColor: 'bg-primary' },
+                      { status: 'ready', label: 'Ready', dotColor: 'bg-emerald-400' },
+                    ].map(col => (
+                      <div key={col.status}>
+                        <h3 className="font-heading font-bold mb-4 flex items-center gap-2 text-white/90">
+                          <span className={`h-2.5 w-2.5 rounded-full ${col.dotColor} shadow-glow`} /> {col.label} ({ordersByStatus(col.status).length})
+                        </h3>
+                        <div className="space-y-4">
+                          {ordersByStatus(col.status).map(order => (
+                            <motion.div key={order.id} className="rounded-2xl glass-ultra p-5 space-y-4 transition-all border border-white/5 hover:border-white/20">
+                              <div className="flex justify-between text-sm">
+                                <span className="font-heading font-bold text-primary">#{order.id}</span>
+                                <span className="text-white/40 flex items-center gap-1"><Clock className="h-3 w-3" /> {new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                              </div>
+                              <div>
+                                <p className="text-base font-bold text-white">{order.user?.name || 'Customer'}</p>
+                                <p className="text-sm text-white/50">{order.items?.map((i: any) => i.name).join(', ')}</p>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <p className="font-heading font-black text-xl text-white">${order.totalAmount.toFixed(2)}</p>
+                                <div className="flex gap-2">
+                                  {col.status === 'incoming' && (
+                                    <>
+                                      <Button size="sm" variant="ghost" className="rounded-xl border border-red-500/30 text-red-400 hover:bg-red-400/10" onClick={() => updateOrderStatus(order.id, 'REJECTED')}>Reject</Button>
+                                      <Button size="sm" className="gradient-warm rounded-xl" onClick={() => updateOrderStatus(order.id, 'PREPARING')}>Accept</Button>
+                                    </>
+                                  )}
+                                  {col.status === 'preparing' && (
+                                    <Button size="sm" className="glass-card text-white hover:bg-white/10" onClick={() => updateOrderStatus(order.id, 'READY')}>Ready</Button>
+                                  )}
+                                </div>
+                              </div>
+                            </motion.div>
+                          ))}
                         </div>
                       </div>
-                      <DialogFooter>
-                        <Button className="gradient-warm w-full rounded-xl" onClick={handleAddMenuItem}>Add to Menu</Button>
-                      </DialogFooter>
-                    </DialogContent>
-                  </Dialog>
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left">
-                    <thead className="bg-white/5 text-white/40 text-xs uppercase tracking-wider">
-                      <tr>
-                        <th className="px-6 py-4">Item Name</th>
-                        <th className="px-6 py-4">Price</th>
-                        <th className="px-6 py-4">Category</th>
-                        <th className="px-6 py-4 text-right">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-white/5">
-                      {restaurant?.menuItems?.map((item: any) => (
-                        <tr key={item.id} className="group hover:bg-white/5 transition-colors">
-                          <td className="px-6 py-4 flex items-center gap-3">
-                            <img src={item.imageUrl || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&h=100&fit=crop'} className="h-10 w-10 rounded-lg object-cover border border-white/10" alt="" />
-                            <span className="font-bold text-white">{item.name}</span>
-                          </td>
-                          <td className="px-6 py-4 text-white/70">${item.price.toFixed(2)}</td>
-                          <td className="px-6 py-4"><Badge variant="outline" className="text-white/40 border-white/10">{item.category}</Badge></td>
-                          <td className="px-6 py-4 text-right">
-                            <Button variant="ghost" size="icon" className="text-red-400/30 hover:text-red-400 hover:bg-red-400/10" onClick={() => handleDeleteItem(item.id)}><Trash2 className="h-4 w-4" /></Button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </TabsContent>
+                    ))}
+                  </div>
+                </TabsContent>
 
-            <TabsContent value="settings">
-              <div className="rounded-3xl glass-ultra border border-white/10 p-8 space-y-8 max-w-3xl shadow-2xl">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-heading font-bold text-white text-xl">Restaurant Profile</h3>
-                    <p className="text-white/40 text-sm mt-1">Update your restaurant information</p>
+                <TabsContent value="menu">
+                  <div className="rounded-2xl glass-ultra border border-white/10 overflow-hidden shadow-2xl">
+                    <div className="flex items-center justify-between p-6 border-b border-white/5">
+                      <h3 className="font-heading font-bold text-white text-lg">Menu Management</h3>
+
+                      <Dialog open={showAddItem} onOpenChange={setShowAddItem}>
+                        <DialogTrigger asChild>
+                          <Button size="sm" className="gradient-warm rounded-xl text-white font-bold"><Plus className="h-4 w-4 mr-2" /> Add New Item</Button>
+                        </DialogTrigger>
+                        <DialogContent className="glass-strong border-white/10 text-white">
+                          <DialogHeader><DialogTitle className="font-heading text-xl">Add Menu Item</DialogTitle></DialogHeader>
+                          <div className="grid gap-4 py-4">
+                            <div className="space-y-2">
+                              <label className="text-xs font-bold text-white/50 uppercase">Item Name</label>
+                              <Input value={newItem.name} onChange={e => setNewItem({ ...newItem, name: e.target.value })} className="glass-card border-white/10 text-white" />
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                              <div className="space-y-2">
+                                <label className="text-xs font-bold text-white/50 uppercase">Price ($)</label>
+                                <Input type="number" value={newItem.price} onChange={e => setNewItem({ ...newItem, price: parseFloat(e.target.value) })} className="glass-card border-white/10 text-white" />
+                              </div>
+                              <div className="space-y-2">
+                                <label className="text-xs font-bold text-white/50 uppercase">Category</label>
+                                <Input value={newItem.category} onChange={e => setNewItem({ ...newItem, category: e.target.value })} className="glass-card border-white/10 text-white" />
+                              </div>
+                            </div>
+                            <div className="space-y-2">
+                              <label className="text-xs font-bold text-white/50 uppercase">Description</label>
+                              <Input value={newItem.description} onChange={e => setNewItem({ ...newItem, description: e.target.value })} className="glass-card border-white/10 text-white" />
+                            </div>
+                            <div className="space-y-2">
+                              <label className="text-xs font-bold text-white/50 uppercase">Image URL</label>
+                              <div className="relative">
+                                <Camera className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                                <Input placeholder="https://..." value={newItem.imageUrl} onChange={e => setNewItem({ ...newItem, imageUrl: e.target.value })} className="glass-card border-white/10 pl-10 text-white" />
+                              </div>
+                            </div>
+                          </div>
+                          <DialogFooter>
+                            <Button className="gradient-warm w-full rounded-xl" onClick={handleAddMenuItem}>Add to Menu</Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
+                    </div>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left">
+                        <thead className="bg-white/5 text-white/40 text-xs uppercase tracking-wider">
+                          <tr>
+                            <th className="px-6 py-4">Item Name</th>
+                            <th className="px-6 py-4">Price</th>
+                            <th className="px-6 py-4">Category</th>
+                            <th className="px-6 py-4 text-right">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-white/5">
+                          {restaurant?.menuItems?.map((item: any) => (
+                            <tr key={item.id} className="group hover:bg-white/5 transition-colors">
+                              <td className="px-6 py-4 flex items-center gap-3">
+                                <img src={item.imageUrl || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&h=100&fit=crop'} className="h-10 w-10 rounded-lg object-cover border border-white/10" alt="" />
+                                <span className="font-bold text-white">{item.name}</span>
+                              </td>
+                              <td className="px-6 py-4 text-white/70">${item.price.toFixed(2)}</td>
+                              <td className="px-6 py-4"><Badge variant="outline" className="text-white/40 border-white/10">{item.category}</Badge></td>
+                              <td className="px-6 py-4 text-right">
+                                <Button variant="ghost" size="icon" className="text-red-400/30 hover:text-red-400 hover:bg-red-400/10" onClick={() => handleDeleteItem(item.id)}><Trash2 className="h-4 w-4" /></Button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                  <Button className="gradient-warm rounded-xl h-12 px-8 flex gap-2 font-bold" onClick={handleUpdateRestaurant}>
-                    <Save className="h-4 w-4" /> Save Changes
-                  </Button>
-                </div>
-                
-                <div className="grid gap-6 sm:grid-cols-2">
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-white/40 uppercase">Restaurant Name</label>
-                    <Input value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="h-12 rounded-xl glass-card border-white/10 text-white" />
+                </TabsContent>
+
+                <TabsContent value="settings">
+                  <div className="rounded-3xl glass-ultra border border-white/10 p-8 space-y-8 max-w-3xl shadow-2xl">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="font-heading font-bold text-white text-xl">Restaurant Profile</h3>
+                        <p className="text-white/40 text-sm mt-1">Update your restaurant information</p>
+                      </div>
+                      <Button className="gradient-warm rounded-xl h-12 px-8 flex gap-2 font-bold" onClick={handleUpdateRestaurant}>
+                        <Save className="h-4 w-4" /> Save Changes
+                      </Button>
+                    </div>
+
+                      <div className="grid gap-6 sm:grid-cols-2">
+                        <div className="space-y-2">
+                          <label className="text-xs font-bold text-white/40 uppercase">Restaurant Name</label>
+                          <Input value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="h-12 rounded-xl glass-card border-white/10 text-white" />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-xs font-bold text-white/40 uppercase">Cuisine</label>
+                          <Input value={formData.cuisine} onChange={e => setFormData({ ...formData, cuisine: e.target.value })} className="h-12 rounded-xl glass-card border-white/10 text-white" />
+                        </div>
+                        <div className="space-y-2 sm:col-span-2">
+                          <label className="text-xs font-bold text-white/40 uppercase">Image URL</label>
+                          <Input value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} className="h-12 rounded-xl glass-card border-white/10 text-white" placeholder="https://..." />
+                        </div>
+                        <div className="space-y-2 sm:col-span-2">
+                          <label className="text-xs font-bold text-white/40 uppercase">Location</label>
+                          <Input value={formData.location} onChange={e => setFormData({ ...formData, location: e.target.value })} className="h-12 rounded-xl glass-card border-white/10 text-white" />
+                        </div>
+                        <div className="space-y-2 sm:col-span-2">
+                          <label className="text-xs font-bold text-white/40 uppercase">Description</label>
+                          <Input value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="h-12 rounded-xl glass-card border-white/10 text-white" />
+                        </div>
+                      </div>
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-white/40 uppercase">Cuisine</label>
-                    <Input value={formData.cuisine} onChange={e => setFormData({...formData, cuisine: e.target.value})} className="h-12 rounded-xl glass-card border-white/10 text-white" />
-                  </div>
-                  <div className="space-y-2 sm:col-span-2">
-                    <label className="text-xs font-bold text-white/40 uppercase">Location</label>
-                    <Input value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} className="h-12 rounded-xl glass-card border-white/10 text-white" />
-                  </div>
-                  <div className="space-y-2 sm:col-span-2">
-                    <label className="text-xs font-bold text-white/40 uppercase">Description</label>
-                    <Input value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="h-12 rounded-xl glass-card border-white/10 text-white" />
-                  </div>
-                </div>
-              </div>
-            </TabsContent>
-          </Tabs>
-          </div>
+                </TabsContent>
+              </Tabs>
+            </div>
           </div>
         </div>
       </div>

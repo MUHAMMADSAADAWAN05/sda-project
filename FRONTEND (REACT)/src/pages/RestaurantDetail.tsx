@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { Star, Clock, MapPin, ArrowLeft, Plus, Minus } from 'lucide-react';
+import { ArrowLeft, Star, Clock, MapPin, Plus, Minus, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
@@ -10,7 +10,7 @@ import { Label } from '@/components/ui/label';
 import { useCart } from '@/context/CartContext';
 import { MenuItem } from '@/types';
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { PageWrapper } from '@/components/PageWrapper';
 import { fetchRestaurantById } from '@/lib/api';
 
@@ -29,7 +29,7 @@ const RestaurantDetail = () => {
   useEffect(() => {
     if (!id) return;
     fetchRestaurantById(id)
-      .then(data => {
+      .then((data: any) => {
         if (data.menuItems && !data.categories) {
           const categoryMap = new Map();
           data.menuItems.forEach((item: any) => {
@@ -185,16 +185,12 @@ const RestaurantDetail = () => {
                 </h2>
                 <div className="grid gap-4 sm:grid-cols-2">
                   {category.items.map((item, itemIdx) => (
-                    <motion.button
-                      key={item.id}
-                      initial={{ opacity: 0, y: 16 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: itemIdx * 0.05 }}
-                      whileHover={{ y: -3, transition: { duration: 0.2 } }}
-                      whileTap={{ scale: 0.98 }}
-                      className="flex gap-4 rounded-2xl glass-ultra p-4 text-left transition-all hover:shadow-card-hover w-full group liquid-shimmer"
-                      onClick={() => openItemDialog(item)}
+                    <motion.button 
+                      key={item.id} 
+                      className="group flex items-start gap-4 rounded-2xl glass-strong border border-white/10 p-5 text-left transition-all hover:neon-border hover:bg-white/5 relative overflow-hidden"
+                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSelectedItem(item); }}
+                      whileHover={{ scale: 1.01 }}
+                      whileTap={{ scale: 0.99 }}
                     >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
@@ -218,22 +214,42 @@ const RestaurantDetail = () => {
           </div>
         </div>
 
-        {/* Item Dialog */}
-        <Dialog open={!!selectedItem} onOpenChange={open => !open && setSelectedItem(null)}>
-          <DialogContent className="sm:max-w-lg max-h-[85vh] overflow-y-auto rounded-2xl glass-strong border-white/10 shadow-2xl backdrop-blur-xl">
-            {selectedItem && (
-              <>
-                <div className="relative -mt-2 -mx-6 overflow-hidden rounded-t-2xl">
+        <AnimatePresence>
+          {selectedItem && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+              <motion.div 
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+                onClick={() => setSelectedItem(null)}
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                className="relative flex w-full flex-col sm:max-w-lg max-h-[85vh] overflow-y-auto rounded-2xl glass-strong border border-white/10 shadow-2xl backdrop-blur-xl bg-background z-50"
+              >
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="absolute right-4 top-4 z-10 h-8 w-8 rounded-full bg-black/50 text-white hover:bg-black/80 backdrop-blur-md" 
+                  onClick={() => setSelectedItem(null)}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+
+                <div className="relative -mx-0 overflow-hidden rounded-t-2xl">
                   <img src={selectedItem.image} alt={selectedItem.name} className="w-full h-52 object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                 </div>
-                <DialogHeader className="mt-4">
-                  <DialogTitle className="font-heading text-2xl font-black text-white">{selectedItem.name}</DialogTitle>
-                  <p className="text-white/60 text-base">{selectedItem.description}</p>
-                  <p className="text-2xl font-heading font-black text-white mt-1">${selectedItem.price.toFixed(2)}</p>
-                </DialogHeader>
+                
+                <div className="p-6 pt-2 flex-1 overflow-y-auto">
+                  <div className="mt-2">
+                    <h2 className="font-heading text-2xl font-black text-white">{selectedItem.name}</h2>
+                    <p className="text-white/60 text-base">{selectedItem.description}</p>
+                    <p className="text-2xl font-heading font-black text-white mt-1">${selectedItem.price.toFixed(2)}</p>
+                  </div>
 
-                <div className="space-y-6 my-4">
+                  <div className="space-y-6 my-4">
                   {selectedItem.modifiers?.map(group => (
                     <div key={group.id} className="space-y-3">
                       <div className="flex items-center justify-between">
@@ -279,34 +295,36 @@ const RestaurantDetail = () => {
                   </div>
                 </div>
 
-                <DialogFooter className="flex-row items-center gap-4 mt-6">
-                  <div className="flex items-center gap-4 rounded-full glass-deep border border-white/10 px-3 py-1.5">
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
-                      className="h-8 w-8 rounded-full text-white/50 hover:text-white hover:bg-white/10" 
-                      onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                    >
-                      <Minus className="h-4 w-4" />
-                    </Button>
-                    <span className="font-black text-white w-4 text-center">{quantity}</span>
-                    <Button 
-                      variant="ghost" 
-                      size="icon" 
-                      className="h-8 w-8 rounded-full text-white/50 hover:text-white hover:bg-white/10" 
-                      onClick={() => setQuantity(q => q + 1)}
-                    >
-                      <Plus className="h-4 w-4" />
+                  </div>
+                  
+                  <div className="flex flex-row items-center gap-4 mt-6">
+                    <div className="flex items-center gap-4 rounded-full glass-deep border border-white/10 px-3 py-1.5">
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="h-8 w-8 rounded-full text-white/50 hover:text-white hover:bg-white/10" 
+                        onClick={() => setQuantity(q => Math.max(1, q - 1))}
+                      >
+                        <Minus className="h-4 w-4" />
+                      </Button>
+                      <span className="font-black text-white w-4 text-center">{quantity}</span>
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="h-8 w-8 rounded-full text-white/50 hover:text-white hover:bg-white/10" 
+                        onClick={() => setQuantity(q => q + 1)}
+                      >
+                        <Plus className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    <Button className="flex-1 gradient-warm rounded-xl neon-glow-primary text-white font-bold h-12 shadow-xl" onClick={handleAddToCart}>
+                      Add to Cart — ${getItemTotal().toFixed(2)}
                     </Button>
                   </div>
-                  <Button className="flex-1 gradient-warm rounded-xl neon-glow-primary text-white font-bold h-12 shadow-xl" onClick={handleAddToCart}>
-                    Add to Cart — ${getItemTotal().toFixed(2)}
-                  </Button>
-                </DialogFooter>
-              </>
-            )}
-          </DialogContent>
-        </Dialog>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
       </div>
     </PageWrapper>
   );

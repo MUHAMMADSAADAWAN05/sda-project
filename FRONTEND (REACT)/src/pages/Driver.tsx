@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { DollarSign, Package, Navigation, MapPin, Phone, Truck, RefreshCw, LayoutDashboard, Settings, History, LogOut, CheckCircle2, Circle, Home, Car, BarChart3, Loader2 } from 'lucide-react';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
+import { DollarSign, Package, Navigation, MapPin, Phone, Truck, RefreshCw, LayoutDashboard, Settings, History, LogOut, CheckCircle2, Circle, Home, Car, BarChart3, Loader2, Save } from 'lucide-react';
 import { motion, useMotionValue, animate, useInView, AnimatePresence } from 'framer-motion';
 import { PageWrapper } from '@/components/PageWrapper';
 import DashboardSideNav from '@/components/DashboardSideNav';
@@ -107,22 +108,41 @@ function DeliveryTimeline({ status }: { status: string }) {
   );
 }
 
-const driverNavItems = [
-  { icon: LayoutDashboard, label: 'Dashboard', to: '/driver' },
-  { icon: Package, label: 'Deliveries', to: '/driver' },
-  { icon: BarChart3, label: 'Earnings', to: '/driver' },
-  { icon: Car, label: 'Vehicle', to: '/driver' },
-  { icon: Settings, label: 'Settings', to: '/driver' },
-  { icon: Home, label: 'Home', to: '/' },
-];
+// driverNavItems moved inside component to use handleSideNavClick
 
 const Driver = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, login } = useAuth();
   const navigate = useNavigate();
   const [availableOrders, setAvailableOrders] = useState<any[]>([]);
   const [activeDelivery, setActiveDelivery] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const [earnings, setEarnings] = useState({ today: 0, week: 0, deliveries: 0 });
+  const [completedOrders, setCompletedOrders] = useState<any[]>([]);
+  const [activeTab, setActiveTab] = useState('dashboard');
+  
+  // Profile settings state
+  const [profileForm, setProfileForm] = useState({
+    name: user?.name || '',
+    email: user?.email || '',
+  });
+
+  const handleSideNavClick = (label: string) => {
+    const tabMap: Record<string, string> = {
+      'Dashboard': 'dashboard',
+      'Deliveries': 'deliveries',
+      'Earnings': 'earnings',
+      'Settings': 'settings'
+    };
+    if (tabMap[label]) setActiveTab(tabMap[label]);
+  };
+
+  const driverNavItems = [
+    { icon: LayoutDashboard, label: 'Dashboard', onClick: () => handleSideNavClick('Dashboard') },
+    { icon: Package, label: 'Deliveries', onClick: () => handleSideNavClick('Deliveries') },
+    { icon: BarChart3, label: 'Earnings', onClick: () => handleSideNavClick('Earnings') },
+    { icon: Settings, label: 'Settings', onClick: () => handleSideNavClick('Settings') },
+    { icon: Home, label: 'Home', to: '/' },
+  ];
 
   const loadData = async () => {
     try {
@@ -135,8 +155,9 @@ const Driver = () => {
       setActiveDelivery(active || null);
       
       // Calculate earnings (mock calculation from completed orders for this driver)
-      const completed = allOrders.filter(o => o.driver?.id === user?.id && o.status === 'DELIVERED');
-      const todayTotal = completed.reduce((sum, o) => sum + (o.totalAmount * 0.15 + 3), 0); // 15% + $3 base
+      const completed = allOrders.filter((o: any) => o.driver?.id === user?.id && o.status === 'DELIVERED');
+      setCompletedOrders(completed);
+      const todayTotal = completed.reduce((sum: number, o: any) => sum + (o.totalAmount * 0.15 + 3), 0); // 15% + $3 base
       setEarnings({
         today: todayTotal,
         week: todayTotal * 5, // Mock weekly
@@ -158,7 +179,7 @@ const Driver = () => {
   const acceptOrder = async (order: any) => {
     try {
       setLoading(true);
-      await apiAcceptOrder(order.id, { id: user?.id });
+      await apiAcceptOrder(order.id, user?.id);
       await loadData();
     } catch (err) {
       alert('Failed to accept order');
@@ -186,6 +207,31 @@ const Driver = () => {
     }
   };
 
+  // Sync form when user loads
+  useEffect(() => {
+    if (user) {
+      setProfileForm({
+        name: user.name || '',
+        email: user.email || '',
+      });
+    }
+  }, [user]);
+
+  const handleUpdateProfile = async () => {
+    if (!user?.id) return;
+    try {
+      setLoading(true);
+      const { updateProfile } = await import('@/lib/api');
+      const updatedUser = await updateProfile(user.id, profileForm);
+      login(updatedUser as any);
+      alert('Profile updated successfully!');
+    } catch (err) {
+      alert('Failed to update profile');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleLogout = () => {
     logout();
     navigate('/login');
@@ -195,7 +241,7 @@ const Driver = () => {
     <PageWrapper>
       <div className="min-h-screen pb-12">
         <div className="container py-8 max-w-[1400px] flex gap-6">
-          <DashboardSideNav items={driverNavItems} title="Driver" />
+          <DashboardSideNav items={driverNavItems} title="Driver" activeTab={activeTab} />
           <div className="flex-1 min-w-0">
 
           {/* Top App Bar */}
@@ -215,9 +261,6 @@ const Driver = () => {
             </Link>
 
             <div className="flex items-center gap-2">
-              <Button className="gradient-warm rounded-lg neon-glow-primary border-0 text-white gap-2 font-semibold btn-premiere">
-                <LayoutDashboard className="h-4 w-4" /> Dashboard
-              </Button>
               <Button variant="outline" className="rounded-lg glass-card border-white/20 text-white hover:bg-white/10 gap-2 transition-all hover:scale-105" onClick={handleLogout}>
                 <LogOut className="h-4 w-4 text-white/70" /> Logout
               </Button>
@@ -225,6 +268,8 @@ const Driver = () => {
           </motion.div>
 
           <div className="glass-ultra rounded-3xl p-6 liquid-shimmer">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+              <TabsContent value="dashboard" className="space-y-6 mt-0">
             {/* Dashboard header with LIVE dot */}
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
@@ -443,6 +488,131 @@ const Driver = () => {
                 </div>
               </div>
             </div>
+            </TabsContent>
+
+            <TabsContent value="deliveries">
+              <div className="glass-card rounded-3xl border border-white/10 p-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <Package className="h-6 w-6 text-[hsl(25,95%,53%)]" />
+                  <h2 className="text-xl font-heading font-bold text-white">Delivery History</h2>
+                </div>
+                {completedOrders.length > 0 ? (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm text-left">
+                      <thead className="table-header-dark text-white/70">
+                        <tr>
+                          <th className="p-4">Order ID</th>
+                          <th className="p-4">Restaurant</th>
+                          <th className="p-4">Dropoff</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {completedOrders.map((o) => (
+                          <tr key={o.id} className="border-b border-white/5">
+                            <td className="p-4 text-white/70">#{o.id}</td>
+                            <td className="p-4 text-white font-bold">{o.restaurantName || 'Restaurant'}</td>
+                            <td className="p-4 text-white/70">{o.deliveryAddress}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <p className="text-white/50 text-center py-8">No completed deliveries yet.</p>
+                )}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="earnings">
+              <div className="glass-card rounded-3xl border border-white/10 p-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <BarChart3 className="h-6 w-6 text-success" />
+                  <h2 className="text-xl font-heading font-bold text-white">Earnings Report</h2>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  <div className="bg-white/5 rounded-2xl p-6 border border-white/10 text-center">
+                    <p className="text-white/50 text-sm font-semibold uppercase mb-1">Today's Earnings</p>
+                    <p className="text-3xl font-heading font-extrabold text-success">${earnings.today.toFixed(2)}</p>
+                  </div>
+                  <div className="bg-white/5 rounded-2xl p-6 border border-white/10 text-center">
+                    <p className="text-white/50 text-sm font-semibold uppercase mb-1">Total Deliveries</p>
+                    <p className="text-3xl font-heading font-extrabold text-white">{earnings.deliveries}</p>
+                  </div>
+                </div>
+
+                {completedOrders.length > 0 ? (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm text-left">
+                      <thead className="table-header-dark text-white/70">
+                        <tr>
+                          <th className="p-4">Order ID</th>
+                          <th className="p-4">Payout</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {completedOrders.map((o) => (
+                          <tr key={o.id} className="border-b border-white/5">
+                            <td className="p-4 text-white/70">#{o.id}</td>
+                            <td className="p-4 text-success font-bold">${(o.totalAmount * 0.15 + 3).toFixed(2)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <p className="text-white/50 text-center py-8">No earnings data available yet.</p>
+                )}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="settings">
+              <div className="rounded-3xl glass-ultra border border-white/10 p-8 space-y-8 max-w-3xl shadow-2xl">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-heading font-bold text-white text-xl">Driver Profile</h3>
+                    <p className="text-white/40 text-sm mt-1">Manage your personal information</p>
+                  </div>
+                  <Button className="gradient-warm rounded-xl h-12 px-8 flex gap-2 font-bold" onClick={handleUpdateProfile} disabled={loading}>
+                    <Save className="h-4 w-4" /> Save Changes
+                  </Button>
+                </div>
+
+                <div className="flex items-center gap-6 p-6 rounded-2xl bg-white/5 border border-white/10 mb-6">
+                  <div className="h-20 w-20 rounded-full gradient-warm flex items-center justify-center border-4 border-white/20">
+                    <span className="text-2xl font-heading font-black text-white">
+                      {user?.name ? user.name.split(' ').map((n: string) => n[0]).join('').toUpperCase().substring(0, 2) : 'DR'}
+                    </span>
+                  </div>
+                  <div>
+                    <h4 className="text-2xl font-heading font-bold text-white">{user?.name || 'Driver'}</h4>
+                    <p className="text-white/60 mb-2">{user?.email || 'No email provided'}</p>
+                    <Badge className="bg-success/20 text-success border-0">Active Driver</Badge>
+                  </div>
+                </div>
+
+                <div className="grid gap-6">
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-white/40 uppercase">Full Name</label>
+                    <input 
+                      className="w-full h-12 rounded-xl glass-card border-white/10 text-white px-4 outline-none focus:border-primary"
+                      value={profileForm.name}
+                      onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-white/40 uppercase">Email Address</label>
+                    <input 
+                      type="email"
+                      className="w-full h-12 rounded-xl glass-card border-white/10 text-white px-4 outline-none focus:border-primary"
+                      value={profileForm.email}
+                      onChange={(e) => setProfileForm({ ...profileForm, email: e.target.value })}
+                    />
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+            </Tabs>
           </div>
           </div>
         </div>

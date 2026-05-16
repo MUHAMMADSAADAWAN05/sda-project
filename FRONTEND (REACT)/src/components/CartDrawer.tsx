@@ -1,5 +1,5 @@
 import { useCart } from '@/context/CartContext';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Minus, Plus, Trash2, ShoppingBag, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -14,16 +14,29 @@ const CartDrawer = () => {
   const total = subtotal + deliveryFee + tax;
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetContent className="flex w-full flex-col sm:max-w-md glass-ultra shadow-2xl border-l border-white/10">
-        <SheetHeader>
-          <SheetTitle className="flex items-center gap-2 font-heading">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg gradient-warm neon-glow-primary">
-              <ShoppingBag className="h-4 w-4 text-primary-foreground" />
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex justify-end">
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={() => setIsOpen(false)}
+          />
+          <motion.div
+            initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="relative flex h-full w-full flex-col sm:max-w-md glass-ultra shadow-2xl border-l border-white/10 z-50 p-6 bg-background"
+          >
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="flex items-center gap-2 font-heading text-lg font-bold">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg gradient-warm neon-glow-primary">
+                  <ShoppingBag className="h-4 w-4 text-primary-foreground" />
+                </div>
+                Your Cart ({itemCount})
+              </h2>
+              <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)} className="h-8 w-8 rounded-full">
+                <X className="h-4 w-4" />
+              </Button>
             </div>
-            Your Cart ({itemCount})
-          </SheetTitle>
-        </SheetHeader>
 
         {items.length === 0 ? (
           <motion.div
@@ -46,8 +59,8 @@ const CartDrawer = () => {
           <>
             <div className="flex-1 overflow-y-auto py-4">
               <p className="mb-3 text-sm font-semibold text-primary">{items[0]?.restaurantName}</p>
-              <AnimatePresence mode="popLayout">
-                <div className="space-y-3">
+              <div className="space-y-3">
+                <AnimatePresence mode="popLayout">
                   {items.map(item => {
                     const modTotal = item.selectedModifiers.reduce((s, m) => s + m.price, 0);
                     const itemTotal = (item.menuItem.price + modTotal) * item.quantity;
@@ -89,8 +102,8 @@ const CartDrawer = () => {
                       </motion.div>
                     );
                   })}
-                </div>
-              </AnimatePresence>
+                </AnimatePresence>
+              </div>
             </div>
 
             <motion.div
@@ -114,8 +127,10 @@ const CartDrawer = () => {
             </motion.div>
           </>
         )}
-      </SheetContent>
-    </Sheet>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
   );
 };
 

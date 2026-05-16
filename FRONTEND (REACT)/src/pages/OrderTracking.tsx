@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { Check, ChefHat, Truck, Home, Phone, MapPin, Loader2 } from 'lucide-react';
+import { Check, ChefHat, Truck, Home, Phone, MapPin, Loader2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
@@ -25,7 +25,19 @@ const OrderTracking = () => {
       try {
         const orders = await fetchOrders() as any[];
         const found = orders.find(o => String(o.id) === String(orderId));
-        setOrder(found);
+        if (found) {
+          setOrder(found);
+          // Map backend status to step index
+          const statusMap: Record<string, number> = {
+            'PLACED': 0,
+            'PREPARING': 1,
+            'READY': 2,
+            'ON_THE_WAY': 2,
+            'DELIVERED': 3,
+            'REJECTED': -1
+          };
+          setCurrentStep(statusMap[found.status] ?? 0);
+        }
       } catch (err) {
         console.error('Failed to load order:', err);
       } finally {
@@ -34,11 +46,8 @@ const OrderTracking = () => {
     };
 
     loadOrder();
-
-    const timer = setInterval(() => {
-      setCurrentStep(prev => (prev < 3 ? prev + 1 : prev));
-    }, 8000);
-    return () => clearInterval(timer);
+    const pollInterval = setInterval(loadOrder, 5000); // Poll every 5s for updates
+    return () => clearInterval(pollInterval);
   }, [orderId]);
 
   if (loading) {
@@ -53,8 +62,23 @@ const OrderTracking = () => {
   if (!order) {
     return (
       <div className="container py-20 text-center">
-        <p className="text-xl font-heading font-bold text-white">Order not found</p>
-        <Button className="mt-4 gradient-warm rounded-xl neon-glow-primary" onClick={() => navigate('/')}>Go Home</Button>
+        <Loader2 className="h-10 w-10 text-primary animate-spin mx-auto mb-4" />
+        <p className="text-xl font-heading font-bold text-white">Finding your order...</p>
+        <p className="text-white/40 mt-2">This might take a second while we confirm with the restaurant.</p>
+        <Button variant="ghost" className="mt-8 text-white/40 hover:text-white" onClick={() => navigate('/')}>Cancel and Go Home</Button>
+      </div>
+    );
+  }
+
+  if (currentStep === -1) {
+    return (
+      <div className="container py-20 text-center">
+        <div className="h-20 w-20 rounded-2xl bg-red-500/20 flex items-center justify-center mx-auto mb-6 border border-red-500/30">
+          <X className="h-10 w-10 text-red-500" />
+        </div>
+        <p className="text-2xl font-heading font-black text-white mb-2">Order Rejected</p>
+        <p className="text-white/50 max-w-md mx-auto mb-8">We're sorry, but the restaurant was unable to fulfill your order at this time. Your payment (if any) will be refunded.</p>
+        <Button className="gradient-warm rounded-xl neon-glow-primary" onClick={() => navigate('/')}>Go Home</Button>
       </div>
     );
   }

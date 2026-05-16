@@ -33,7 +33,8 @@ const Login = () => {
     setError('');
     setLoading(true);
     try {
-      const userData = await loginUser(email, password);
+      localStorage.removeItem('cravix_user'); // Force clear old session
+      const userData = await loginUser(email, password) as any;
       login(userData);
       const dest = roleDestinations[userData.role] || destination;
       navigate(dest);
@@ -98,25 +99,7 @@ const Login = () => {
             <Button type="submit" className="w-full gradient-warm rounded-xl neon-glow-primary hover:shadow-xl transition-all border-0" size="lg" disabled={loading}>{loading ? 'Signing in...' : 'Sign In'}</Button>
           </form>
 
-          {/* Skip button */}
-          <Button
-            variant="ghost"
-            className="w-full gap-2 text-muted-foreground hover:text-primary rounded-xl"
-            onClick={() => navigate(destination)}
-          >
-            <SkipForward className="h-4 w-4" />
-            Skip for now
-          </Button>
 
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-white/10" /></div>
-            <div className="relative flex justify-center text-xs uppercase"><span className="glass-deep px-3 py-1 rounded-full text-muted-foreground">Or continue with</span></div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <Button variant="outline" className="w-full rounded-xl glass-deep border-white/10 text-foreground hover:bg-white/10 transition-all">Google</Button>
-            <Button variant="outline" className="w-full rounded-xl glass-deep border-white/10 text-foreground hover:bg-white/10 transition-all">Apple</Button>
-          </div>
 
           <p className="text-center text-sm text-muted-foreground">
             Don't have an account? <Link to={`/signup?role=${role}`} className="text-primary font-semibold hover:underline">Sign up</Link>

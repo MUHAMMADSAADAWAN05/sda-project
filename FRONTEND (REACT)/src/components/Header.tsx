@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
 import { useState, useEffect } from 'react';
 import { useTheme } from '@/context/ThemeContext';
+import { useAuth } from '@/context/AuthContext';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { motion, AnimatePresence } from 'framer-motion';
 import cravixLogo from '@/assets/cravix-logo.jpeg';
@@ -11,6 +12,7 @@ import cravixLogo from '@/assets/cravix-logo.jpeg';
 const Header = () => {
   const { itemCount, setIsOpen } = useCart();
   const { theme, toggleTheme } = useTheme();
+  const { user } = useAuth();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -109,7 +111,7 @@ const Header = () => {
             </motion.div>
 
             <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.05 }}>
-              <Button variant="ghost" size="sm" className="relative gap-2 rounded-xl hover:bg-white/5" onClick={() => setIsOpen(true)} aria-label="Open cart">
+              <Button variant="ghost" size="sm" className="relative gap-2 rounded-xl hover:bg-white/5" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(true); }} aria-label="Open cart">
                 <ShoppingCart className="h-4 w-4" />
                 <AnimatePresence>
                   {itemCount > 0 && (
@@ -143,17 +145,28 @@ const Header = () => {
               </Button>
             </motion.div>
 
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
-              <Button variant="ghost" size="sm" className="rounded-xl hover:bg-white/5" asChild>
-                <Link to="/account" aria-label="Account"><User className="h-4 w-4" /></Link>
-              </Button>
-            </motion.div>
-
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
-              <Button size="sm" className="rounded-xl gradient-warm neon-glow-primary hover:shadow-xl transition-all font-semibold border-0 btn-premiere" asChild>
-                <Link to="/login">Sign In</Link>
-              </Button>
-            </motion.div>
+            {user ? (
+              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
+                <Button size="sm" className="rounded-xl gradient-warm neon-glow-primary hover:shadow-xl transition-all font-semibold border-0 btn-premiere" asChild>
+                  <Link to="/account" className="flex items-center gap-2">
+                    <User className="h-4 w-4" /> {user.name?.split(' ')[0] || 'Account'}
+                  </Link>
+                </Button>
+              </motion.div>
+            ) : (
+              <>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
+                  <Button variant="ghost" size="sm" className="rounded-xl hover:bg-white/5" asChild>
+                    <Link to="/account" aria-label="Account"><User className="h-4 w-4" /></Link>
+                  </Button>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
+                  <Button size="sm" className="rounded-xl gradient-warm neon-glow-primary hover:shadow-xl transition-all font-semibold border-0 btn-premiere" asChild>
+                    <Link to="/login">Sign In</Link>
+                  </Button>
+                </motion.div>
+              </>
+            )}
           </div>
         )}
 
@@ -161,7 +174,7 @@ const Header = () => {
         {!['/dashboard', '/driver', '/login', '/signup'].includes(location.pathname) ? (
           <div className="flex items-center gap-2 md:hidden">
             <motion.div whileTap={{ scale: 0.9 }}>
-              <Button variant="ghost" size="icon" className="relative" onClick={() => setIsOpen(true)} aria-label="Cart">
+              <Button variant="ghost" size="icon" className="relative" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(true); }} aria-label="Cart">
                 <ShoppingCart className="h-5 w-5" />
                 <AnimatePresence>
                   {itemCount > 0 && (
@@ -184,11 +197,16 @@ const Header = () => {
                     >{link.label}</Link>
                   ))}
                   <hr className="my-2 border-white/10" />
-                  <Link to="/account" onClick={() => setMobileOpen(false)} className="rounded-xl px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-white/5">Account</Link>
                   <hr className="my-2 border-white/10" />
-                  <Link to="/login" onClick={() => setMobileOpen(false)}>
-                    <Button className="w-full gradient-warm rounded-xl border-0">Sign In</Button>
-                  </Link>
+                  {user ? (
+                    <Link to="/account" onClick={() => setMobileOpen(false)}>
+                      <Button className="w-full gradient-warm rounded-xl border-0">My Account</Button>
+                    </Link>
+                  ) : (
+                    <Link to="/login" onClick={() => setMobileOpen(false)}>
+                      <Button className="w-full gradient-warm rounded-xl border-0">Sign In</Button>
+                    </Link>
+                  )}
                 </nav>
               </SheetContent>
             </Sheet>

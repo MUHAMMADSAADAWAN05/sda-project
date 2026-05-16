@@ -4,6 +4,7 @@ import COM.ONLIINE.FOOD.ORDERING.SYSTEM.PROJECT.model.MenuItem;
 import COM.ONLIINE.FOOD.ORDERING.SYSTEM.PROJECT.model.Restaurant;
 import COM.ONLIINE.FOOD.ORDERING.SYSTEM.PROJECT.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,21 +17,35 @@ public class RestaurantController {
     private RestaurantRepository repository;
 
     @GetMapping
+    @Transactional(readOnly = true)
     public List<Restaurant> getAllRestaurants() {
-        return repository.findAll();
+        List<Restaurant> restaurants = repository.findAll();
+        // Force load menuItems within transaction so Jackson can serialize them
+        for (Restaurant r : restaurants) {
+            if (r.getMenuItems() != null) r.getMenuItems().size();
+        }
+        return restaurants;
     }
 
     @GetMapping("/{id}")
+    @Transactional(readOnly = true)
     public Restaurant getRestaurantById(@PathVariable Long id) {
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Restaurant not found"));
+        Restaurant r = repository.findById(id).orElseThrow(() -> new RuntimeException("Restaurant not found"));
+        // Force load menuItems within transaction
+        if (r.getMenuItems() != null) r.getMenuItems().size();
+        return r;
     }
 
     @GetMapping("/owner/{ownerId}")
+    @Transactional(readOnly = true)
     public Restaurant getRestaurantByOwner(@PathVariable Long ownerId) {
-        return repository.findAll().stream()
-                .filter(r -> r.getOwner() != null && r.getOwner().getId().equals(ownerId))
+        Restaurant r = repository.findAll().stream()
+                .filter(rest -> rest.getOwner() != null && rest.getOwner().getId().equals(ownerId))
                 .findFirst()
                 .orElse(null);
+        // Force load menuItems within transaction
+        if (r != null && r.getMenuItems() != null) r.getMenuItems().size();
+        return r;
     }
 
     @PostMapping
@@ -39,6 +54,7 @@ public class RestaurantController {
     }
 
     @PutMapping("/{id}")
+    @Transactional
     public Restaurant updateRestaurant(@PathVariable Long id, @RequestBody Restaurant restaurantDetails) {
         Restaurant restaurant = repository.findById(id).orElseThrow();
         restaurant.setName(restaurantDetails.getName());
@@ -55,17 +71,11 @@ public class RestaurantController {
     private COM.ONLIINE.FOOD.ORDERING.SYSTEM.PROJECT.repository.MenuItemRepository menuItemRepository;
 
     @PostMapping("/{id}/menu")
+    @Transactional
     public MenuItem addMenuItem(@PathVariable Long id, @RequestBody MenuItem item) {
-        try {
-            Restaurant restaurant = repository.findById(id).orElseThrow();
-            item.setRestaurant(restaurant);
-            System.out.println("Adding menu item: " + item.getName() + " to restaurant: " + restaurant.getName());
-            return menuItemRepository.save(item);
-        } catch (Exception e) {
-            System.err.println("Error adding menu item: " + e.getMessage());
-            e.printStackTrace();
-            throw e;
-        }
+        Restaurant restaurant = repository.findById(id).orElseThrow();
+        item.setRestaurant(restaurant);
+        return menuItemRepository.save(item);
     }
 
     @DeleteMapping("/menu/{itemId}")

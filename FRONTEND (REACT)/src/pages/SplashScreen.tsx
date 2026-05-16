@@ -39,48 +39,23 @@ const roles = [
   },
 ];
 
-const FOOD_ICONS = ['🍕', '🍔', '🌮', '🍜', '🍣', '🧁'];
 
-const STATS = [
-  { value: 500, suffix: '+', label: 'Restaurants' },
-  { value: 50,  suffix: 'K+', label: 'Happy Orders' },
-  { value: 4.9, suffix: '★', label: 'Avg Rating', isDecimal: true },
-];
-
-/* ─── Animated Counter ─────────────────────────── */
-function AnimatedCounter({ target, suffix, isDecimal }: { target: number; suffix: string; isDecimal?: boolean }) {
-  const count = useMotionValue(0);
-  const [display, setDisplay] = useState('0');
-
-  useEffect(() => {
-    const controls = animate(count, target, {
-      duration: 2,
-      ease: 'easeOut',
-      delay: 0.3,
-      onUpdate: (v) => setDisplay(isDecimal ? v.toFixed(1) : Math.floor(v).toString()),
-    });
-    return controls.stop;
-  }, [target, isDecimal, count]);
-
-  return (
-    <span className="stat-shimmer text-2xl font-heading font-black md:text-3xl">
-      {display}{suffix}
-    </span>
-  );
-}
 
 /* ─── Particle ─────────────────────────────────── */
-function Particle({ delay, x, size }: { delay: number; x: number; size: number }) {
+function Particle({ delay, x, size, fromTop }: { delay: number; x: number; size: number; fromTop?: boolean }) {
   return (
     <motion.div
-      className="absolute bottom-0 rounded-full bg-white/30 pointer-events-none"
+      className={`absolute rounded-full bg-white/20 pointer-events-none ${fromTop ? '-top-4' : '-bottom-4'}`}
       style={{ left: `${x}%`, width: size, height: size }}
-      animate={{ y: [0, -140], opacity: [0, 0.7, 0.7, 0] }}
+      animate={{ 
+        y: fromTop ? ['0vh', '110vh'] : ['0vh', '-110vh'],
+        opacity: [0, 0.8, 0.8, 0] 
+      }}
       transition={{
-        duration: 4 + Math.random() * 3,
+        duration: 5 + Math.random() * 3,
         repeat: Infinity,
         delay,
-        ease: 'easeOut',
+        ease: 'linear',
       }}
     />
   );
@@ -181,11 +156,12 @@ const SplashScreen = () => {
   const [hoveredRole, setHoveredRole] = useState<string | null>(null);
   const [showRoles, setShowRoles] = useState(false);
 
-  const particles = Array.from({ length: 22 }, (_, i) => ({
+  const particles = Array.from({ length: 45 }, (_, i) => ({
     id: i,
-    delay: i * 0.28,
-    x: 5 + (i * 4.3) % 90,
-    size: 3 + (i % 4) * 2,
+    delay: i * 0.15,
+    x: Math.random() * 100,
+    size: 5 + Math.random() * 8,
+    fromTop: i % 2 === 0,
   }));
 
   return (
@@ -199,7 +175,7 @@ const SplashScreen = () => {
       {/* Particle field */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {particles.map(p => (
-          <Particle key={p.id} delay={p.delay} x={p.x} size={p.size} />
+          <Particle key={p.id} delay={p.delay} x={p.x} size={p.size} fromTop={p.fromTop} />
         ))}
       </div>
 
@@ -235,7 +211,7 @@ const SplashScreen = () => {
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.9, type: 'spring', stiffness: 190, damping: 14 }}
-              className="pulse-ring-wrap rounded-full"
+              className="rounded-full"
             >
               <motion.div
                 animate={{ y: [0, -12, 0] }}
@@ -243,15 +219,7 @@ const SplashScreen = () => {
                 className="relative"
                 style={{ willChange: 'transform' }}
               >
-                {/* Spinning glow ring */}
-                <motion.div
-                  className="absolute -inset-3 rounded-full"
-                  style={{
-                    background: 'conic-gradient(from 0deg, transparent 60%, hsl(25 95% 53% / 0.6) 100%)',
-                  }}
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-                />
+
                 <img
                   src={cravixLogo}
                   alt="CraviX Logo"
@@ -280,58 +248,7 @@ const SplashScreen = () => {
               </motion.p>
             </motion.div>
 
-            {/* Floating food icons orbiting around */}
-            <div className="absolute inset-0 pointer-events-none">
-              {FOOD_ICONS.map((icon, i) => {
-                const angle = (i / FOOD_ICONS.length) * 360;
-                const radius = 200;
-                const rad = (angle * Math.PI) / 180;
-                const x = Math.cos(rad) * radius;
-                const y = Math.sin(rad) * radius;
-                return (
-                  <motion.div
-                    key={i}
-                    className="absolute text-2xl md:text-3xl select-none"
-                    style={{ left: '50%', top: '42%' }}
-                    animate={{
-                      x: [x, x * 0.85, x],
-                      y: [y, y * 1.1, y],
-                      rotate: [0, 360],
-                      scale: [0.8, 1, 0.8],
-                    }}
-                    transition={{
-                      duration: 8 + i * 1.2,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                      delay: i * 0.4,
-                    }}
-                  >
-                    {icon}
-                  </motion.div>
-                );
-              })}
-            </div>
 
-            {/* Animated stat counters */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.0, duration: 0.5 }}
-              className="flex items-center gap-6 md:gap-10 mt-2"
-            >
-              {STATS.map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.1 + i * 0.12 }}
-                  className="text-center"
-                >
-                  <AnimatedCounter target={stat.value} suffix={stat.suffix} isDecimal={stat.isDecimal} />
-                  <p className="text-xs text-white/60 font-medium tracking-wide mt-0.5">{stat.label}</p>
-                </motion.div>
-              ))}
-            </motion.div>
 
             {/* CTA Button */}
             <motion.div

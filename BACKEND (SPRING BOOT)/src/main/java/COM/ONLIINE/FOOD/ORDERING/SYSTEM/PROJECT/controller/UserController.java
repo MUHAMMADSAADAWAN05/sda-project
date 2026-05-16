@@ -74,6 +74,8 @@ public class UserController {
         response.put("name", user.getName());
         response.put("email", user.getEmail());
         response.put("role", user.getRole());
+        response.put("address", user.getAddress());
+        response.put("cardNumber", user.getCardNumber());
         return ResponseEntity.ok(response);
     }
 
@@ -104,6 +106,8 @@ public class UserController {
         User user = userOpt.get();
         if (body.containsKey("name")) user.setName(body.get("name"));
         if (body.containsKey("email")) user.setEmail(body.get("email"));
+        if (body.containsKey("address")) user.setAddress(body.get("address"));
+        if (body.containsKey("cardNumber")) user.setCardNumber(body.get("cardNumber"));
         
         User saved = userRepository.save(user);
         
@@ -112,6 +116,8 @@ public class UserController {
         response.put("name", saved.getName());
         response.put("email", saved.getEmail());
         response.put("role", saved.getRole());
+        response.put("address", saved.getAddress());
+        response.put("cardNumber", saved.getCardNumber());
         return ResponseEntity.ok(response);
     }
 
